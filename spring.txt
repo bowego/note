@@ -1,0 +1,6 @@
+@ResponseEntity.ok("success")
+@RequestMapping(method=RequestMethod.GET)=@GetMapping,PostMapping,DeleteMapping,PutMapping
+@RequestParam(value = "userId", required = true)
+@DeleteMapping("")
+restFul @requestMapping(value="/article/{id}",metho=GET/PUT,produces="application/json")
+		update(@PathVariable Long id,@RequestBody Article article)

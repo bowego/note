@@ -1,0 +1,139 @@
+authentication：身份认证，是否拥有相应的权限
+authorization：授权，权限认证，判断用户是否能做事情，是否拥有某个角色，某个用户对某个资源是否用有某个权限
+sessionManager：用户登录之后就是一次回话没有退出之前他的所有信息都在会话中
+cryptography：加密，保护数据的安全性，密码加密到数据库，不是明文存储
+websupport：集成到web环境
+			caching：用户登录之后，身份信息，角色/权限缓存不必每次都去读数据库
+			runas:用户以另外某个用户的身份,执行动作
+			rememberme:一次登录后下一次不必登录了
+			concurrency:线程之间的权限的传递
+			testing:测试功能
+shiro不会去维护用户/权限,需要自己去设计/提供,然后通过相应的几口注入给shiro
+appplicationCode->subject->shiroSecurityManager->realm
+subject:当前用户,任何与当前用户交互的东西都是subject,所有subject绑定到securityManager,SecurityManager是实际的执行者
+SecurityManager:shiro的核心,任何与安全相关的操作都会与securityManager交互,管理者所有的subject,负责与其他组件交互
+realm:域,shiro从realm获取相应的用户比较用户身份/角色/权限
+最简单的一个shiro应用:应用代码通过subject来进行认证授权,subject将操作委托给securityManager,我们将realm提供给securityManager,让他可以获得身份角色权限认证信息
+
+	authenticator:认证器,可以自定义实现:认证策略(AuthenticationStrategy)什么情况下用户的认证算通过了
+	authrizer:授权器,用来决定该主体是否有权限进行相应的操作
+	realm:可以有一个或多个realm,jdbc或ladp由用户提供
+	sessionManager:管理session的生命周期,web环境下的session,javase环境下的session
+	sessionDao:将session放入数据库
+	cacheManager:管理将用户/角色/权限信息放入缓存提高效率
+	Cryptography:密码模块,shiro提供一些常见的组件进行密码加密
+
+身份认证:在应用中证明身份:在shiro中用户需要提供principals身份和credentials(证明)给shiro,才能验证身份
+	     principals:主体的标识属性,唯一即可,一个主体可以有多个principals但只有一个primaryPrincipals,一般是用户名/密码/手机号
+		 credentials:证明/凭证,
+		 全局设置一个SecurityManager,SecurityUtils.getSubject(),subject.login(new UseranmePasswordToken())失败会出异常,最后调用subject.logout()退出
+		 subject.login(token)登录,委托给securityManager->authenticator(可以插入自己的定义的验证策略)->authenticationStrategy->realm多realm的验证
+realm:shiro.realm.Realm借口:getName()realm的名字,support(AuthenticationToken)是否支持此token,getAuthenticationInfo(token)获取认证信息
+shiro提供的realm,SimpleAccountReaml,JdbcRealm,JndiLadpRealm,AbstractLadpRealm   继承自AuthorizingRealm->AuthenticationRealm->Realm
+
+FirstSuccessfulStrategy:只要有一个Realm验证成功即可,返回第一个验证成功的认证信息,忽略其他的
+AtLeastOneSuccessfulStratety:只要有一个realm验证成功,返回所有的realm认证成功的信息
+AllSuccessfulStrategy:所有的realm验证陈宫才算成功,返回所有的realm认证信息
+
+ModularRealmAuthenticator默认使用AtleastOneSuccessfulStrategy策略
+自定义authenticationStrategy借口:beforeAll/before[attempt/s],after/afterAll在realm验证之前或之后调用  
+
+
+授权:主体subject访问应用的用户,资源resource应用中用户可以访问的任何东西,权限permission用户可否访问相应的资源,角色role:一组权限的集合
+	 基于角色的/基于资源的权限控制
+	 shiro支持三种授权方式:编程式:if(SecurityUtils.getSubject().hasRole("admin")){}else{}
+						   注解式:@RequiresRoles("admin) public void hello()
+						   jsp/GSP标签:<shiro:hasRole name="admin"> </shiro:hasRole>
+	 基于资源的访问控制 用户=密码,角色1,角色2/subject.hasRole/hasRoles,checkRole/Roles(不满足会抛出异常),  subject.isPermitted/isPermittedAll/checkPermission/checkPermissions(不满足会抛出异常)					   
+	 字符串通配符权限:资源标识符:操作:对象实例ID对哪个资源的哪个实例进行哪些操作 :标识资源操作实例的分割,','表示操作的分割,'*'表示任意资源/操作/实例
+					  单个资源单个权限,system:user:update
+					  单个资源多个权限,system:user:update,system:user:delete==checkPermikssions("system:user:update,delete") 多包涵少,反之不行
+					  单个资源全部权限,system:user:create,update,delete,view==checkPermissions("system:user:*")==checkPermissions("system:user")
+					  
+					  单个实例单个权限,user:view:1//view关键字
+					  单个实例多个权限,user:view,delete:1//权限关键字
+					  单个实例所有权限,user:*:1//没有权限关键字,说明*代表所有权限
+					  所有实例单个权限,user:auth:* //权限关键字已经指定
+					  所有实例所有权限,user:*:* 
+					  
+					  
+					  
+					  单个资源单个权限,user:update
+					  单个资源多个权限,user:update,user:delete==checkPermikssions("user:update,delete") 多包涵少,反之不行
+					  单个资源全部权限,user:create,update,delete,view==checkPermissions("user:*")==checkPermissions("user")
+					  权限缺失的处理, user:view==user:view:*  org==org:*==org:*:*
+									  *:view!=*:*:view
+					  WildcardPermission与字符串相等
+	  授权流程:1调用subject.isPermitted*/hasRole*->SecurityManager->Authorizer
+			   2Authorizer式真正的授权者,调用授权方法会首先通过PermissionResolver将字符串转换成相应的Permission实例
+			   3进行授权之前调用相应的Realm获取subject相应的角色权限/用于匹配
+			   4Authorizer会判断Realm的角色/权限是否和传入的匹配如果有多个Realm会委托给多个ModularRealmAuthorizer进行循环匹配,如果匹配返回true,否则返回false表示授权失败
+			   多realm授权流程,检查realm是否实现Authorizer,如果实现了调用hasRoles,isPermitted进行匹配,如果有一个Realm匹配将返回true,否则返回false
+	
+	shiro-config.ini:[main]:authenticator,authorizer,realm,permissionResolver
+					 [users]:用户密码
+					
+					 [roles]:角色权限
+					 [urls]:weburl拦截相关
+					 
+加密/解密:散列算法:一般用于生成数据的摘要信息,是一种不可逆的算法,一般适合存储密码之类的数据
+				   shiro通用的散列支持:SimpleHash指定散列算法,source,salt
+				   提供了HashService/设置算法/私盐/公盐.computeHash(request).toHex(); request=HahsRequest.Builder().setAlgorithmName().setSource().setSalt()
+				   SecureRandomNumberGenerator用于生成随机数,generater.setSeed("123".getBytes());
+				   shiro提供了passwordService: ini文件配置,自动注入,提供加密.encryptPassword();
+		  HashCredentialsMatcher:系统保存username,password+salt(username+random),realm返回authenticationInfo,matcher可以自动识别盐并比较\
+		  密码重试次数的限制: CredentialsMatcher.doCredentialsMatcher(token,info) passwordRetryCache.get(username);此处缓存重试次数,定制重试策略
+		  
+AuthenticationToken:收集用户提交对的身份凭据,RememberMeAuthenticationToken提供了记住我,HostAuthenticationToken可以获取用户主机名,UsernamePasswordToken直接拿来使用
+
+AuthenticationInfo:提供给AuthenticationRealm.CredentialsMatcher进行凭据验证,提供给SecurityManager创建subject
+MergableAuthenticationInfo用于在多realm时合并AuthenticationInfo,其他的如salt会后面的信息覆盖前面的信息
+如果账号不多可以使用account
+
+PricipalsCollection:firstPricipal,oneBytype,collectionByType,getRealms,getpricipalbyRealm//多个realm的时候会有很多身份为集合
+	AuthenticationStrategy,的afterTempt会在一个realm认证后,试图将身份信息合并
+	准备三个realm对相同的用户返回不同的AuthenInfo, subject.getPricipal()//获取主principal,subject.getPrincipals().getPrimary()//同样获取主
+AuthorizingRealm:聚合授权信息,getRole/返回角色getStringPermission()/字符串权限信息getIObjectPermission()获取permission对象
+
+subject:身份信息获取 getPrincipal(),getPrincipals()
+		身份验证:login(AuthenticationToken),isAuthenticated(),isRemembered()后两个方法如果返回true即验证成功,返回false失败,两个方法互斥,不能同时为true
+		角色授权认证 hasRole/hasRoles/hasAllRoles/checkRole/checkRoles
+		权限授权认证 isPermitted)(String/list<Permission)) checkPermission()
+		会话:getSession(); getSession(boolean);
+		退出 logout();
+		RunAs :runAs(PricipalCollection),isRunAs(),getPreviousPrincipal(),releaseRunAs()
+		多线程:execute(Callable/Runnable) associateWith(Runable);
+
+与web的集成:shiro1.1版本,shiro1.2版本使用listener,与spring集成配置shiroFilter,web.xml配置delegateingProxy/*
+			通配符:?一个字母,*多个字母单级 ,**多个字母多级
+			匹配顺序,按照url出现的第一个拦截规则设置的拦截器
+Filter:NameableFilter:给Filter起个名字,
+	   OncePerRequestFilter:防止多次执行Filter
+	   ShiroFilter:真个shiro的入口点过时了
+	   AdviceFilter:AOp风格类似SpringInterceptor,preHandle(req,resp),postHandle(req,resp)afterCompletion(req,resp,exep)类似最终通知
+	   PathMatchingFilter:在prehandle中匹配一个路径,将路径绑定参数传递给mappedValue如果验证失败中断流程
+	   AccessControlFilter:提供了访问控制的基础功能,是否允许访问/当访问拒绝时如何处理等
+						   还提供方法用于处理登录成功后重定向到上一个请求
+	   如果想要访问控制使用AccessControlFilter,如果需要添加一些通用数据可以直接继承pathMatchingFilter
+拦截器链,限制性shiro的filterchain再执行servlet的filterchain, 通过FilterChainResolver解析路径与拦截器连得关系,通过FilterChainManager能够动态管理url与拦截器链之间的关系
+	DefaultFilterChain默认添加了一些拦截器 anon,roles,user,logout,perms,authc
+	注册定义自己的filterchain,IniSecurityManagerFactory/webIniSecurityManager会自动扫描ini配置文件中的ini/main部分,注册到defaultFilterChainManager
+	
+会话session:完整的会话模块subject.getsession(),session.getId(),getHost(),getTImeOUt(),lastTIme,startTime,touch,stop()
+	   会话管理器:sessionManager:startSessio(),getSession(),isServletContainerSession()是否用sevletContainerSEssion
+				  DefaultSessionManager:ServletContainerSessinManager,DefaultWebSessionManager
+	   会话监听器用于监听会话创建,过期,停止事件SessionListener,onStart(Session),onExpiration(),onStop()
+				继承sessionAdapter实现部分功能
+		SessionManager.sessionDao=EnterpriseCacheSessionDao----ehcache
+		SessionDao.activeSessionsCacheName=shiro-activeSessionCache
+		CacheManager=EhCacheManager, cacheManager.cacheManagerConfigFile=classpath:ehcache.xml
+		SecurityManager.cacheManager=$cacheManager,ID生成器
+		配置:ehcache.xml 整体大小,溢出到磁盘,永久, 自定义实现SessionDao,使用jdbc?
+会话验证:是否过期? sessionValidationScheduler.interval=3600000 TimeOut,可以分页验证所有的session是否过期,
+	   
+
+
+
+
+
+

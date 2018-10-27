@@ -1,0 +1,195 @@
+javax.servlet.Servlet:接口:规定了servlet引擎识别管理的方法集:init(ServletConfig):被载入和实施服务前由servlet引擎进行一次性调用
+														service(ServletRequest,ServletResponse):处理请求返回结果
+														destroy():卸载servlet
+														getServletInfo():返回描述servlet的字符串
+														getServletConfig():返回传递个init()方法的ServletConfig对象
+javax.servlet.ServletConfig:接口:被容器使用为servlet提供信息:getServletName():返回servlet名字,配置文件中配置或者是类名
+														     getServletContext():返回调用者运行在内的上下文对象引用
+															 getInitParameter(String):返回指定初始化参数
+															 getInitParameterNames():返回初始化参数的key组成的枚举对象
+javax.servlet.GenericServlet:抽象类(协议无关版本):implements Servlet,ServletConfig
+							 提供了除service()方法以外的所有servlet方法实现
+							 init(ServletConfig)
+							 init():被init(ServletConfig)方法最后被调用
+							 destroy()
+							 getServletConfig()
+							 getServletInfo():返回空字符串
+							 abstract service(ServletRequest,ServletResponse):必须被子类实现提供服务
+							 getServletName()
+							 getServletContext()
+							 getInitParameter(String)
+							 getInitParameterNames()
+							 log(String):日志信息
+							 log(String,Throwable):编写异常栈信息
+javax.servlet.http.HttpServlet extends GenericServlet:实现了service方法:service方法调用doGet().doPost()等
+							 service(ServletReqeust,ServletResponse):将ServletRequest转化为HttpServletReqeust
+							 service(HttpServletRequest,HttpServletResponse):被上面方法调用,判断请求头方法,调用下面方法
+							 doPost(req,resp)
+							 doGet(req,resp)
+							 doPut(req,resp)
+							 doDelete(req,resp)
+							 doTrace(req,resp)
+							 doOptions(req,resp)
+							 doHead(req,resp)
+javax.servlet.ServletReqeust:getRemoteHost(),getRemoteAddr(),getRemotePort()
+							 getLocalAddr(),getLocalPost(),getLocalName()
+							 getServerName()':'前面的,getServerPort()
+							 getParameter(String),getParameterNames(),getParameterValues(),getParameterMap()
+							 getAttribute(String),getAttributeNames(),setAttribute(String,Object),removeAttribute(String)
+							 getContentLength():int,getContentLength():Long,getContentType()
+							 getCharacterEncoding()获取请求体编码,setCharacterEncoding(String)在读取请求参数之前设置编码格式
+							 getProtocol():HTTP/1.1,getSchema():http/https/ftp
+							 getReader(),getImputStream()
+							 getRequestDispatcher():转发
+							 getServletContext();
+							 isSecure(),request是否用安全通道,https
+							 getAsyncContext()
+javax.servlet.http.HttpServletRequest:getAuthType():安全认证方案
+								 getContextPath():返回指定servlet上下文
+								 getServletPath():返回上下文的子串
+								 getPathInfo():返回额外的路径信息
+								 getMethod():Http请求方法
+								 getQueryString():查询字符串
+								 getRemoteUser():通过认证返回远程和用户名,否则为null
+								 getRequestSessionId()返回客户端会话id
+								 getRequestUri()
+								 getHeader(String),getIntHeader(String),getDateHeader(String),getHeaders(String),getHeaderNames()
+								 getCookies(),
+								 getSession(true)
+								 getPrincipal()
+								 isRequestedSessionIdFromCookie():请求会话ID由一个Cookie对象提供
+								 isRequestedSessionIdFromURL():请求会话的id在URL中提供
+								 isRequestedSessionIdValid():会话id是否仍有效
+								 isUserInRole(String role)
+javax.servlet.ServletResponse:flushBuffer():发送缓存到客户端的输出内容
+							  getBufferSize():返回使用缓存的大小
+							  getCharacterEncoding():返回使用字符解码的名字,默认是ISO-8859-1
+							  getLocale():返回本地信息
+							  getOutputStream()
+							  getWriter():与上只能调用一个
+							  isCommitted():如果状态和响应头标发送到客户端,再次发送状态和响应投标会无作用
+							  reset():清除输出缓存和响应头标,如果响应已得到确认引发异常
+							  setBufferSize(Int),设置最小缓存大小
+							  setContentLength(Int)设置内容体的长度
+							  setContentType(String type)设置内容类型,在HttpServlet中设置Content-type头标
+							  setLocale(Locale)设置本地信息
+javax.servlet.http.HttpServletResponse:addCookie(Cookie cookie)将一个Set-Cookie头标加入到响应
+									   addDateHeader(String,Date)将指定日期值加入到指定名字响应头标
+									   setHeader(String,String)设置响应头标
+									   addIntHeader(String,Int)设置响应头标
+									   containsHeader(String)是否包含响应头标
+									   encodeRedirectURL(String):编码URL,向重定向网址添加CookieId
+									   encodeURL(string):编码Url
+									   sendError(int status)设置错误状态码,int类型
+									   sendError(int ,String)设置错误状态码,添加消息
+									   setStatus(int)设置状态码
+javax.servlet.ServletContext:servlet上下文是引擎服务web应用的接口,Servlet上下文唯一一行射到文件系统的一个目录
+							 一个Servlet可以通过getServletContext()或者getServletConfig().getServletContext()得到上下文对象
+							 通过servlet上下文可以:调用期间保存检索属性,并与其他servlet共享属性
+												   读取web应用文件内容和其他静态资源的功能
+												   互相发送请求的方式
+												   记录错误和信息化消息的功能
+							 getAttribute(String):获取全局可用的属性
+							 setAttribute(String,Object):设置全局属性
+							 getAttributeNames():所有属性名字的枚举
+							 getInitParameter(String):获取全局初始化参数
+							 getInitParameterNames():获取全局初始化参数的名字的枚举
+							 getMajorVersion():返回ServletApi级别最大和最小版本号
+							 getMinorVersion()
+							 getMimeType(String):返回指定文件名的mime类型
+							 getNameDispatcher(String):返回具有指定名字或路径的requestDispatcher, '/'开头
+							 getRealPath(String):返回文件系统的绝对路径
+							 getResource(String):返回指定servlet,或输入流相对应的URL
+							 getResourceAsStream(String path):资源文件
+							 log(String):日志
+							 removeAttribute(String)从servlet上下文中删除指定属性
+javax.servlet.http.HttpSession:HttpSession提供了一个会话ID关键字,一个参与会话的客户端在同一个会话请求中存储和返回它,servlet请求查找适当的会话,使之对当前请求可用							 
+							   getAttribute(String)
+							   setAttreibute(String,Object)
+							   removeAttribute(String)
+							   getAttributeName()
+							   getCreationTime()
+							   getLastAccesedTime()
+							   getId():Servlet引擎设置的一个唯一关键字
+							   getMaxInactiveInterval(Int):如果客户端没哟就动作,设置返回会话存活最大秒数
+							   setMaxInactiveInterval(Int):
+							   invalidate():终止会话,释放其中所有对象
+							   isNew(),如果客户端未加入到会话返回true
+Filter:Request:直接访问目标资源时执行过滤器
+	   Forward:转发访问执行过滤器,RequestDisaptcher.forward(),<jsp:forward>
+	   Include:包含访问执行器.RequestDispatcher.include(),<jsp:include>:forward()方法请求的响应结果由第二个servlet返回,include()方法请求的响应结果包含第一个和第二个servlet的响应内容,响应头被第一个servlet设置,request,response与第一个保持一致
+	   Error:配置了<error-page>,出现了异常,转发到错误页面时户执行过滤器;
+	   
+	   对资源前置过滤:request到达servlet之前,后置过滤:response到达客户端之前,对servlet,jsp,html过滤
+			用户授权filter:根据请求过滤用户的非法请求
+			日志Filter:记录某些特殊的用户请求
+			负责解码的Filter:对非标准编码的请求解码
+			改变xml内容的xsltFilter
+	   init(FilterConfig):初始化
+	   destroy():销毁
+	   doFilter(ServletRequest,ServeltResponse,FilterChain),对每个请求响应进行额外处理
+	   请求分派器ReqeustDispatcher.forward(),include(),在<dispatcher>设置/include/forward/request/error</dispatcher>
+	   filterChain代表此filter所在的过滤器链,当次filter的操作执行完成后,应该讲request发送给下一个filter,此时调用filterChain.doFilter(req,resp)
+
+HttpServletRequestWrapper extends HttpServletRequest:重写getInputStream可以多次获取getInputStream
+HttpServletResponseWrapper extends HttpServletResponse :重写getOutputStream可以多次获取OutputStream
+  
+	   
+Listener:ServletContextListener:contextInitialized(ServletContextEvent):创建servletContext时触发
+								contextDestroyed(ServeltContextEvent):销毁servletContext时触发
+		 ServletContextAttributeListener:attributeAdded(ServletContextAttributeEvent event):添加属性时
+										 attributeReplaced(ServletContextAttributeEvent):替换属性时
+										 attributeRemoved(ServletContextAttributeEvent):移除属性时
+		 HttpSessionListener:sessionCreated(HttpSessionEvent):创建session时
+							 sessionDestroyed(HttpSessionEvent):销毁session时
+		 HttpSessionAttributeListener:attributeAdded(HttpSessionBindingEvent):添加属性时
+									  attributeReplaced(HttpSessionBindingEvent):替换属性时
+									  attributeRemoved(HttpSessionBindingEvent):移除属性时
+		 ServletRequestListener:requestInitialized(ServletRequestEvent):创建request时
+								requestDestroyed(ServletRequestEvent):销毁request时
+		 servletRequestAttributeListener:attributeAdded(ServletRequestAttributeEvent):添加属性时
+										 attributeReplaced(ServletRequestAttributeEvent):替换属性时
+										 attributeRemoved(ServletRequestAttributeEvent):移除属性时
+								 
+jdbc:用于执行sql语句的javaapi:封装了访问数据库的细节
+jndi:统一的命名目录服务:类之间的依赖可以通过配置文件配置,不再显式地写在代码中
+ejb:服务端组件模型,目标是部署分布式应用程序,定义了容器和组件标准架构		
+rmi:远程方法调用,类需要实现序列化,同时定义了java远程方法协议
+javaIDL/corba:common object reqeust broker architecture用于集成现有应用和新的java应用	
+jsp:javaServerPages:一种动态网页技术,简化的servlet设计
+javaServlet:j2ee组件,部署在服务端容器运行,配置web.xml返回html			\
+xml:可扩展标记语言
+JMS:提供面向消息中间件的Api,用于在两个程序或分布式应用中间发送消息,提供了基于存储和转发的应用程序之间的异步消息传送		
+JTA:javaTrasactionApi,用于分布式事务支持,可以访问多个计算机网络资源??
+JTS:组件事务监视器:按照事务性对象的调用方法定义
+JavaMail:支持java开发者处理电子邮件的编程接口
+JAF:扩展java平台,决定任意类型的数据,封装访问他,发现可用的操作. 
+
+servlet:容器:server:包含多个service:
+			 service:包含connector,engine
+			 
+			 
+			 host:多个context:放置在engine容器中
+			 context:包含多个wrapper
+								 
+								 
+								 
+								 
+								 
+								 
+								 
+								 
+								 
+								 
+								 
+								 
+								 
+								 
+								 
+								 
+								 
+								 
+								 
+								 
+								 
+								

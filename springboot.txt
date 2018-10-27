@@ -1,0 +1,57 @@
+@SpringBootApplication=@Configuration @EnableAutoConfiguration @ComponentScan
+
+@EnableAutoConfiguration 上注解:@Import({EnableAutoConfigurationImportSelector.class,
+										 AutoConfigurationPackages.Registrar.class});
+								EnableAutoCOnfigurationImportSelector使用SpringFacotriesLoader.loadFactoryNames方法扫描META-INF/spring.factories文件中
+								的jar文件,而spring-boot-autoconfigure.jar内有一个spring-facotries文件,
+								其中有org.springframework.boot.autoconfigure.EnableAutoConfiguration,
+																			.CacheAutoConfiguration
+																			.data.elasticsearch.ElasticsearchRepositoriesAutoConfiguration
+																			.jms.JmsAutoConfiguration
+																			.data.web.SpringDataWebAutoConfiguration
+								打开上述配置文件一般都有如下注解@ConditionalOnBean 容器有指定bean
+																			OnClass 类路径下有指定类
+																			OnMissingBean 没有bean
+																			OnMissingClass 没有类
+																			OnWebApplication 当前项目是web工程
+																			OnNotWepApplication 当前项目不是web工程
+																			OnJava	指定java版本
+																			OnJndi  jndi存在的条件下查找指定的位置
+																			OnExpression spel表达式判断
+																			OnProperty  指定属性是否有指定的值
+																			OnResource  类路径是否有指定的值
+																			OnSingleCandidate bean在容器中是否只有一个或者有一个首选bean
+常规属性配置:application.properties: 自定义key-value,@Value("${key}")注入
+类型安全的配置:@Component@ConfigurationProperties(prefix="author",location="")public class AuthorSettings{private String name,private Long age},其他的bean可以直接使用@Autowired,Author.name
+日志配置:logging.file=D:/ logging.level.org.springframework.web=DEBUG
+profile配置:application-dev.properties/application-prod.properties,application.properties:spring.profiles.active=prod
+自动配置运行原理:自动配置的源码:spring-boot-autoconfiogure-1.3.0.x.jar:batch,cache,redis,dao,jmx,jms,freemarker,elasticsearch,security
+				 运行时增加--debug java -jar xx.jar --debug 查看启用未启用的自动配置
+				 
+				 springboot没有自动配置的类怎么配置?:@ConfugurationProperties(prefix="spring.http.encoding")public class HttpPropertis 将注入到条件配置的bean
+													 @Configuration@EnableConfigurationProperties(httpPropertis.class/此处已经注入不需要@Autowired)@OnClass(xxx.class)@OnProperty(prefix="" value="enabled",matchIfMissing=true)
+当某个类存在的时候自动配置bean,并且可以在Application.properties中配置属性:配置属性bean与application.properties的条目对应,注入配置类,条件华创建,类路径有类,属性文件中有前缀开始的条目,容器中没有bean
+																		  在src/main/resources/新建META-INF/spring.factories文件,将配置类注册
+																		  org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+																		  com.xx.xxConfiguration
+
+web开发的核心内容是内嵌servlet容器和springmvc:spring-boot-starter-web支持web开发,嵌入的Tomcat,SpringMvc依赖,相关自动配置存储在spring-boot-autoconfigre.jar中的org.springframework.boot.autoconfigure.web下
+											  EmbeddedServletContainerAutoConfiguration.class		
+											  DispatcherServletAutoConfiguration.class
+											  HttpEncodingAutoConfiguraion.class
+											  ServerProperties.class
+											  WebMvcAutoConfiguration.class
+	webMvcAutoCOnfiguration提供了如下配置:ContentNegotiatingViewResolver,InternalResouceViewResolver,
+		formatter,Converter自定义messageConverter @Beanpulbic HttpMessageConverters customConverters(){HttpMessageCOnverter.add(new Converter)}
+																		  
+	静态首页的支持 /META-INF/resources/index.html
+				   /resources/index.html
+				   /static/index.html
+				   /public/index.html
+																		  
+																		  
+																		  
+																		  
+																		  
+																		  
+																		  

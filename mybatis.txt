@@ -1,0 +1,6 @@
+<trim prefix="" prefixoverride="AND|OR">
+	<if test="name !=null and name.length()>0"> AND name=#{name}</if>
+</trim>
+prefix/suffixoverride忽略第一个或最后一个, AND关键字等
+<sql id=""></sql>
+<include refid=""/>
