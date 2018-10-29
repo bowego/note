@@ -1,0 +1,16 @@
+tomcat支持websocket:
+websocket:不同于http的一种协议,为了实现tcp式的服务器端可以向客户端浏览器发送消息
+
+@ServerEndpoint("/websockt"):描述一个类使它成为一个websocket服务单元,如同一个servlet,可以接受web浏览器的消息也可以向web浏览器发送消息
+							 服务器为每一个浏览器端启动一个线程即WebSocket,这个线程只要不手动中断,就会一直存在
+@OnOpen:作用于方法上,当浏览器服务端连接成功时回调此方法,此方法可以接受获得浏览器的Session
+@OnMessage:作用于方法,当浏览器向服务端发送方法时回调此方法,此方法可以接受浏览器的Message和Session
+@OnClose:连接中断的时候回调此方法.
+
+Session.getBasicRemote().sendText("Message");向相应的客户端发送消息
+
+只要WebSocket服务线程一直存在,通过Session就可以向客户端发送消息
+
+js: if('WebSocket' in window) //判断浏览器是否支持WebSocket
+	new WebSocket("ws://localhost:8080/websocket"); //与服务端建立连接
+	webSocket.onopen()/onmessage()/onclose()/onerror/onbeforeunload

@@ -1,0 +1,2 @@
+"runtimeExecutable": "C:/Program Files/nodejs/node.exe"
+cmd->npm install -g node-inspector-> --inspect-brk=11358 bad option
