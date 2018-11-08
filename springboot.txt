@@ -48,6 +48,69 @@ web开发的核心内容是内嵌servlet容器和springmvc:spring-boot-starter-w
 				   /resources/index.html
 				   /static/index.html
 				   /public/index.html
+				   
+				   
+spring 基础: bean的scope Singleton:一个spring容器只有一个bean实例
+						 Prototype:每次调用创建一个新的实例
+						 session:web项目中,每个session提供一个新实例
+						 request:web项目中每一个请求提供一个新的实例
+						 GlobalSession:只在potal应用中有用,给每一个GlobalSession提供一个新的实例
+						 @StepScope:批处理之中会用到
+			 springExpressionLanguage:注入普通字符
+									  表达式计算结果
+									  其他bean的属性
+									  操作系统属性
+									  网址内容
+									  文件内容
+									  属性文件
+			 Aware:BeanNameAware:获得容器中bean的名字
+				   BeanFactoryAware:获得当前的BeanFactory,可以调用容器的服务
+				   ApplicationContextAware:获得当前的APplicaitonCOntext可以调用容器的服务
+				   MessageSourceAware:获得messageSource可以获得文本信息
+				   ApplicationEventPublisherAware:应用实践发布器,可以发布实践
+				   RsourceLoaderAware:获得资源加载器可以加载外部文件
+			 TaskExecutor:实现多线程并发编程
+						  实际开发任务线程的任务多是异步的
+						  配置一个线程池执行器,将方法用注解注册为异步任务,执行这些方法的时候,每调用一次方法都相当于开启了一个线程
+			 定时任务:在配置类上@EnableScheduling开启一个定时任务
+					  在方法上用@Scheduled声明这是一个计划任务
+			 条件注解:@Conditional(implements Condition.class):条件化创建一个bean
+					  根据Condition接口中的matches方法决定是否创建bean
+			 @Enable*注解原理:@EnableASpectJAutoProxy
+							  @EnableAsync
+							  @EnableScheduling
+							  @EnableWebMvc
+							  @EnableConfigurationProperties
+							  @EnableJpaRepositories
+							  @EnableTransactionMangement
+							  @EnableCaching   ->以上所有的注解都有一个import注解
+							  1:直接导入配置类 @Import(SchedulingConfiguraion.class) EnableScheduling
+							  2:依据条件选择配置类:@Import(AsyncConfigurationSelector.class) EnableAsync
+									实现ImportSelector接口,实现方法selectImports(parameter);
+							  3:动态注册Bean:@Import(AspectJAutoProxyRegister.class) EnableASpectJAutoProxy
+									实现了BeanDefinationRegistry接口,实现方法registerBeanDefinition
+springMVC:三层架构:presentation tier+Application tier+Data tier
+				   Model:数据模型
+				   View:视图freemarker jsp thymelear tile velocity 
+				   Controller:@Controller
+		  2.5 web.xml <servler>dispatcheServlet
+		  3.0 WebApplicationInitializer接口
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+				   
+									  
 																		  
 																		  
 																		  
