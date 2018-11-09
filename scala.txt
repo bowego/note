@@ -1,1 +1,32 @@
+traits
+object
+class
+
+scala.collection.GenIterable
 IndexedSeq 循环
+for(i <- arr) yield
+定长数组val arr=new Array[Int](5) ;arr(2)
+非定长数组 val arr=new ArrayBuffer[Int]() ; Array(1,2,3) Array[Int](2)
+
+for(i<- 0 until 10) 不包含10
+(0 until 10).reverse
+
+arr.filter(x=>x%2==0).map(x->x*10)
+arr.filter(_%2==0).map(_*10)
+arr.sum,min,max
+
+映射
+Map(key->value)
+Map((key,value))
+map(key)
+map.getOrElse(key,default)
+
+
+map+=(key->value)
+
+元组
+tuple=(a,b,..)
+tuple._1 数组索引从1开始
+Array(tuple,tuple).toMap
+
+Array.zip(ages).zip(addrs)
