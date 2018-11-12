@@ -48,10 +48,38 @@ web开发的核心内容是内嵌servlet容器和springmvc:spring-boot-starter-w
 				   /resources/index.html
 				   /static/index.html
 				   /public/index.html
+				   
+spring-boot-aop:配置文件开启支持spring.aop.auto=true
+			    编写切面类:@Component
+						 @Aspect
+				编写切点:注解类型切点,普通切点		
+				@Order(1) 前置注解i值越小优先级越高,after,after-returning i值越大优先级越高
+spring-boot-validation:自定义异常封装类 Result:code message
+					   注解实体类的属性 @Size(min,max)String
+										@NotEmpty(message=)//自定义异常信息
+										@Email
+										@NotNull
+										@DateTimeFormat(pattern="MM/dd/yyyy")
+										@Past
+						定义异常捕获类:@RestControllerAdvice BindExceptionHandler{@ExceptionHandler(BindException.class)handleBindException}
+						使用验证:method(@Validated Entity entity){}				
 																		  
-																		  
-																		  
-																		  
-																		  
-																		  
-																		  
+						自定义验证注解 @Constraint(validatedBy=PhoneValidationValidator.class)
+									   public @inteface PhoneValidation{}
+									   public PhoneValidationValidator implements ConstraintValidator<PhoneValidation,String>{
+										isValid(){
+										}
+									   }								  
+spring-boot-starter-test:@RunWith(SpringRunner.class)
+							@SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+							@EnableAutoConfiguration
+							public class BBTestAA {
+								@Autowired
+								private TestRestTemplate testRestTemplate;
+
+								//Application.class 为SpringBoot的启动入口类,每个SpringBoot项目大家都会配置
+							}
+spring-boot-starter-devtools: 配置文件开启spring.devtools.restart.enabled:true		
+							  重启目录:spring.devtools.restart.additional-paths:src/main/java
+							  排除一些文件修改spring.devtools.restart.exclude:WEB-INF/**
+							  idea->build.execution->compiler->build project automatically										  
