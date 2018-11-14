@@ -1,0 +1,13 @@
+viriable: $x=5; $z=$x; 
+		 case Sensitive $y!=$Y
+		 不必声明变量的数据类型,:弱类型语言
+		 变量作用域:global:所有函数外部定义的变量,全局作用域,-->不能再函数中直接访问需要使用global关键字{global $x; echo $x}
+					static: 默认函数中的变量函数完结后会删除,-->可以声明为static
+					parameter:函数的参数与列表中声明,
+					local:
+IO:echo:输出一个或多个字符串,无返回值,比print快,可加括号或不加:echo "hello","zhofngguo";
+   print:输出一个字符串,返回值总为1,可以加括号或不加
+   EOF:heredoc:在命令行后定义<<<EOF
+								中国""'\
+							 EOF
+							 自动转义,双引号不解释变量和转义字符,带单引号解释内嵌的变量和转义字符
