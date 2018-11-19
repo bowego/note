@@ -1,3 +1,67 @@
+php_particular:创建一个类:class a{}; $a='a'; $obj=new $a;		//一个变量获取元素的名字,通过这个变量来使用元素;
+			   调用一个函数:function b(){}; $b='b'; $b();
+			   可变参数:function sum(int ...$ints);
+
+php7新特性:常量:php5.6仅能通过const定义常量数组,php7可以使用define定义常量数组define('sites',['google','hello']);
+		   变量类型声明:强制模式 declare(strict_types=1)
+						严格模式:declare(strict_types=1),可以使用的参数类型有:int,float,bool,string,interfaces,array,callable
+								 function sum(int ...$ints);
+								 返回类型声明:function returnIntValue(int $value):int
+		   NULL合并运算符:$a??"hello":如果变量值存在且不为null返回值,否则返回"hello";
+		   组合运算符,太空船运算符:<=>:比较左右两端顺序返回1,0,-1
+		   匿名类:interface Logger{}; new class implements Logger{};
+		   闭包:Closure::call():php7之前:将函数绑定到类上,为类添加新方法,  function->bindTo(new classA,"classA")();
+								php7之后:function.call(new ClassA);
+		   序列化反序列化:unserialize(serialize(new A))->getX();
+		   伪随机数生成器:random_bytes(int $length):$length:伪随机字节的长度
+						  random_int(int $min,int $max):min:最小值,max最大值
+		   use语句:使用类:use some\namespace\ClassA
+				   使用函数:use function some\namespace\fun_a;
+				   使用常数:use const some\consA;
+				   使用多个:use some\name\{ClassA,ClassB,ClassC as C}
+		   可传参数的session_start(); 'cache_limiter'=>'private',
+									  'read_and_close'=>true; session读取完后立即关闭
+namespace:用户编写的代码与php内部的类/函数/常量或者与第三方的类函数/常量名字冲突
+		  每个元素都有唯一的一个表示,可以为他们起剪短的别名
+		  在php文件总定义命名空间:<?php namspace MyProject;
+								 :统一个文件中可以定义不同的命名空间建议namespace myProject{//内容}namespace annotherProject{//其他的内容}
+								 :声明命名空间之前唯一合法的代码是定义源文件编码方式的declare语句
+								 :自命名空间:namespace MyProject\Sub\Level;
+		  命名空间的使用:非限定名称$a=new foo(); foo:staticmethod();默认当前命名空间或全局命名空间
+						 限定名称:当前命名空间下加限定命名空间名的函数或常量
+						 完全限定名:从\路径开始   include 'file1.php';//引用其他的php文件
+						 访问全局类,函数,常量:\strlen();访问函数没有找到会到上一级的命名空间中去找,直到全局命名空间,类名称只解析到当前的命名空间
+		  namespace:显式的访问当前命名空间或命名空间中的元素,
+					use blah\blah as mine; // see "Using namespaces: importing/aliasing"
+					blah\mine(); // calls function blah\blah\mine()
+					namespace\blah\mine(); // calls function MyProject\blah\mine()
+		  __NAMESPACE__:当前的命名空间
+		  使用命名空间:别名/导入:use My\Full\Classname as annother; //别名
+								 use My\Full\Nsname; //导入
+包含文件:在服务器执行php文件之前在该文件中插入一个文件的内容,include和require语句用哦关于在执行流中插入其他文件中的代码
+		 require:处理错误生成一个致命错误(E_COMPILE_ERROR) require 'filename';
+		 include:处理错误生成一个警告(E_WARNING)		   include 'filename';
+		 
+Object-oriented:类:class C{var $var1;function myfunc(){}}
+				   $c=new C;
+				   $c->myfuc();  $c->var1;
+				构造函数:void __construct([mixed $args[,$..]]);new C(args);
+				析构函数:void __destruct(void)
+				继承: class Child extends Site{}
+				方法重写:覆盖Override
+				访问控制:public:公有的类成员可以在任何地方被访问;
+						 protected:受保护的类成员则可以被器吱声机器子类父类访问
+						 private:私有的类成员只能被其定义所在的类访问; var 定义默认是公有;
+			    接口:interface 内部的方法都是空的, implements实现接口必须实现里面的所有方法
+				常量: const constant="常量";用一个变量动态调用类,变量值不能为关键字self,parent,static
+					  $iter =new Class();
+					  $iter::constant;
+				抽象类:子类必须实现父类中所有抽象方法,访问控制必须和父类一样或者更宽松;
+					   abstract protected function getValue();
+					   子类方法可以与父类方法的参数不同
+				static:不能通过一个类已经实例化的对象来访问,可以通过类中的静态方法访问静态变量,$this关键字在静态方法中不能使用
+				final:方法声明为final不能被覆盖,类声明为final不能被继承
+				父类构造方法:子类中的构造方法不会自动调用父类的构造方法,要执行父类构造方法,需要在子类构造方法中调用parent::__construct();
 viriable: $x=5; $z=$x; 
 		 case Sensitive $y!=$Y
 		 不必声明变量的数据类型,:弱类型语言
@@ -5,9 +69,184 @@ viriable: $x=5; $z=$x;
 					static: 默认函数中的变量函数完结后会删除,-->可以声明为static
 					parameter:函数的参数与列表中声明,
 					local:
+		 数据类型:String:'' 或"" 之间的任意文本
+				  Integer:十进制,八进制0XX,十六进制,0xXX
+				  Float:小数形式:10.23,指数形式:2.4e3
+				  Boolean:true或false;
+				  Array:array("volvo","bmw","toyota")
+						数值数组:带有数字id,关联数组:带有指定键,多维数组:包含一个或多个数组
+						$arr[0]...
+						$arr[1]="volvo":人工分配id,$arr['hello']="volvo"
+						多维数组:array(array('a','b','c'),array('a','b','c'));
+				  Object:class关键字声明,包含属性和方法:
+						 class Car{
+							var $color;//变量/属性
+							function __construct($color="green"){//构造方法
+								$this->color=$color;//自身的引用
+							}
+							fuction get_color(){//普通方法
+								return $this->color;
+							}
+						 }//$this是指向当前对象指针
+				  Null:null
+				  Date(string $format[,int $timestamp]); date("Y/m/d");
+		 超级全局变量:系统自带的变量,在一个脚本中的全部作用域中可用
+					  $GLOBALS:<?php	//超级全局变量组
+								$x=12;$y=25;function addtion(){$GLOBALS['z']=$GLOBALS['x']+$GLOBALS['Y'];}addtion();echo $z;
+					  $_SERVER:是一个包含了诸如头信息(header)、路径(path)、以及脚本位置(script locations)等等信息的数组,$_SERVER['']:
+							   PHP_SELF,SERVER_NAME,HTTP_HOST,HTTP_REFERER,HTTP_USER_AGENT,SCRIPT_NAME
+					  $_REQUEST:请求变量,["String"]
+					  $_POST:post参数
+					  $_GET:get参数
+					  $_FILES:
+					  $_ENV:
+					  $_COOKIE:可以取回cookie的值 echo $_COOKIE["user"],print_r($_COOKIE):查看所有的cookie
+					  $_SESSION:
+const:常量是全局的,可以在定义在方法外部也可已在函数内部访问
+	  常量一旦定义就不能改变
+	  define(String $name, mixed $value[,bool $case_insensitive=false]);
+	  魔术常量:随着魔术常量在代码中的位置的改变而改变:不区分大小写
+			   php向它运行的脚本提供了大量的预定义常量,但是很多常量是由不同的扩展库定义的,只有加载了扩展库是才会出现,或者编译时,或者动态加载
+			   __LINE__:文件中的当前行号 echo "this is "._LINE_."行";
+			   __FILE__:脚本文件的完整路径和文件名
+			   __DIR__:脚本文件的路径
+			   __FUNCTION__:函数名称
+			   __CLASS__:返回类被定义的时候的名字
+			   __TRAIT__:trait sayWorld{
+							public function sayHello(){}
+						 }
+						 子类继承基类覆盖父类方法,class child{use sayWorld;}//添加了trait中的方法,并且子类方法会覆盖trait方法,trait方法会覆盖父类方法
+			   __METHOD__:类的方法名
+			   __NAMESPACE__:当前命名空间的名称,编译时定义的php5.3.0新增<?php namespace MyProject;  echo __NAMESPACE__;
+			   
+operator:+ - * / % -取反 .并置
+		 += -= *= /= %= -= .=
+		 == ===绝对等于类型相同值相同 != <> > < >= <=
+		 and or xor && || !
+		 << >> & ^ |
+		 instanceof
+		 ++ -- ~位求反运算符 (int)(float)(string)(array)(object)(bool)@	@$cache[$key];当将其放置在一个 PHP 表达式之前，该表达式可能产生的任何错误信息都被忽略掉
+		 数组运算符:x+y x==y有相同的键值对返回true x===y有相同的键值对,顺序相同,类型相同返回true != <> !==不恒等
+		 expr?expr2:expr3;
+		 php7: $x['hello']??'nobody':存在返回不存在返回默认
+			   组合比较符 <=> 整形 L<R=-1 L>R=1 L=R=1,浮点型,字符串规则类似
+		 PHP_EOL是一个换行符,兼容更大平台
+control_flow:	if(){}  if(){}else{}  if(){}elseif(){}else{}	
+				switch(n){case label1:break;case label2:break;default;}
+				foreach($arr as $value)echo $value;
+				for($x=0;$x<100;$x++){}
+				while(){}
+				do{}while();
+function:PHP提供了超过1000个内建函数:var_dump($x):返回数据类型和值
+									 echo: 输出String+,字符串连接echo $txt1 . " " . $txt2;
+									 print: slow than echo
+									 print_r:输出简单类型值,格式化输出复杂类型数据,  会将数组指针指向最后边
+									 reset():让数组的指针回到开始处
+									 var_dump():返回表达式的类型和格式化输出复杂类型数据
+									 define():定义一个常量
+									 isset():检查是否有一个变量已经设置
+									 unset():销毁一个变量,内存单元中的数据
+									 intdiv():第一个参数除以第二个参数取整
+									 die():输出一条信息,退出当前脚本;
+									 parse_ini_file(realpath('config.ini')):解析ini文件输出数组;
+									 String->:strlen():字符串的长度
+											  strpos($s,"world"):匹配的第一个字符串的位置,w的索引,从0开始
+											  explode(".",$string):将字符串以"."分割成为一个字符串数组
+											  str_raplace("a","B",$str):字符传中"B",替换成"a";
+											  phpString参考手册:http://www.runoob.com/php/php-ref-string.html
+									 array->count():数组长度
+											sort():升序排列
+											resort():降序排列
+											asort():根据关联数组的值升序
+											ksort():根据关联数组的键升序排列
+											arsort():根据关联值降序 krsort():根据关联键降序
+											end():将数组指针指向最后一个元素
+											in_array("a",arr):检查数组中是否存在特定值
+											phpArray参考手册:http://www.runoob.com/php/php-ref-array.html
+									 cookie->setcookie():设置cookie
+									 time->time():当前时间
+		 function functionName($fname,$production){//函数签名,函数参数
+			echo $fname.$production		//使用函数参数
+			return ;//返回值
+		 }
+
 IO:echo:输出一个或多个字符串,无返回值,比print快,可加括号或不加:echo "hello","zhofngguo";
    print:输出一个字符串,返回值总为1,可以加括号或不加
    EOF:heredoc:在命令行后定义<<<EOF
 								中国""'\
 							 EOF
 							 自动转义,双引号不解释变量和转义字符,带单引号解释内嵌的变量和转义字符
+  echo sprintf("%d",$temp)."\n"; 格式化输出
+  文件处理:fopen(path,mode);r只读,r+读写在文件开头,w只写清空文件,不存在创建,w+读写清空文件,不存在创建,a追加,文件末尾写文件不存在创建,a+读写,文件末尾追加,x只写,x+读写文件不存在返回错误
+		   fclose($file):关闭文件
+		   feof($file):到达文件末尾返回true
+		   egets($file):调用一次读取一行
+		   fgetc($file):调用一次读取一个字符
+		   file_exists("path/".$filename)
+		   realpath():文件系统中的绝对位置
+		   filesystem手册:http://www.runoob.com/php/php-ref-filesystem.html
+  文件上传:html表单: <form enctype="multipart/form-data"><input type="file",name="file">
+           服务端php:$_FILES["file"]["error"]>0:上传文件有错误
+					 $_FILES["file"]["name"]:文件名,type:文件类型,size:文件大小,tmp_name:文件临时存储位置
+		   上传限制:if(type..,size..,extension..){//something}
+		   保存文件:if(!file_exists("upload/".$filename)){move_upload_file($_FILES["file"]["tmp_name"],"upload/".$_FILES["file"]["name"])}
+error_handle:错误检测方法:简单die()语句
+			 自定义错误和错误处理器:error_function(error_level,error_message,error_file,error_line,error_context)
+									错误级别:E_WARNING:运行时非致命,E_NOTICE:运行时通知
+											 E_USER_ERROR:致命用户错误,E_USER_WARNING:非致命用户错误,E_USER_NOTICE:用户通知
+											 E_RECOVERABLE_ERROR:可捕获的致命错误,E_ALL:所有错误
+									function customError($errno,$errstr){//something}简单错误处理函数
+									set_error_handler("customError"):设置错误处理函数,能够处理所有的错误,还可指定错误级别,
+									trigger_error("haha"):代码中触发错误
+			 错误报告:
+exception_handle:发生错误时改变脚本的正常流程
+				 try{throw new Exception();}catch(Exception $e){}
+				 set_exception_handler();设置顶层异常处理器,可以处理所有未捕获异常
+php_filter:用于验证过滤来自非安全来源的数据,比如用户的输入		
+		   filter_var():通过一个指定的过滤器过滤单一变量 filter_var($int,FILTER_VALIDATE_INT);$int_options=array("options"=>array("min_range"=>0,"max_range"=>256));filter_var($int,FILTER_VALIDATE_INT,$int_options);
+		   filter_var_array():多个过滤器过滤多个变量
+		   filter_input():一个过滤器过滤一个输入变量
+		   filter_input_array():多个过滤器对多个输入变量过滤
+		   filter_has_var(INPUT_GET,"eamil"):是否有变量, INPUT_GET中是否有email参数
+		   filter_input(INPUT_GET, "email", FILTER_VALIDATE_EMAIL):参数是否符合email格式
+		   验证规则:Validating:验证用户输入:严格格式,成功返回预期类型否则返回false,		FILTER_VALIDATE_EMAIL  FILTER_VALIDATE_INT
+					Sanitizing:允许或禁止字符串中指定字符,无数据格式规则,始终返回字符串	FILTER_SANITIZE_STRING
+				    $func_filter($arr,$key,$filters):上述验证方法,$arr被验证的数组,$key数组中的值,$filters验证的规则
+													 $filters=array(//被验证的数据应该与$filters有一样的格式
+														"name"=>array{"filter"=>FILTER_SANITIZE_STRING},//应该有name属性,name符合Filter_santize_string
+													 );
+					自定义filter规则:function convertSpace($str){}
+									 $filters=array("options"=>"converSpace")
+		   过滤器的使用:filter_var($int,FILTER_VALIDATE_INT,array("options"=>array("min_range"=>0,"max_range"=>123)));验证数字范围
+						filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6):验证ipv6地址
+						filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_QUERY_REQUIRED):是否包含QUERY_STRING,
+						filter_var($str, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH):移除ascii值大于127的字符,
+						过滤器参考手册:http://www.runoob.com/php/php-ref-filter.html
+php_json:编码解码JSON对象
+		 json_encode():对变量编码
+		 json_decode():对变量解码成php变量
+		 json_last_error():返回最后发生的错误
+web:表单数据  $val=_GET['a']; if(isset($val))echo $val;//_POST['a']
+	将表单的提交地址设置为:htmlspecialchars($_SERVER['PHP_SELF']);//当前脚本文件地址,htmlspecialchars会将符号转义
+Cookie:setcookie(name,value,expire,path,domain):设置cookie,expire=time()+秒
+	   $_COOKIE["user"]:获取cookie
+	   setcookie(name,"",time()-3600):删除cookie
+Session:session_start();开启一个session,浏览器第一次浏览session服务器不知道身份,服务器创建一个session保存用户身份,和一个sesssionid返给用户,用户下一次用sessionId,服务器可以知道session中保存的用户的身份
+		$_SESSION['views']:获取一个session中的值
+		unset($_SESSION['views']):销毁session
+Mail:简单邮件:允许php脚本中直接发送电子邮件:mail(to,subject,message,headers,parameters);
+mysql:创建连接:面向对象:new mysqli($servername,$username,$password)->connect_error;:判断是否连接成功
+			   面向过程:mysqli_connect($servername,$username,$password); if($con):判断连接是否存在/成功
+	  关闭连接:过程mysqli_close($con);对象:mysqli($con);
+	  创建数据库,表:$conn->query($sql);
+	  插入多条数据:$conn->multiquery($sql);
+	  预处理语句:$stmt=mysqli_stmt_init($conn);
+				 mysqli_stmt_prepare($stmt,$sql);
+				 mysqli_stmt_bind_param($stmt,'sss',$A,$B,$C); $A=?... mysqli_stmt_execute($stmt);
+	  查询:$result=$conn.query($sql); $result->num_rows:结果条数 while($result->num_rows>0){echo $row['id']}
+	       面向过程:mysqli_fetch_array(mysqli_query(mysqli_connect(),$sql));
+		   sql 中添加where子句
+		   sql 中添加order by子句
+		   
+		   
+		   

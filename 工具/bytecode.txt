@@ -1,0 +1,19 @@
+ClassPool pool = ClassPool.getDefault();
+CtClass stuClass = pool.makeClass("com.shanpai.javaassist.Student");
+//pool.get("classname")==Class.forName("classname");
+CtField idField = new CtField(CtClass.longType, "id", stuClass);
+stuClass.addField(idField);
+
+CtMethod getMethod = CtNewMethod.make("public long getId(){return this.id;}", stuClass);
+CtMethod setMethod = CtNewMethod.make("public void setId(long id){this.id=id;}",stuClass);
+stuClass.addMethod(getMethod);
+stuClass.addMethod(setMethod);
+
+Class clazz = stuClass.toClass();
+
+Object o = clazz.newInstance();
+clazz.getDeclaredMethod("setId",int.class ).invoke(o,1314L);
+System.out.println(clazz.getDeclaredMethod("getId").invoke(o));
+
+
+
