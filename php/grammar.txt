@@ -94,7 +94,7 @@ viriable: $x=5; $z=$x;
 					  $GLOBALS:<?php	//超级全局变量组
 								$x=12;$y=25;function addtion(){$GLOBALS['z']=$GLOBALS['x']+$GLOBALS['Y'];}addtion();echo $z;
 					  $_SERVER:是一个包含了诸如头信息(header)、路径(path)、以及脚本位置(script locations)等等信息的数组,$_SERVER['']:
-							   PHP_SELF,SERVER_NAME,HTTP_HOST,HTTP_REFERER,HTTP_USER_AGENT,SCRIPT_NAME
+							   PHP_SELF,SERVER_NAME,HTTP_HOST,HTTP_REFERER,HTTP_USER_AGENT,SCRIPT_NAME		[argv][0]:脚本的名称
 					  $_REQUEST:请求变量,["String"]
 					  $_POST:post参数
 					  $_GET:get参数
@@ -153,6 +153,7 @@ function:PHP提供了超过1000个内建函数:var_dump($x):返回数据类型�
 											  strpos($s,"world"):匹配的第一个字符串的位置,w的索引,从0开始
 											  explode(".",$string):将字符串以"."分割成为一个字符串数组
 											  str_raplace("a","B",$str):字符传中"B",替换成"a";
+											  parse_str("hello",$str):把字符串解析到变量
 											  phpString参考手册:http://www.runoob.com/php/php-ref-string.html
 									 array->count():数组长度
 											sort():升序排列
@@ -162,9 +163,12 @@ function:PHP提供了超过1000个内建函数:var_dump($x):返回数据类型�
 											arsort():根据关联值降序 krsort():根据关联键降序
 											end():将数组指针指向最后一个元素
 											in_array("a",arr):检查数组中是否存在特定值
+											array_keys($arr):返回数组的keys
+											array_merge($arr1,$arr2):将多个数组合并成一个数组
 											phpArray参考手册:http://www.runoob.com/php/php-ref-array.html
 									 cookie->setcookie():设置cookie
 									 time->time():当前时间
+									 class->spl_autoload_register(function,throw=true,prepend=true):没有include类文件的时候初始化一个类,如果当前没有这个类会调用函数集合依次从预定义的地方加载类文件
 		 function functionName($fname,$production){//函数签名,函数参数
 			echo $fname.$production		//使用函数参数
 			return ;//返回值
@@ -184,6 +188,7 @@ IO:echo:输出一个或多个字符串,无返回值,比print快,可加括号或�
 		   fgetc($file):调用一次读取一个字符
 		   file_exists("path/".$filename)
 		   realpath():文件系统中的绝对位置
+		   file_get_contents($file):将文件读取为一个字符串 file_get_contents("php://input"):将http请求读取为一个字符串
 		   filesystem手册:http://www.runoob.com/php/php-ref-filesystem.html
   文件上传:html表单: <form enctype="multipart/form-data"><input type="file",name="file">
            服务端php:$_FILES["file"]["error"]>0:上传文件有错误

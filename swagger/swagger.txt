@@ -1,0 +1,60 @@
+swagger:生成,描述,调用,可视化RESTful风格的web服务,文件的方法,参数和模型紧密继承到服务端的代码,允许API来始终保持同步
+	    接口的文档在线自动刚生成
+		功能测试
+		swagger-tools:提供各种与swagger进行集成和交互的工具,模式校验,文档版本转换
+		swagger-core:java/scala的swagger实现,与JAX-RS(jersey,Resteasy,CXF),servlet和play框架进行集成
+		swagger-js:js的swagger实现
+		swagger-node-express:node.js的Express web的应用框架
+		swagger-ui:一个无依赖的HTML,JS,CSS的集合为swagger兼容的api动态生成文档
+		swagger-codegen:模板引擎,通过分析用户的swagger资源声明以各种语言生成客户端代码
+		maven:io.springfox:springfox-swagger2:2.2---io.springfox:springfox-swagger-ui:2.2.2
+
+spring::@Configuration @EnableSwagger2
+		
+	 @Bean
+    public Docket createRestApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo())
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.swaggerTest.controller"))
+                .paths(PathSelectors.any())
+                .build();
+    }
+    
+    /**
+     * 创建该API的基本信息（这些基本信息会展现在文档页面中）
+     * 访问地址：http://项目实际地址/swagger-ui.html
+     * @return
+     */
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title("Spring Boot中使用Swagger2构建RESTful APIs")
+                .description("更多请关注http://www.baidu.com")
+                .termsOfServiceUrl("http://www.baidu.com")
+                .contact("sunf")
+                .version("1.0")
+                .build();
+    }
+
+@Api:类上,说明类的作用 value
+@ApiOperation:方法说明:value notes
+
+@ApiImplicitParams:方法上的一组参数说明
+@ApiImplicitParam:方法的入参说明
+	paramType:header,@RequestHeader
+			  query:@RequestParam
+			  path:@PathVariable
+			  body:
+			  form:
+    name:参数名
+	dataType:参数类型
+	required:参数是否必传
+	value:参数的意思
+	defaultValue:参数的默认值
+@ApiResponse:用于一组响应
+	code:数字
+	message:信息
+	response:抛出异常的类
+@ApiModel:一个Model的信息value 
+@ApiModelProperty:描述一个model的属性 value required
+	

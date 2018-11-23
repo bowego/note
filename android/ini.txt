@@ -1,0 +1,69 @@
+Activity:extends ApplicationContext
+		:private static final String TAG="ActivityDemo";
+		:的生命周期:onCreate():创建,初始化  superOnCreate(Bundle);setContentView(R.layout.main);
+											findViewById(R.id.editText);
+					onStart():开启
+					onResume():追备好运行,下一步就是运行
+					onPause():暂停, 后继:onResume(),ProcessKilled    此时保存应用程序的状态
+					onStop():运行终止,开启应用需要重新onCreate(),或者OnRestart()
+					onDestroy():Activity is shutdown
+					onRestart():准备好重启,下一步可以onStart()		 此时可以恢复应用程序的状态
+		:Back键程序结束,onPause()->onStop()->onDestroy()
+		:Home键,onPause()->onStop()但是程序没有销毁
+UI布局:javaswing布局
+	   ViewGroup:布局方式的类,上述布局继承自此类
+	   View:所有的布局,展示相关的类都继承自此类,包括ViewGroup
+	   LinearLayout:线性布局:RadioGroup,TabWidget,TableLayout,TableRow,ZoomControls的父类
+					android:rientation="vertical":使元素垂直或水平排成一行,每一行列只有一个元素
+					android:layout_weight="1":排列元素之间的行列距离
+	   RelativeLayout:相对布局,相对于其他元素或父元素的位置(通过ID指定),最有上下对齐
+					  layout_below="@id/.." layout_alignTop layout_toRightOf
+					  属性值为true,false
+					  android:layout_centerHrizontal 水平居中
+
+						android:layout_centerVertical 垂直居中
+
+						android:layout_centerInparent 相对于父元素完全居中
+
+						android:layout_alignParentBottom 贴紧父元素的下边缘
+
+						android:layout_alignParentLeft 贴紧父元素的左边缘
+
+						android:layout_alignParentRight 贴紧父元素的右边缘
+
+						android:layout_alignParentTop 贴紧父元素的上边缘
+
+						android:layout_alignWithParentIfMissing 如果对应的兄弟元素找不到的话 就以父元素做参照物
+						属性值必须为id的引用
+						android:layout_below 在某元素的下方
+
+						android:layout_above 在某元素的的上方
+
+						android:layout_toLeftOf 在某元素的左边
+
+						android:layout_toRightOf 在某元素的右边
+
+						android:layout_alignTop 本元素的上边缘和某元素的的上边缘对齐
+
+						android:layout_alignLeft 本元素的左边缘和某元素的的左边缘对齐
+
+						android:layout_alignBottom 本元素的下边缘和某元素的的下边缘对齐
+
+						android:layout_alignRight 本元素的右边缘和某元素的的右边缘对齐
+						具体像素值 20dip 40px
+						android:layout_marginBottom 离某元素底边缘的距离
+
+						android:layout_marginLeft 离某元素左边缘的距离 离某元素右边缘的距离
+
+						android:layout_marginRight
+
+						android:layout_marginTop 离某元素上边缘的距离
+布局文件main.xml
+<linearLayout>
+	<TextView />
+	<EditText android:id="@+id/et_phone" layout_width="fill_parent" layout_height="wrap_content" hints="@string/tip_content" minLines="3"/>
+</linearLayout>
+				:可以调用res/values下的strings.xml或color.xml的值:"@string/${name}","@color/${name}"
+				string.xml:<string name="name"/>
+				color.xml:<color name="name"/>
+				
