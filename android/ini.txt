@@ -64,6 +64,7 @@ UI布局:javaswing布局
 	<EditText android:id="@+id/et_phone" layout_width="fill_parent" layout_height="wrap_content" hints="@string/tip_content" minLines="3"/>
 </linearLayout>
 				:可以调用res/values下的strings.xml或color.xml的值:"@string/${name}","@color/${name}"
-				string.xml:<string name="name"/>
+				string.xml:<str
+				ing name="name"/>
 				color.xml:<color name="name"/>
 				
