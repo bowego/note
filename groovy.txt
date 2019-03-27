@@ -1,0 +1,65 @@
+groovy    				 					java
+== 						 					equals
+{ it }					 					lambda
+;?						 					;
+def			             					
+instanceof 				 					instanceof
+default BigDecimal 		 					float/double
+suffix i/l/g/g/d/f		 					l/f/d
+'''  '''
+'a'..'z' 
+explicit type[]								{}
+default java.util.List/ArrayList[]
+
+
+explict char */as/(char)  
+[public] [return] def mname([t]a){[return] a} 
+
+GString "" contain $
+String '' can't contain $
+groovy.lang.Closure
+	def closure={[parameter -> ] statements}
+	closure.call(a)
+	closure(a)
+	closure a
+	default it
+function a,b
+closure a,b
+default LinkedHashMap
+	map['']=
+	
+	map.g=
+	def map=[red:''] default cant support variable
+	def map=[(red):'']
+range=0..5
+
+Grails web framework
+groovyShell new GroovyShell();
+	shell.setVariable('', );
+	shell.evaluate("");
+	or shell.parse("");
+		 shell.run();
+Eval
+	Eval.me("");
+	Eval.me(k,v,"");
+	Eval.x(v,'');
+	Eval.xy(v1,v2,'');
+	Eval.xyz(v1,v2,v3,'');
+GroovyClassLoader
+	new GroovyClassLoader();
+	String clazz='';
+	Class c=loader.parse(clazz);
+GroovyScriptEngine
+	new GroovyScriptEngint("script/groovy");
+	new Binding();
+	binding.setVariable("",'');
+	engine.run("",binding);
+java.scriptApi
+	new ScriptEngineManager().getEngineByName("groovy");
+	new SimpleBindings();
+	bindings.put("",'');
+	engine.eval("",bindings);
+	engine.eval(new FileReader("script/groovy/hello.groovy"));
+
+	
+

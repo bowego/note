@@ -1,0 +1,251 @@
+class Shape{
+	public :shape(){}
+	int area(){return 0;}
+}
+
+class Rectangle :public Shape{
+	public Rectangle():Shape(){}
+}
+
+class Triangle :public Shape{
+	public Triangle():Shape(){}
+}
+
+父类引用
+Shape *shape;
+指向子类引用
+Rectangle rec();
+shape = &rec;
+调用函数 shape->area();//不会调用子类的函数编译器将调用的函数指向基类的非虚函数
+
+虚函数:virtual int area(){return 0;}
+会调用子类的函数覆盖基类同名函数;动态链接,后期绑定
+
+纯虚函数,,java抽象函数没有函数体
+virtual int area()=0; //0告诉编译器函数是纯虚函数
+
+使用类来定义抽象数据类型ADT//例如cout << "hello c"不需要cout的内部实现细节
+访问标签/访问修饰符,可以有多个标签,一个标签在遇到下一个标签之前一直有效
+
+数据抽象的好处:类的内部受到保护,类的实现者可以不影响消费者的前提下修改代码
+
+抽象把代码分离为接口和实现,设计组件时,接口必须独立于实现,可以容易改变底层代码
+
+数据抽象,比数据封装更抽象
+
+默认情况下所有的成员都是私有的,把一个类定义为另一个类的有元类
+友元函数的使用:没有this指针,访问非static成员需要对象做参数
+							访问static成员或全局变量不需要对象做参数
+							如果参数对象是全局对象不需要对象做参数
+							可以直接调用友元函数,不需要对象指针
+this指针,每一个对象都能通过this指针访问自己的地址,this指针是每个函数的隐含参数;
+
+如果一个类中至少有一个被声明为纯虚函数,这个类就是一个抽象类
+
+文件:头文件#include<fstream>
+ofstream:文件输出流
+ifstream:文件输入流 
+fstream:同时具有两种功能
+void open(const char * filename,ios::openmode mode)是fstream,ofstream,ifstream对象的成员
+	ios::app:追加模式,所有写入在末尾
+	ios::ate:打开文件定位到文件末尾
+	ios::in:读取模式
+	ios::out:写入
+	ios::truc:如果文件已经存在,内容在打开之前被截断,即设文件长度为0
+关闭文件:c++程序终止时会关闭刷新所有流释放所有内存,文件但手动是一个好习惯
+	void close();
+	
+throw "hello"; //字符串型异常
+try{}catch(const char* msg){} //捕获字符串异常
+
+标准异常:std::exception :所有c++异常的父类
+			  bad_alloc:可通过new抛出/分配内存异常
+			  bad_cast:dynamic_cast抛出
+			  bad_exception:无法预期的异常
+			  bad_typeid:typeid抛出
+			  logic_error:逻辑错误
+			  domain_error:无效的数学域
+			  invalid_argument:无效参数
+			  length_error:太长的string
+			  out_of_range:方法抛出如std::vector/std:bitset<>::operator[]()
+			  runtime_error:运行时异常
+			  overflow_error:数学上溢
+			  range_error:存储范围超出
+			  underflow_error:数学下溢
+	自定义新异常
+	struct MyException : public exception{
+		const char* what()const throw(){
+			return "C++ exception";
+		}
+	}
+	what() 异常提供的方法被所有子类重载,返回异常的原因
+动态内存:栈:函数内声明的所有变量占用栈内存
+		 堆:程序中未使用的内存,程序运行时动态分配内存
+		 new:分配内存返回分配的空间地址,可能放回null空指针
+		 delete:删除之前有new分配的内存
+		 exampel: double* pvalue=NULL;
+		 pvalue=new double;
+		 if(!pvalue){
+			cout << "Error:out of memory"<<endl;
+			exit(1);
+		 } 
+		 数组分配内存
+			int *array=new int[m]; //new int*[m]//存储指针的数组
+			delete [] array;
+命名空间
+	namespace first_space{
+		func();
+	}
+		
+	first_space::func();
+不连续的命名空间:命名空间可以定义在几个不同的部分中
+嵌套的命名空间: namespace fist{
+					namespace second{
+						fun();
+					}
+				}
+函数模板,模板是泛型编程的基础,泛型编程的例子:迭代器算法,
+		template <class type> ret-type func-name(parameter list){}
+类模板, template<class type>class class-name{}
+
+c++预处理指令:只是编译器在实际编译之前需要完成的预处理,所有的指令以#开头,只有空格可以出现在预处理之前,不是c++语句
+	所以不以分号结尾
+	#define :创建符号常量  //替换常量//生成常量 
+			 #define PI 3.1415  int main(){cout << PI <<endl;}
+			  gcc -E temp.cpp > temp.p
+			 参数宏 : #define MIN(a,b) 生成常量 (a<b?a:b)
+	#if/#ifdef .. #endif: 
+						#ifdef DEBUG
+							//如果定义了DEBUG常量编译
+						#endif
+						
+						#if 0
+							//不编译
+						#endif
+	预定义的宏 __LINE__ 编译的时候被替换为行号
+			   __FILE__ 文件名
+			   __DATE__ 日期
+			   __TIME__ 时间
+c++信号处理:信号是操作系统传递给进程的中断,会提早终止一个程序,比如ctrl+C
+	预定义信号:SIGABRT:程序异常终止
+			   SIGFPE:错误的算术运算
+			   SIGILL:非法指令
+			   SIGINT:接收到交互注意信号
+			   SIGSEGV:非法访问内存
+			   SIGTERM:发哦送到程序的终止请求
+	void (*signal())(int)
+	int raise(signal sig);一个整数编号作为参数,程序内发送一个信号
+	
+多线程:多个可以同时运行的两个或多个部分,使用POSIX编写多线程c++程序,PThreads/POSIXThreads
+		提供的api可在多种类unix系统上使用freeBSD,netBSD,GNU/linux,MacOSX,Solaris
+		创建线程 #include<pthread.h>
+				pthread_t thread;		NULL
+				 pthread_create(&thread,attr,start_routine,arg)
+				 thread:指向线程标识符的指针
+				 attr:为线程指定属性对象那个
+				 start_routine:线程运行函数起始地址
+				 arg:运行函数的参数,必须通过把应用作为指针强值转换为void传递
+				 return 0创建成功,不为0创建失败
+		终止线程: pthread_exit(status),显式退出线程
+				如果main()没有通过pthread_exit()退出其他线程随之退出,否则其他线程可能继续运行
+				pthread_exit(NULL);
+		向线程传递参数:可以在线程回调中传递任意数据类型因为为 void*
+		void *printHello(void *threadargs);
+		pthread_t thread=
+		struct thread_data arg;: pthread_create(&thread,NULL,printhello,(void *)&td);
+		
+c++标准库:
+	标准函数库:继承自c,通用独立不属于任何类的函数
+				输入输出
+				字符串/字符处理
+				数学
+				时间日期/本地化
+				动态分配
+				其他
+				宽字符函数
+	面向对象:类和相关函数
+				标准c++/IO类
+				string类
+				数值类
+				STL容器类
+				STL算法
+				STL函数对象
+				STL迭代器
+				STL分配器
+				本地化库
+				异常处理类
+				杂项支持库
+
+gcc -E a -o a.o
+gcc -S a.o -o a.s
+
+gcc -c a.c -o a.o
+gcc a.exe -o a.o
+
+-O 优化		
+-g 调试信息
+-pg 程序中额外调试代码
+-lpthread  -lm=libm.so	lib和扩展名去掉=库名
+-L/usr/x11R6/lib 找库的地址 -l -L配合使用
+-I/myinclude 包含头文件
+-Wall gcc警告信息
+-w 关闭所有警告
+-v 列出所有编译不走
+
+相关环境变量
+PKG_CONFIG_PATH
+CC
+CXX
+LIBS
+CFLAGS
+
+gcc -o helloworld helloworld.c 生成ELF格式连接后的可执行文件
+-static 静态编译可执行文件 从c/cpp文件生成
+-shared 生成动态库 从.o文件生成
+-crv 生成静态库	从.o文件生成
+	
+	
+g++ -c first.cpp					destination xx.o /xx.exe 可以省略 不指定名字名字会有但不可确定
+ar -crv libfirst.a first.o
+
+g++ -c second.cpp
+g++ -o second.exe second.o -lfirst -L./
+	
+	
+g++ -fPIC -shared -o libfirst.so first.cpp	 /生成位置无关代码
+g++ -fPIC -shared -o libfirst.dll first.cpp
+
+windows 加载dll文件的顺序 应用程序所在目录->当前目录->windowsSystem目录->windows目录->path环境变量指定路径
+windows下是dll文件,linux下是so文件	
+	
+	
+linux	
+libpthread.a a文件
+libpthread.so so文件
+	
+windows
+libpthread.a a文件
+libpthread.dll dll文件
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

@@ -1,0 +1,23 @@
+javaassist.CtClass 表示一个class文件
+	ClassPool pool=ClassPool.getDefault() 通过默认系统类搜索路径生成一个类池
+		pool是一个存储CtClass的hash表,类的名称作为Hash的key找到返回找不到创建一个新的CtClass
+	ClassPool	
+		makeClass(String name);创建新类
+		makeInterface(String name);创建接口
+		doPruning 默认false
+		stopPruning(boolean bool);驳回修建操作
+		debugWriteFile();
+		insertClassPath(new ClassClassPath(this.getClass()));注册类加载路径
+		insertClassPath("/user/local/javalib");注册目录
+		insertClassPath(new URLClassPath("www.javassist.org",80,"/java/","org.javassist."));
+	CtNewMethod
+		abstractMethod();创建抽象方法
+	CtClass
+		addMethod(String method,CtClass clazz);添加方法
+		writeFile();
+		toClass();
+		toBytecode();将类冻结起来,不允许再修改
+		doFrost();解冻
+		
+	
+		
