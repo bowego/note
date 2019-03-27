@@ -18,6 +18,8 @@ javaassist.CtClass 表示一个class文件
 		toClass();
 		toBytecode();将类冻结起来,不允许再修改
 		doFrost();解冻
+
+		hello
 		
 	
 		
