@@ -61,5 +61,5 @@ java.scriptApi
 	engine.eval("",bindings);
 	engine.eval(new FileReader("script/groovy/hello.groovy"));
 
-	
-
+afasdfsadf	afdasdfa
+a
