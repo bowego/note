@@ -1,0 +1,409 @@
+主要特性
+	分布式：
+		网络应用编程接口：URL|URLConnection|Socket|ServerSocket|RMI
+	健壮性：
+		强类型，异常处理，垃圾收集，安全检查机制
+	安全：
+		安全管理机制SecurityManager
+	可移植：
+		编译器用java实现，运行环境用ANSI C实现
+	高性能：
+		随着JIT（just in time）编译器技术的发展
+	动态：
+		程序需要的类能够动态地载入到运行环境，类有一个运行时刻的表示，能进行运行时刻的类型检查
+基础语法：
+	对象：类的实例
+	类：一个模板，描述一类对象的行为状态
+	方法：行为
+	实例变量：描述对象的状态
+	修饰符
+		访问控制修饰符：default，public，protected，private
+		非访问控制修饰符：final，abstract，static，synchronized，volatile
+	变量：
+		局部变量
+		类变量（静态前两
+		成员变量（非静态变量
+	数组：
+		保存在堆上的一组对象
+	枚举：
+		限制变量只能是预先设定好的值，使用枚举可以减少代码中的bug
+	关键字
+		abstarct
+		assert 断言条件满足
+		boolean 
+		break 跳出循环或label代码段
+		byte
+		case
+		catch
+		char
+		class
+		const 保留
+		continue 
+		default
+		do
+		double
+		else
+		eunum
+		extends
+		final 值初始化之后不能再改变，方法不能重写，类不能有子类
+		finally
+		float
+		for
+		goto 保留
+		if
+		implements
+		import
+		instanceof	测试一个对象是类的实例
+		int
+		interface
+		long
+		native
+		new
+		package
+		private
+		protected
+		public
+		return
+		short
+		static
+		stritfp	浮点数使用比较严格的规则
+		super
+		switch
+		synchronized
+		this
+		throw
+		throws
+		transient 修饰不要序列化的字段
+		try
+		void
+		volatile
+		while
+	基本数据类型
+		内置（基本）数据类型	包装类属性 SIZE MAX_VALUE MIN_VALUE
+			整数型
+				byte
+				short
+				int
+				long
+			浮点型
+				float
+				double
+			字符 char
+			布尔 bool
+			void Void
+		引用数据类型
+		byte int long short 都可以用十进制 十六进制0x.. 八进制0..表示
+		转义字符
+			n 		0x0a
+			r	回车	0d
+			f	翻页	0c
+			b	退格	08
+			s	空格	20
+			t	制表
+			\000 八进制字符
+			\u   十六进制字符
+	访问修饰符
+		默认 同一包内可见
+		private  类内可见
+		public 所有可见
+		protected 同一包内或者子类课件
+	位运算符
+		&
+		|
+		^	抑或
+		~ 按位取反	
+		<< 左移运算符
+		>> 右移运算符
+		>>> 右移补零运算符
+	运算符的优先级
+		()_[]_.
+		++_--_!_~
+		*_/_%
+		+_-
+		>>_>>>_<<
+		>_>=_<_<=
+		==_!=
+		&
+		^
+		|
+		&&
+		||
+		?:
+		=_+=_-=_*=_/+_%=_>>=_<<=_&=_^=_|=
+		,
+	Number类
+		子类
+			Byte
+			Short
+			Integer
+			Long
+			Doulbe
+			Float
+	Math类
+		xxxValue|compareTo|equals|valueOf|toString|abs|max|exp|log|pow|sqrt|sin|cos|tan|asin|acos|atan
+		parseInt|ceil|floor|rint返回与整数最接近的整数double round返回一个最接近的long
+		toDegrees|toRadians|random|atan2笛卡尔坐标转化为极坐标返回角度值
+	Character类
+		isLetter|isDigit|isWhitespace|isUpperCase|isLowerCase|toUpperCase|toLowerCase|toString
+	Stirng类
+		concat链接字符串
+		charAt|compareTo|contentEquals|copyValueOf|endsWith|equals|equalsIgnoreCase|getBytes|getChars
+		hashCode|indexOf|intern|lastIndexOf|
+		matches|regeionMatches|replace|replaceAll|replaceFirst|split|startsWith|subSequence
+		substring|toCharArray|toLowerCase|toString|toUpperCase|trim|valueOf
+	StringBuffer 线程安全 StringBuilder 线程不安全
+		append|reverse|delete|insert|replace
+	Arrays binarySearch|equals|fill|sot
+	Date after|before|clone|compareTo|equals|getTime|hashCode|setTime
+	SimpleDateFormat "E yyyy.MM.dd 'at' hh:mm:ss a zzz"
+		G纪元标记 y年 M月 d日 h十二 H24 m s S微秒数 
+		E星期几 D一年中日子 F一月中几周周几 w一年中第几周 W一月中第几周 aAM/PM
+		k一天中的小时 K格式小时 z时区 ‘文字界定符 “单引号
+	正则表达式  https://www.w3cschool.cn/java/java-regular-expressions.html
+		匹配小数整数：^\\d+(\\.\\d+)?$
+		匹配年月日：[1-9]\\d{0,3}-(1[0-2]|0?[1-9])-(0?[1-9]|[12][0-9]|3[01])
+		匹配qq号：[1-9]\\d{4,11}
+		11位电话号码：1[3-9]\\d{9}
+		长度为8-10位的用户密码：\\w{8,10}
+		四位验证码：\\w{4}
+		邮箱地址：[\\w]+@[\\w]+\\.\\w{2,6}
+		匹配最内层小括号：\\([^()]+\\C
+		匹配乘除法表达式：\\d+[/*]\\d+
+		可以用来搜索编辑处理文本
+		捕获组：将正则表达式的各个部分编号，根据编号获取匹配的字符串的各个部分
+		非捕获组：编号但不缓存
+			(?:exp)
+			(?:()|())
+			((?:exp))
+		Pattern :一个正则表达式的变异表示，公共静态编译方法
+		Matcher: 对输入字符串进行解释和匹配操作的引擎
+			start	匹配的组的开始位置索引
+			end		匹配的组的结束位置索引
+			lookingAt	一个字符串包含此模式返回true
+			find		
+			matches	一个字符串完全匹配此模式返回true
+			appendReplacement  操纵匹配到的依次作用替换  m-c-c-n for(m|n:upper) M-c-c-N StringBuffer
+			appendTail	最终将剩余的添加
+			replaceAll	将匹配到模式全部替换
+			replaceFirst	将匹配到的第一个替换
+			quoteReplacement	
+		\	转义字符
+		^	开始
+		$	结束
+		*	零或多个
+		+	一或多个
+		?	零或一个
+		{n,m}	至少n个最多m个
+		?		用在*,+,?,{n,m}之后表示是非贪心的匹配尽可能少的字符 默认是贪心匹配尽可能多的字符
+		.	\r\n 之外的任意单个字符
+		(pattern)	匹配并捕获表达式
+		(?:pattern)
+		(?!pattern)
+		x|y	或
+		[xyz]	列举
+		[^xyz]	反列举
+		[a-z]	范围
+		\b	边界字符
+		\B	非边界字符
+		\cx	控制字符
+		\d	数字
+		\D	非数字
+		\f	换页
+		\n	换行
+		\r	回车
+		\s	空白
+		\S	非空白
+		\t	制表符
+		\v	垂直制表符
+		\w	任何字类字符[A-Za-z0-9_]
+		\W	任何非字类字符
+		\xn	
+		\num
+		\n
+		\nm
+		\nml
+		\un
+	finalize: 手动调用销毁对象，回收内存
+	流：
+		支持基本类型，对象，本地化字符集
+		文件传输，网络编程
+		读取控制台输入
+			new BufferedReader(new InputStreamReader(System.in)); .read|readeLine 读取一个或一行字符
+		OutputStream
+			FilterOuputStream
+				BufferedOuputStaream
+				DataOutputStaream
+				PrintStream
+			FileOutputStream
+			ByteArrayOutputStream
+		InputStream
+			ByteArrayInputStream
+			FileInputStream
+			FilterInputStream
+				BufferedInputStream
+				DataInputStream
+				PushBackInputStream
+			StringBufferInputStream
+			SequenceInputStream
+		InputStream
+			close
+			finalize
+			read(int)
+			read(byte[] r)
+			available() 下一次读取可用字节数（准备好的字节数
+		OutputStream
+			close
+			finalize
+			write(int)
+			write(byte[] w)
+	文件目录
+		File mkdir|mkdirs|isDiectroy|exists
+	异常处理
+		检查性异常：编译器会给出提示，需要手动处理
+		运行时异常：编译时不会被检查出来，运行时可能会出现
+		错误：硬件错误|栈溢出
+		Throwable
+			Error
+			Exception
+				IOException
+				RuntimeException
+		非检查性异常
+			ArithmeticException
+			ArrayIndexOutOfBoundsException
+			ArrayStoreException
+			ClassCastException
+			IllegalArgumentException
+			IllegalMonitorStateException
+			IllegalStateException
+			IllegalThreadStateException
+			IndexOutOfBoundsExceptino
+			NegativeArraySizeException
+			NullPointerException
+			NumerFormatException
+			SecurityException
+			StringINdexOutOfBoundsExceptin
+			UnsupportedOperationExceptin
+		检查性异常
+			ClassNotFoundEception
+			CloneNotSuppotedException
+			IllegalAccessException
+			InstantiationException
+			InterrruptedException
+			NosuchFieldExceptino
+			NoSuchMethodException
+		Throwable
+			getMessage
+			getCause
+			toString
+			pritnStatckTrace
+			getStackTrace
+			fillnStackTrace
+	接口
+		可以包含static 和final 变量
+		标记接口
+			没有任何方法和属性的接口仅仅表明他的类属于一个特定的类型
+	集合框架
+		扩展，高效，互操作
+		接口，实现，算法
+		Collection
+			List
+			Set
+				SortedSet
+		Map
+			.Entry
+			SortedMap
+		AbstractCollection
+		AbstractList
+		AbstractSequentialList
+		LinkedList
+		ArrayList
+		AbstractSet
+		HashSet
+		LinkedHashSet
+		TreeSet
+		AbstractMap
+		HashMap
+		TreeMap
+		WeakHashMap
+		LikedHashMap
+		IdentityHashMap
+		Vector 一个动态数组
+		Stack 后进先出的栈
+		Dictionary
+		HashTable
+		Propeties
+		BitSet
+		EMPTY_SET EMPYT_LIST EMPT_MAP
+		Interator ListIterator
+	泛型方法
+		尖括号包括的类型变量 在返回值之后 用作返回值类型，参数类型，声明变量 必须是引用类型
+		限制泛型（参数类型） <V extends Number>
+	序列化/反序列化
+		o implemnts Serializable 
+		transient Type t;
+		ObjectOutputStram
+			writeObject
+		(Type)ObjectInputStream
+			readObject
+	网络编程
+		ServerSocket(int|port backlog|port backlog InetAddres)
+			getLocalPort
+			accept
+			setSoTimeout
+			bind
+		Socket(host port|InetAddrss port|host port InetAddress port|InetAddress port InetAddress port)
+			connect(host timeout)
+			getInetAddress
+			getPort
+			getLocalPort
+			getRemoteSocketAddress
+			getInputSTream
+			getOUtputStream
+			close
+		InetAddress 
+			getByAddress(byte[]|host byte[])
+			getByName
+			getHostAddress
+			getHostName
+			getLoalHOst
+			toString
+	发送邮件 https://www.w3cschool.cn/java/java-sending-email.html
+		System->getProperties[Properties
+		properties->setProperty|mail.smtp.host
+				  ->setProperty|mail.smtp.auth:true
+		->Authenticator[$	添加用户名密码
+		->PasswordAuthentication|username&password[$auth
+		$->getPasswordAuthntication[$auth
+		Session->getDefualtInstance|properties&$
+		
+		Session->getDefaultInstance|properties
+		->MimeMessage|Session
+		->InternetAddress|from
+		->InternetAddress|to
+		message->setFrom|internetAddress
+			   ->addRecipent|Message.RecipientType.To
+			   ->setContent|'<html/>' 发送html格式的
+			   ->setSubject|''
+			   ->setText|''
+		
+		->FileDataSource|''[$	添加附件
+		->DataHandler|$[$hdl
+		->MimeBodyPart[$b
+		$b->setText|''
+		  ->setFileName|''
+		  ->setDataHandler|$hdl
+		->MimeMultipart|$m
+		$m->setContent|$b
+		
+		
+		Transport->send|message
+		MimeMessage->Session->getDefaultInstance(Properties.mail.smtp.host))
+		
+switch
+	接受：
+		byte
+		short
+		int
+		char
+		enum
+		String

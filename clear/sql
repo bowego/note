@@ -1,0 +1,105 @@
+https://blog.csdn.net/scbiaosdo/article/details/81561162
+数据库对象
+	table
+	view
+	index
+	过程和函数
+	触发器
+	同义词
+	序列
+	数据字典
+完整性约束
+	primary key
+	foreign key
+	not null
+	unique
+	auto_increment
+	default
+使用create复制表
+	create table a like b 复制表结构约束无数据
+	create table a as select * from b 复制表结构数据不复制约束
+	
+创建数据库
+	t-table c-column t-type d-database restrain-r index-i	 a-any 
+	ddl语句：
+		create：
+			crate database name default charset utf8 collate utf8_general_ci			
+			create table t like tt
+			create t as select * from tt
+		alter
+			alter table t add c r	添加字段
+			alter table t add column c r	
+			alter table t add index i(c)	添加索引
+			alter table t add primary key (c) 添加主键
+			alter table t add unique key (c)
+			alter table t add foreign key a(c) references	tt(cc) 添加外键约束
+			alter table t change column c cc t	修改字段类型名称
+			alter table t modify column  c t 修改字段类型‘
+			alter table t alter column set default ''
+			alter table t alter column drop default
+			alter table t disable keys 
+			alter table t enable keys
+			alter table t drop column c
+			alter table t drop primary key
+								index c
+								foreigh key c
+						 rename tt
+		drop
+			drop database d
+			drop table t
+		truncate
+			truncate table t 只删除数据不删除表结构
+	连接：
+		内连接：关系表中满足连接条件和查询条件
+		外连接：不一定满足连接条件
+			左外连接：左表满足查询条件
+			右外连接：右表满足查询条件
+			全外连接：左右表满足查询条件
+https://www.cnblogs.com/sdlzspl/p/7365557.html 
+Cursor
+	一个指针指向数据库查询结果集
+	种类：
+		静态游标：结果集是数据库的复制
+				显示游标：用户自定义
+				隐式游标；数据库管理可以得到属性信息
+	DECLARE
+		CURSOR cursor1 IS select * from table; 声明
+		var table.username%TYPE;	声明数据集变量
+	OPEN cursor	打开游标
+	FETCH cursor INTO var	读取
+	CLOSE cursor	关闭
+	TYPE rowType IS TABLE OF table%ROWTYPE;	数据集变量是行
+	rowTYPE rowVAR;
+	
+	BEGIN
+		OPEN cursor;
+			LOOP 
+				FETCH cursor INTO var;
+				EXIST WHEN cursor%NOTFOUND;
+				dbms_output.put_line(''||var);
+			END LOOP;
+		CLOSSE cursor;
+	END;
+	
+	FETCH cursor BULK COLLECT INTO cour LIMIT 3;
+	
+	游标指定参数：
+		DECLARE cursor(invar IN varchar2) IS select * from table where usernmae = invar;
+		OPEN cursor('username1'); 打开参数游标
+	
+	变量读取：
+		var(i);
+		rowVar.username
+		cursor%ROWCOUNT
+		cursor%FOUND
+			   NOTFOUND
+			   ISOPEN
+	循环
+		FOR var IN cursor
+		LOOP
+		ENDLOOP;
+		-
+		FOR i IN 1..10
+		LOOP
+		ENDLOOP
+	

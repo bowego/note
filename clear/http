@@ -1,0 +1,68 @@
+HyperText Transfer Protocol
+http/1.0 
+http/1.1 默认采用持久链接，支持管道方式同时发送多个请求
+1.0-1.1差异
+	缓存
+	带宽优化，网络链接
+	错误通知
+	网络发送消息
+	互联网地址维护
+	安全性完整性
+特性
+	无连接：每次链接处理一个请求，收到客户应答断开连接，可以节省传输时间？
+	媒体独立：只要客户端服务器约定好任何类型都可以传输
+	无状态：缺少之前事务处理的记忆能力
+Web服务器：Apache，IIS（Internet information Service） 默认端口80
+消息结构：
+	统一资源定位符Uniform Resource Indentifiers 建立链接传输数据
+	使用RFC5322  RFC2045传送
+	客户端请求消息
+		请求行
+		请求头部
+		空行
+		请求数据
+		method_URL_protocolVersion/r/n
+		headerName:value/r/n
+		..
+		/r/n
+		data
+	服务器响应消息
+		状态行
+		消息报头
+		空行
+		响应正文
+		HTTP/1.1 200 OK/r/n
+		resHeader:value/r/n
+		/r/n
+		data
+请求方法
+	1.0 方法：
+		get 	请求页面消息，并返回实体
+		post 	提交数据，数据包含在请求提中
+		head 只获取请求头
+	1.1 方法：
+		put	提交，取代服务器内容
+		delete	删除服务器指定页面
+		connect	预留给能够将连接改为管道方式的代理服务器
+		trace	回显服务器收到的请求
+		options 查看服务器的性能
+响应头信息
+	Allow 服务器支持那些方法
+	Content-Encoding  文档编码方法
+	Content-Length 内容长度
+	Content-Type 表示后面的文档属于什么MiME类型
+	Date 时间
+	Expires 应该什么时候任务文档已经过期从而不再缓存
+	Last-Modified 文档的最后改动时间
+	Location 客户应该到哪里去提取文档
+	Refresh
+	Server 服务器的名字
+	WWW-Authenticate 客户应该在Authorization头中提供什么类型的授权信息
+HTTP状态码
+	100
+	200 请求成功
+	300 资源转移
+	400	客户端错误
+	500	服务端错误
+HTTP-content_type
+	

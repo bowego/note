@@ -1,0 +1,3501 @@
+<shexam>springframework.beans.BeanUtils
+	new 新方式
+	.instantiate(X.class);无参构造
+	.instantiateClass(X.class.getDeclaredConstructor(Y.class),new Y())//有参构造
+	.getPropertyDescriptor
+	.findDeclaredMEthod
+	.findPropertyFormethod
+	.copyProperties
+PropertyDescriptor.getReadMethod
+				.getWriteMethod
+		
+
+DisposableBean
+	destroy
+@PostConstruct
+BeanPostProcessor
+	postProcessBeforeInitialization
+	postProcessAfterInitialization
+InitializingBean
+	afterPropertiesSet
+ApplicationContextAware
+	setApplicationContext
+ApplicationEventPublisher
+	publishEvent
+ResourceLoaderAware
+	getResourceLoader
+ApplicationEventPublisherAware
+MessageSourceAware
+ApplicationEvent
+ApplicationListener
+
+BeanFactory	
+	getBean
+	getAlias
+	getBeanProvider
+	getType
+	isPrototype
+	isTypeMatch
+	
+spring 生命周期
+	beannameAware
+	BeanFactoryAware
+	ApplicationContextAware
+	BeanPostProcessor before after
+	initializingBean
+	DisposableBean
+	init destroy
+	
+spring 有点
+	减少代码耦合
+	提供了aop
+	
+	Proxy.newInstance(ClassLoader,Interfaces,InvocationHandler)
+	Enhancer.setSupperclass
+			.setCallback 
+			.create
+类加载器
+	代理模式
+	双亲委托模式，加载一个类首先从父辈加载器加载，所以父辈的加载路径会覆盖自己的加载路径
+	
+spring模式
+	单例模式
+	工厂模式
+	代理模式
+	模板方法
+	观察者模式
+
+数据库事务：binlog redolog
+事务特性 ACID
+脏读：一个事务读到另一个事务中间状态的数据
+不可重复读：一个事务期间另外的事务改变了数据
+隔离级别：读已提交
+		 可重复读
+
+spring 事务传播行为
+	你有事务我用你的事务 你没有我不用事务
+	你有我用 没有我新建
+	你有我用 没有则异常
+	你有我挂起并新建没有我新建
+事务管理器PlateformTransactionManager
+	各个框架有各个框架的具体实现 是一个模板方法
+	编程事务
+		为模板提供一个钩子方法
+	声明事务
+		在声明注解的方法上通过切面织入事务逻辑
+spring事件
+	Context..Event [started stopped closed refreshed 
+	RequestHandledEvent
+	ApplicationListener
+	
+Aop名词
+连接点 一个被增强的方法
+切入点 表明对那些连接点进行拦截
+通知 增强逻辑
+切面 切入点+通知
+
+通知类型
+	aroundBefore
+	before 
+	method
+	aroundAfter
+	after
+	afterReturing
+	
+	aroundBefore
+	before
+	method
+	aroundAfter
+	after
+	afterthrowing
+
+mybatis 插件
+xxHandler [parameter result statement 
+executor   
+Interceptor.intercept
+</shexam>
+<text>
+spring.factories
+	PropertySourceLoaders
+		PropertiesPropertySourceLoader
+		YamlPrppertySourceLoader
+	RunListeners
+	ErrorReporters
+	ContextInitializers
+	ApplicationListeners
+	EnvironmentPostProcessors
+	FailureAnalyzer
+	FailueAnalysisReporters
+spring.handlers
+	namespace=NamespaceHandlers
+spring-beans.kotlin_module
+spring.tooling
+spring.schemas
+</text>
+<pic>
+SpringFactoriesLoader.contains(PropertySourceLOader)
+</pic>
+<bootstrap>
+initializers
+	DelegatingApplicationContextInitializer
+	ContextIdAppliationCOntextInitializer
+	ConfigurationWarningsAPplicationContextInitalizer.COnfigurationWarningsPostProcessor implements BeanDefinitionRgistryPostProcessor
+	ServerPortInfoApplicationContextInitalizer
+	SharedMEtadataReaderFactoryContextInitializer.CachgingMeatadataReaderFactoryPostProcessor 
+	ConditionEvaluationReportLOggingListener
+ApplicationListenr
+	ConfigFileApplicationListenr.PropertySourceOrdringPOstProcessor\
+	
+</bootstrap>
+<java.util.concurrent>
+Callable
+	call
+CompletionService
+	poll
+	submit
+	take
+COmpletionStage
+	accceptEither
+	acceptEitherAsync
+	applyToEitherAsync
+Delayed
+	getDelay
+Executor
+	execute
+ExecutorService
+	awaitTermination
+	invokeAll
+	invokeAny
+	isShutdown
+	isTerminated
+	shutdown
+	shutdownNow
+	submit
+ForkJoinPool
+	awaitQuiscence
+	awaitTermination
+	commonPool
+	drainTasksTo
+	execute
+	getActiveThreadCount
+	getAsyncMode
+	getCommonPoolParallelism
+	getFactory
+	getParallelism
+	getPoolSize
+	getQueuedSubmisionCount
+	getQueuedTaskCount
+	getRunnaingThreadCOunt
+	getStealCount
+	getUncaughtExceptionandler
+	hasQueuedSubmissions
+	invoke
+	invokeAll
+	isQuiescent
+	isShutdown
+	isTeminated
+	isTeminating
+Future
+	cancel
+	get
+	isCancelled
+	isDone
+</java.util.concurrent>
+
+<beans.factory>
+ListableBeanFactory
+	containsBeanDefinition
+	getBeanDefinitionCount
+	getBeanDefinitionNames
+	getBeanNamesForType
+	getBeansOfType
+	findAnnotatinOnBean
+	getBeanNamesForAnnotation
+	getBeansWithAnnotation
+AutowireCapableBeanFactory
+	applyBeanPostProcessorAfterInitialization
+	applyBeanPostProcessorsBeforeInitializtion
+	applyBeanPropertyValues
+	autowire
+	autowireBean
+	autowireBeanProperties
+	configureBean
+	createBean
+	destroyBean
+	initializeBean
+	resolveBeanByName
+	resolveDependency
+	resolveDependency
+	resolveNamedBean
+HierarchicalBeanFactory
+	contiansLocalBean
+	getParentBeanFactory
+ConfigurableBeanFactory
+	addBeanPostProcessor
+	addEmbeddedValueResolver
+	addPropertyEditorRegistrar
+	copyConfigurationFrom
+	copyRegisteredEditorsTo
+	destroyBean
+	destroyScopedBean
+	destroySingletons
+	getAccessControlContext
+	getBeanClassLoader
+	getBeanExpressionResolver
+	getBeanPostProcessorCount
+	getConversionSerivce
+	getDependenciesForBean
+	geDependentBean
+	getMergedBeanDefinition
+	getRegisteredScope
+	getRegisteredScopeNames
+	getTempClassLoader
+	getTypeConverter
+	hasEmbeddedValueResolver
+	isCacheBeanMetadata
+	isCurrentlyInCreation
+	isFactoryBean
+	registerAlias
+	registerCustomEditor
+	registerDependentBean
+	registerScope
+	resolveAliases
+	resolveEmbeddedValue
+	setBeanClassloader
+	setBeanExpressionResolver
+	serCacheBeanMetaData
+	setConversionService
+	setCurrentlyInCreation
+	setParentBeanFactory
+	setTempClassLoader
+	setTypeConverter
+ConfigurableListableBeanFactory
+	clearMetadataCache
+	freezeConfiguration
+	getBeanDefinition
+	getNamesIterator
+	ignoreDependencyInterface
+	ignoreDependencyType
+	isAutowireCandidate
+	isConfigurationFrozen
+	preInstantiatesSingletons
+	registerResolvableDependency
+AliasRegistry
+	getAliases
+	isAlias
+	registerAlias
+	removeAlias
+SimpleAliasRegistry
+	()
+	allowAliasOverriding
+	canonicalName
+	checkForAliasCircle
+	hasAlias
+	resolveAliases
+SingletonBeanRegistry
+	containsSingleton
+	getSingleton
+	getSingletonCount
+	getSingletonMutex
+	getSingletonNames
+	registerSingleton
+DefaultSingletonBeanRegistry
+	[singletonObjects
+	[singletonFactories
+	[earlySingletonObjects
+	[registeredSingletons
+	[singletonCurrentlyInCreation
+	[inCreationCheckExclusions
+	[suppressedExceptions
+	[singletonCurrentlyInDestruction
+	[disposableBeans
+	[containedBeanMap
+	[dependentBeanMap
+	[dependenciesForBeanMap
+
+	()
+	addSingleton
+	addSingletonFactory
+	afterSingletonCreation
+	beforeSingletonCreation
+	clearSingletonCache
+	containsSingleton
+	destroyBean
+	destroySingleton
+	destroySingletons
+	getDependenciesForBean
+	getDependentBeans
+	getSingleton
+	getSingletonCount
+	getSingletonMutes
+	getSingletonNames
+	hasDependentBean
+	isActurallyInCreation
+	isCurrentlyInCreation
+	isDependent
+	isSingletonCurrentlyInCreation
+	onSuppressedException
+	registerContainedBean
+	registerDependentBean
+	registerDisposableBean
+	registerSingleton
+	removeSingleton
+	setCurrentlyInCreation
+FactoryBeanRegistrySupport
+	[factoryBeanObjectCache
+	()
+	clearSingletonCache
+	getAccessControlCOntext
+	getCachedObjectForFactoryBean
+	getFactoryBean
+	getOBjectFromFactoryBean
+	getTypeForFactoryBean
+	postProcessObjectFromFactoryBean
+	removeSingleton
+BeanDefinitionRegistry
+	containsBeanDefinition
+	getBeanDefinition
+	getBeanDefinitionCount
+	getBeanDefinitionNames
+	isBeanNameInUse
+	registerBeanDefinition
+	removeBeanDefinition
+BeanFactory
+	containsBean
+	getAliases
+	getBean
+	getBeanProvider
+	getType
+	isPrototype
+	isSingleton
+	isTypeMatch
+AbstractBeanFactory
+	[parentBeanFactory
+	[beanClassLoader
+	[tempClassLoader
+	[cacheBeanMetaData 
+	[beanExpressionResolver
+	[conversionService
+	[propertyEditorRegistrars
+	[customEditor
+	[typeConverter
+	[embeddedValueResolvers
+	[beanPostProcessors
+	[hasInstantiationAwareBeanPostProcessors
+	[hasDestructionAwareBeanPostProcessors
+	[scopes
+	[securityContextProvider
+	[mergedBeanDefinitions
+	[alreadyCreated
+	[protoTypesCurrentlyInCreation
+	
+	()
+	(BeanFactory)
+	addBeanPostProcessor
+	addEmbeddedValueResolver
+	addPropertyEditorRegistrar
+	afterPrototypeCreation
+	beforePrototypeCreation
+	checkMergedBeanDefinition
+	cleanupAfterBeanCreationFailure
+	clearMergedBEanDefinition
+	clearMEtadataCache
+	containsBean
+	containsBeanDefinition
+	containsLocalBean
+	copyConfigurationFrom
+	copyRegisteredEditorsTo
+	createBean(String,RootBeanDefinition,Object[])
+	destoryBean
+	destroyScopedBean
+	doGetBean
+	evaluateBeanDefintinoString
+	getAccessControlContext
+	getAliases
+	getBean
+	getBeanClassLoader
+	getBeanDefinition
+	getBeanExpressionResolver
+	getBeanPostProcessorCount
+	getBeanPostProcessors
+	getConversionService
+	getCustomEditors
+	getCustomTypeCOnverter
+	getMergedBeanDefiniton
+	getMergedLocalBeanDefinition
+	getObjectForBeanInstance
+	getParentBeanFactory
+	getPropertyEditorRegistrars
+	getRgisteredScope
+	getRegisteredScopeNames
+	getTempClassLoader
+	getTpep
+	getTypeConverter
+	getTypeForFactoryBean
+	hasBean
+	hasBeanCreationStarted
+	hasDestructionAwareBeanPostProcessors
+	hasEmbeddedValueResolver
+	hasInstantiationAwareBeanPostProcessors
+	initBeanWrapper
+	isActurallyInCreation
+	isBeanEligibleForMetadataCaching
+	isBeanNameInUse
+	isCacheBeanMetadata
+	isFactoryBean
+	isPrototype
+	isPrototypeCurrentlyInCretion
+	isSingleton
+	isTypeMatch
+	markBeanAsCreated
+	orginalBeanName
+	predictBeanType
+	registerCUstomEditor
+	registerCustomEditor
+	registerDisposableBeanIfNecessary
+	registerScope
+	removeSingletonIfCreatedForTypeCheckOnly
+	requireDestruction
+	resolveBeanClass
+	resolveEmbeddedValue
+	setBeanClassLoader
+	setBeanExpressionResolver
+	setCacheBeanMEtadata
+	setConversionService
+	setParentBeanFactory
+	setSecurityContextProvider
+	setTempClassLoader
+	setTypeConverter
+	transformedBeanName
+AbstractAutowireCapableBeanFactory
+	[instantiationStrategy
+	[parameterNameDiscoverer
+	[allowCircularReferences
+	[allowRawInjectionDespiteWrapping
+	[ignoredDependencyTypes
+	[ignoredDependencyInterfaces
+	[currentlyCreatedBean
+	[factoryBeanInstanceCache
+	[filterredPropertyDescriptorCache
+	()
+	(BeanFactory)
+	applyBeanPostProcessorsAfterInitialization
+	applyBeanPostProcessorBeforeInitialization
+	applyBeanPostProcessorsBeforeInstantiation
+	applyBeanPropertyValues
+	applyMergedBeanDefinitionPostProcessors
+	applyPropertyValues
+	autowire
+	autowireBean
+	autowireBeanProperties
+	autowireByName
+	autowireByType
+	autowireConstructor
+	checkDependencies
+	clearSingletonCache
+	configureBean
+	copyConfigurationFrom
+	createBean
+	createBeanInstance
+	destoyBean
+	determineConstructorsFromBeanPostProcessors
+	determineTargetType
+	doCreateBean
+	filterPropertyDescriptorsForDependencyCheck
+	getEarlyBeanReference
+	getInstantiationStrategy
+	getObjectForBeanInstance
+	getParameterNameDiscoverer
+	getTypeForFactoryBean
+	getTypeForFactoryMethod
+	ignoreDependencyInterface
+	ignoreDependencyType
+	initializeBean
+	instantiateBean
+	instantiateUsingFactoryMethod
+	invokeCustomInitMethod
+	invokeInitMethods
+	isExcluededFromDependencyCheck
+	obtainFromSupplier
+	populateBean
+	postProcessObjectFromFactoryBean
+	predictBeanType
+	removeSingleton
+	resolveBeanByName
+	resolveBeforeInstantiation
+	resolveDependency
+	setAllowCircularReferences
+	setAllowRawInjectionDespiteWrapping
+	setInstantiationStrategy
+	setParmaterNameDiscoverer
+	unsatisfiedNonSimpleProperties
+DefaultListableBeanFactory
+	[javaxInjectProviderClass
+	[serializableFactories
+	[serializationId
+	[allowBeanDefintionOverriding
+	[allowEagerClassLoading
+	[dependencyComparator
+	[autowireCandidateResolver
+	[resolvableDependencies
+	[beanDefinitionMap
+	[allBeanNamesByType
+	[singletonBeanNamesByType
+	[beanDefinitionNames
+	[manualSIngletonNames
+	[frozenBeanDefintionNames
+	[configurationFrozen
+	()
+	(BeanFactory)
+	allowAliasOverriding
+	clearMetadataCache
+	containsBeanDefinition
+	copyConfigurationFrom
+	destroySingleton
+	destroySingletons
+	determineAutowireCandidate
+	determineHighestPriorityCandidate
+	derterminePrimaryCandidate
+	doResolveDependency
+	findAnnotationOnBean
+	findAutowireCandidates
+	freezeConfiguration
+	getAutowireCandidateResolver
+	getBean
+	getBeanDefinition
+	getBeanDefiitionCount
+	getBeanDefinitionNames
+	getBeanNamesForAnotation
+	getBeanNamesForType
+	getBeanNamesIterator
+	getBeanProvider
+	getBeansOfType
+	getBeansWithAnnotation
+	getDependencyComparator
+	getPriority
+	getSerializationId
+	isAllowBeanDefinitionOverriding
+	isALlowEagerClassLoading
+	isAutowireCandidate
+	isBeanEligibleForMetadataCaching
+	isConfigurationFrozen
+	isPrimary
+	matchesBeanName
+	preInstantiateSingletons
+	registerBeanDefinition
+	registerReolvableDependency
+	registerSingleton
+	removeBeanDefintion
+	resetBeanDefinition
+	resolveDependency
+	resolveNamedBean
+	setAllowBeanDefinitionOverriding
+	setAllowEagerClassLoading
+	setAutowireCandidateResolver
+	setDependencyComparator
+	setSerializationId
+	writeReplace
+
+</beans.factory>	
+<beans.factory.support>
+EnvironmentCapable
+	getEnviromnent
+AbstractBeanDefinitonReader
+	(BeanDefinitionRegistry)
+	[registry
+	[resourceLoader
+	[beanClassLoader
+	[enviroment
+	[beanNameGenerator
+	getBeanClassLoader
+	getBeanFactory
+	getNameGenerator
+	getEnvironment
+	getRegistry
+	getResourceLoader
+	loadBeanDefinitions
+	setBeanClassLoader
+	setBeanNameGenerator
+	setEnviromnent
+	setResourceLoader
+BeanDefinitionReader
+	getRegistry
+	getResourceLoader
+	getBeanClassLOader
+	getBeanNameGenerator
+	loadBeanDefinitions
+XmlBedefinitionReader
+	(BeanDefinitionRegistry)
+	[documentReaderClass
+	[problemReporter
+	[eventListener
+	[sourceExtractor
+	[namespaceHandlerResolver
+	[documentLoader
+	[entityResolver
+	[errorHandler
+	[validationModeDetector
+	[resourcesCurrentlyBeingLoaded
+	createBeanDefinitionDocumentReader
+	createDefaultNamespaceHandlerResolver
+	createReaderContext
+	dectectValidationMode
+	doLoadBeanDefinitions
+	doLoadDocument
+	getEntityResolver
+	getNamespaceHandlerResolver
+	getValidationMode
+	getValidationMOdeForResoource
+	isNamespaceAware
+	loadBeanDefinitions
+	registerBeanDefinitions
+	setDocumentLoader
+	setDocumentLoaderReaderClass
+	setEntitryResolver
+	setErrorHandler
+	setEventListener
+	setNamespaceAware
+	setNamespaceHandlerResolver
+	setProblemReporter
+	setSourceExtractor
+	setValidating
+	setValidationMode
+	setValidationModeName
+
+</beans.factory.support>	
+<beans.factory.config>
+InstantiationAwareBeanPostProcessor
+	postProcessAfterInstantiation
+	postProcessBeforeInstantiation
+	postProcessProperties
+	postProcessPropertyValues
+BeanDefinition
+	getBeanClassName
+	getCOnstructorArgumentValues
+	getDependsOn
+	getDescription
+	getDestroyMethodName
+	getFactoryBeanName
+	getFactoryMethodName
+	getINitMethodName
+	getOriginatingBeanDefinition
+	getParentName
+	getPropertyValues
+	getResourceDescription
+	getRole
+	getScope
+	hasConstructorArgumentValues
+	hasPropertyValues
+	isAbstract
+	isAUtowireCandidate
+	isLazyInit
+	isPrimary
+	isPrototype
+	isSingleton
+	setAutowireCandidtate
+	setBeanClassName
+	setDependsOn
+	setDescription
+	setDestroyMethodName
+	setFactoryBeanName
+	setFactoryMethodName
+	setInitMethodName
+	setLazyInit
+	setParentName
+	setPrimary
+	setRole
+	setScope
+AbstractBeanDefinition
+	addQualifier
+	applyDefaults
+	clone
+	cloneBeanDefinition
+	copyQualifiersFrom
+	equals
+	getAutowireMode
+	getBeanClass
+	getBeanClassName
+	getConstructorArgumentValues
+	getDependencyCheck
+	getDependensOn
+	getDescription
+	getDestoryMethodName
+	getFactoryBeanName
+	getFactoryMethodName
+	getInitMethodName
+	getInstanceSupplier
+	getMethodOverrides
+	getOriginatingBeanDefinition
+	getPropertyValues
+	getQualifier
+	getQualifiers
+	getResolvedAutowireMode
+	getResource
+	getResourceDescription
+	getRole
+	getScope
+	hasBeanClass
+	hasConstructorArgumentValues
+	hashCOde
+	hasMethodOverrides
+	hasPropertyValues
+	hasQualifier
+	isAbstract
+	isAutowiredCandidate
+	isEnforceDestroyMethod
+	isEnforceInitMethod
+	isLazyInit
+	isLenientConstructorResolution
+	isNonPublicAccessAllowed
+	isPrimary
+	isPrototype
+	isSingleton
+	isSynthetic
+	overrideFrom
+	prepareMethodOverride
+	prepareMethodOVerrides
+	resolveBeanClass
+	setAbstract
+	setAutowireCandidate
+	setAutowireMode
+	setBeanClass
+	setBeanClassName
+	setConstructorArgumentValues
+	setDependencyCheck
+	setDependensOn
+	setDescription
+	setDestoryMethodName
+	setEnforceInitMethod
+	setFactoryBeanName
+	setFactoryMethodName
+	setInitMethodName
+	setInstanceSupplier
+	setLazyInit
+	setLenientConstructorResolution
+	setMethodOverrides
+	setNonPublicAccessAllowed
+	setOriginatingBeanDefinition
+	setPrimary
+	setPropertyValues
+	setResource
+	setResourceDescription
+	setRole
+	setScope
+	setSynthetic
+	validate 
+rootBeanDefinition
+	cloneBeanDefinition
+	equals
+	getDecoratedDefinition
+	getParamName
+	getPreferredConstructors
+	getQualifiedElement
+	getResolvableType
+	getResolvedFctoryMethod
+	getTargetType
+	isExternalManagedCOnfigMember
+	isExternalManagedInitMethod
+	isFactoryMehtod
+	registerExternallyManagedConfigMember
+	registerExternallyManagedDestroyMethod
+	registerExternallyManagedInitMethod
+	setDecoratedDefinition
+	setParentName
+	setQualifiedElement
+	setTargetType
+	setUniqueFactoryMethodName
+GenericBeanDefiition
+	cloneBeanDefi ition
+	equals
+	getParentName
+	setParentName
+ChildBeanDefinition
+	cloneBeanDefinition
+	equals
+	getParentName
+	setParentName
+	validate
+BeanDefinitionHolder
+	equals
+	getAliases
+	getBEanDefinition
+	getBeanName
+	getLongDescription
+	getShortDescription
+	getSource
+	matchesName
+	hashCode
+	toString
+BeanWrapper
+	getAutoGrowCollectionLimit
+	getPropertyDescriptor
+	getPropertyDescriptors
+	getWrappedClass
+	getWrappedInstance
+	setAutoGrowCollectionLimit
+
+</beans.factory.config>
+<beans.factory.annotation>
+AnnotatedGenericBeanDefinition
+	getFactoryMethodMetaData
+	
+</beans.factory.annotation>
+<context>
+ApplicationContextInitializer
+	initialize
+ApplicationListener
+	onApplicationEvent
+SmartApplicationListener
+	getOrder
+	supportsEventType
+	supportsSourceType
+ApplicationEvent
+	getTimestamp
+ApplicationContextEvent
+	getApplictionContext
+ContextRefreshedEvent
+	[source
+ContextStartedEvent
+ContextStoppedEvent
+ContextClosedEvent
+PayloadApplicationEvent
+AbstractSubProtocolEvent
+	getMessage
+	getUser
+SessionConnectedEvent
+</context>
+<context.annotation>
+ClasspathScannigCnadidateComponentProvider
+	[resourcePattern
+	[incudeFilters
+	[excludeFilters
+	[environment
+	[conditionEvaluator
+	[resourcePatternResolver
+	[metadataReaderFactory
+	[componentsIndex
+	addExcludeFilter
+	addIncludeFilter
+	clearCache
+	findCandidateCOmponents
+	getEnvironment
+	getMetadataReaderFactory
+	getRegistry
+	getResourceLoader
+	isCandidateCOmponent
+	registerDefaultFilters
+	resetFilters
+	resolverBasePackage
+	setEnvironment
+	setMetadataReaderFactory
+	setResoruceLoader
+	setResourcePttern
+ClassPathBeanDefinitionScanner
+	checkCandidate
+	doScan
+	getBeanDefinitionDefaults
+	getRegistry
+	isCompatible
+	postProcessBeanDefinition
+	registerBeanDefinition
+	scan
+	setAutowireCandidtePatterns
+	setBeanDefinitionDefautls
+	setBeanNameGenerator
+	setIncludeAnnotationConfig
+	setScopedProxyMode
+	setScopeMetadataResolver
+AnnotatedBeanDefinitionReader
+	getRegistry
+	register
+	registerBean
+	setBeanNameGenerator
+	setEnvironment
+	setScopeMetadataResolver
+</context.annotation>
+<context.index>
+CandidateComponentIndex
+	getCandidateTypes
+CandidateComponentIndexer
+	getCompletions
+	getSupportedAnnotationTypes
+	getSupportedOptions
+	getSupportedSourceVersion
+	init
+	process
+</context.index>
+<context.support>
+GenericApplicationContext
+	cancelRefresh
+	closeBeanFactory
+	getAutowireCapableBeanFactory
+	getBeanDefinition
+	getBeanFactory
+	getClassLOader
+	getDefaultListableBeanFactory
+	getResource
+	isAlias
+	isBeanNameInUse
+	refreshBeanFactory
+	registerAlias
+	registerBean
+	registerBeanDefinition
+	removeAlias
+	removeBeanDefinition
+	setAllowBeanDefinitionOverriding
+	setAllowCircularReferences
+	setClassLoader
+	setParent
+	setResourceLoader
+ApplicationContext
+	getapplicationName
+	getAutowireCapableBeanFactory
+	getDisplayName
+	getId
+	getParent
+	getStartUpDate
+ClassPathXmlApplicationContexts
+	()
+	(ApplicationContext)
+	(Cofiglocation)
+	[configLocations
+	getConfigResources
+AbstractXmlApplicationCOntext
+	()
+	(ApplicationContext)
+	[validating
+	getCOnfigResources
+	initBeanDefinitionReader
+	loadBeanDefinitions
+	setValidating
+AbstractRefreshableConfigApplicationContext
+	()
+	(ApplicationContext)
+	[configLocations
+	[setIdCalled
+	afterPropertiesSet
+	getConfigLocations
+	getDefaultConfigLocations
+	resolvePath
+	setBeanName
+	setConfigLOcation
+	setConfigLocations
+	setID
+AbstractRefreshableApplicationContext
+	()
+	(ApplicationContext)
+	[allowBeanDefinitionOverriding
+	[allowCircularReferences
+	[beanDefaultFactory
+	[beanFactoryMonitor
+	assertBeanFactoryActive
+	cancelRefresh
+	closeBeanFactory
+	createBeanFactor
+	customizeBeanFactory
+	getBeanFactory
+	hasBeanFactory
+	loadBeanDefinitions
+	refreshBeanFactory
+	setAllowBeanDefinitionOVerriding
+	setAllowCIrcularReferences
+AbstractApplicationCOntext
+	[parent
+	[environment
+	[beanFactoryPostProcessors
+	[startupDate
+	[active
+	[closed
+	[startupShutdownMonitor
+	[shutdownHook
+	[resourcePatternResolver
+	[lifecycleProcessor
+	[MessageSource
+	[applicationeEventMulticaster
+	[applicationListeners
+	[earlyApplicationEvents
+	()
+	(ApplicationContext)
+	addApplicationListener
+	addBeanFactoryPostProcessor
+	asssertBeanFactoryActive
+	cancelRefresh
+	close
+	closeBeanFactory
+	containsBean
+	containsBeanDefinition
+	containsLocalBean
+	destory
+	destroyBeans
+	doClose
+	findAnnotationOnBean
+	finishBeanFactoryInitialization
+	finishRefresh
+	getALiases
+	getApplicationListeners
+	getApplicationName
+	getAutowireCapableBeanFactory
+	getBean
+	getBeanDefinitionCount
+	getBeanDefinitionNames
+	getBeanFactory
+	getBeanFacotryPostProcessors
+	getBeanNamesForAnnotation
+	getBeanNamesFOrType
+	getBeanProvider
+	getBeansOfType
+	getBeansWIthAnnotation
+	getDisplayName
+	getEnviromnent
+	getId
+	getInternalParentBeanFactory
+	getInternalParentMesssageSource
+	getParent
+	getMessage
+	getParentBeanFactory
+	getResourcePatternResolver
+	getResources
+	getStartupDate
+	getType
+	initApplicationEventMulticaster
+	initLifecycleProcessor
+	initMessageSource
+	initPropertySources
+	invokeBeanFactoryPostProcessors
+	isActive
+	isPrototype
+	isRunning
+	isSingleton
+	isTypeMatch
+	obtainFreshBeanFactory
+	onClose
+	onRefresh
+	postProcessBeanFactory
+	prepareBeanFactory
+	publishEvent
+	refresh
+	refreshBeanFactory
+	registerBeanPostProcessors
+	registerListeners
+	registerShutdownHook
+	resetComonCaches
+	setDisplayName
+	setEnviromnent
+	setId
+	setParent
+	start
+	stop
+	toString
+DefaultResourceLoader
+	()
+	(ClassLoader)
+	[classLoader
+	[protocolResolvers
+	[resourceCaches
+	addProtocolResolver
+	clearResourceCaches
+	getClassLoader
+	getProtocolResolvers
+	getResource
+	getResorceByPath
+	getResourceCache
+	setClassLoader
+ConfigurableApplicationContext
+	addApplicationListener
+	addFactoryPostProcessor
+	addProtocolResolver
+	close
+	getBeanFactory
+	getEnviroment
+	isActie
+	refresh
+	registershutdownHook
+	setEnviromentn
+	setId
+	setParent
+Lifecycle
+	isRunning
+	start
+	stop
+WebApplictionContext
+	getServletContext
+ConfigurableWebApplicationContext
+	getConfigLocations
+	getNamespace
+	getServletConfig
+	setConfigLocations
+	setNamespace
+	setServletConfig
+	setServletContext
+AbstractRefreshableWebApplicationContext
+	createEnvironment
+	getApplicationName
+	getCOnfigLocations
+	getNamespace
+	getResourceByPath
+	getResourcePatternResolver
+	getServletConfig
+	getServletContext
+	getTheme
+	initPoropertySources
+	onRefresh
+	postProcessBeanFactory
+	setNamespace
+	setServletConfig
+	setServletContext
+AnnotationConfigWebApplicationContext
+	getAnnotatedBeanDefinitionReader
+	getBeanNameGenerator
+	getClassPathBeanDefinitionScanner
+	getScopeMetadataResolver
+	loadBeanDefinitions
+	register
+	scan
+	setBeanNameGenerator
+	setScopeMetadataResolver
+</context.support>
+<context.annotation>
+@ComponentScan
+	basePackageClasses
+	basePackages
+	excludeFilters
+	includeFilters
+	lazyInit
+	nameGenerator
+	resourcePattern
+	scopedProxy
+	scopeResolver
+	useDefaultFilters
+	value
+ClasspathScanningCandidateComponentProvider
+	[List
+	[List
+	[Environment
+	[CanditionEvaluator
+	[ResourcePatternResolver
+	[MetadataReaderFactory
+	[CandidateCOmponentsIndex
+	addExcludeFilter
+	addIncludeFilter
+	clearCache
+	findCandidateComponents
+	getEnvironment
+	getMetadataReaderFactory
+	getRegistry
+	getResourceLoader
+	isCandidateComponent
+	registerDefautFilters
+	resetFilters
+	resolveBasePackage
+	setEnvironment
+	setMetadatareaderFactory
+	setResourceLoader
+	setResourcePattern
+ConfigurationClassPostProcessor
+	enhanceConfigurationCLasses
+	getOrder
+	postProcessBeanDefiintionRegistry
+	postPRocessBeanFactory
+	processConfigBenaDefinitions
+	setBeanClassLoader
+	setBeanNameGenerator
+	setEnviroment
+	setMetadataReaderFactory
+	setProblemReporter
+	setResourceLoader
+	setSourceExtracter
+COnfigurationClassParser
+	
+</context.annotation>
+<context.index>
+CandidateCoponentsIndex
+	getCandidateTypes
+</context.index>
+<web.servlet>
+HttpServletBen
+	addRequirePropert
+	createEnvironment
+	getEnvronment
+	getSerlvetName
+	init
+	initBeanWrapper
+	initServletBean
+	setEnvironment
+FrameworkServlet
+	applyInitializers
+	buildLocaleContext
+	buildRequestAttributes
+	configuraeAndRefreshWebApplicationContext
+	createWebApplicationContext
+	destroy
+	doDelete
+	doOptions
+	doPost
+	doPut
+	doSevice
+	doTrace
+	findWebApplicationContext
+	getContextAttribute
+	getContextClass
+	getContextConfigLocations
+	getContextId
+	getNamespace
+	getServletContextAttrubuteName
+	getUsernameFOrRequest
+	getWebApplicationContext
+	initFrameorkServlet
+	initServletBean
+	initWEebApplicationContxt
+	isEnableLoggingRequestDetails
+	onApplicationEvet
+	onRefresh
+	postProcessWebApplicationContext
+	processRequest
+	refresh
+	service
+	setApplicationContext
+	setContextAttribute
+	setContextClass
+	setContextConfigLocation
+	setCOntextId
+	setContextInitializerClasses
+	setContextInitializers
+	setDispatchOptionsRequest
+	setDispatchTraceRequest
+	setNamespace
+	setPublishContext
+	setPublishEvents
+	setThreadContextInheritable
+DispatcherServlert
+	buildLOcaleContext
+	checkMultipart
+	cleanupMultipart
+	createDefaultStrategy
+	doDispatch
+	doService
+	getDefaultStrategies
+	getDefaultStratgy
+	getDefaultViewName
+	getHandler
+	getHandlerAdapter
+	getHandlerMappings
+	getMultipartResolver
+	getThemeSource
+	initStrategies
+	noHandlerFound
+	onRefresh
+	processHandlerException
+	render
+	resolveViewName
+	setCleanupAfterInclude
+	setDeectAllHandlerAdapters
+	setDectectAllHandlerExceptionResolvers
+	setDectAllHandlerMappings
+	setDectectAllViewResolvers
+	setThrowExceptionIfNoHandlerFound
+
+</web.servlet>
+<beans>
+BeanInfoFactory
+	getBeanInfo
+BeanMetadataElement
+	getSource
+BeanWrapper
+	getAutoGrowCollectionLimit
+	getPropertyDescriptor
+	getPropertyDescriptors
+	getWrapperdClass
+	getWrapperdInstance
+	setAutoGrowCOllectionLimit
+ConfigurablePropertyAccessor
+	getCOnversionService
+	isAutoGrowNEstedPaths
+	isExtractOldValueForEditor
+	setAutoGrowNestedPaths
+	setConversionService
+	setExtracOldValueForEditor
+Mergeable
+	isMErgeEnable
+	merge
+PropertyAccessor
+	getPropertyType
+	getPRopertyTypeDescriptor
+	getPropertyValue
+	isReadableProperty
+	isWritableProperty
+	setPropertyValue
+	setPropertyValues
+PropertyEditorRetistrar
+	
+	
+
+ApplicationContextAware
+	setApplicationContext
+AliasRegistry
+	[aliasMap
+	getAliases
+	isALias
+	registerAlias
+	removeAlias
+AttributeAccessor
+	attributeNames
+	getAttribute
+	hasAttribute
+	removeAttribute
+	setAttribute
+DecoratingProxy
+	getDecoratedClass
+InfrastructureProxy
+	getWrappedObject
+MethodIntrospector.MetadataLookup
+	inspect
+OrderComparator.OrderSourceProvider
+	getOrderSource
+Ordered
+	getOrder
+ParameterNameDiscover
+	getParamaterNames
+	getParameterNames
+PriorityOrdered
+	优先的Ordered
+ResolveableTypeProvider
+	getResolvableType
+SmartClassLoader
+	isClassReloadable
+	
+AttributeAccessorSupport 
+BridgeMethodResolver
+	findBridgeMethod
+	isVisibilityBridgeMehodPair
+CollectionFactory
+	createApproximateCollection
+	createApproximateMap
+	createCollection
+	createMap
+	createStringAdaptingProperties
+	isApproximableCollectionType
+	isApproximableMapType
+Constants
+	asNumber
+	asObject
+	asString
+	getClassName
+	getFieldCache
+	getNames
+	getNamesForProperty
+	getNamesForSuffix
+	getSize
+	getValues
+	getValuesForProperty
+	getValuesForSuffix
+	propertyToConstantNamePrefix
+	toCode
+	toCodeForProperty
+	toCodeForSuffix
+Conventions
+	attributeNameToPropertyName
+	getQualifiedAttributeName
+	getVariableName
+	getVarialbeNameForParameter
+	getVariableNameForReturnType
+DecorationClassLoader
+	excludePackage
+	excluedClass
+	isExcluded
+DefaultParameterNameDiscover
+ExceptionDepthComparator
+GenericTypeResolver
+	getTypeVariableMap
+	resolverParameterType
+	resolveReturnType
+	resolverReturnTypeArgument
+	resolveType
+	resolveTypeArgument
+LocalVariableTableParameterNameDiscover
+MethodClassKey
+	comapreTo
+	equals
+	hashCode
+	toString
+MethodIntrospector
+	selectInvocableMethod
+	selectMethods
+	selectMethods
+MethodParamater
+	adaptAnnotation
+	adaptAnnotationArray
+	decresenestingLevel
+	findParameterIndex
+	forExecutable
+	forMethodOrConstructor
+	forParameter
+	getAnnotatedElement
+	getConstructor
+	getContainingClass
+	getExecutable
+	getGenericParameterType
+	getMember
+	getMethodAnnotations
+	getNestedGenericParameterType
+	getNestedParameterType
+	getNestingLevel
+	getParameter
+	getParameterAnnotation
+	getParameterIndex
+	getParameterType
+	getTypeIndexForCurrentLevel
+	getTypeIndexForLevel
+	hasMethodAnnotation
+	hasParameterAnnotation
+NamedInheritableThreadLocal
+	toString
+NamedThreadLocal
+NEstedExceptionUtils
+	buildMessage
+	getMostSpecificCause
+	getRootCause
+OrderComparator
+	compare
+	findOrder
+	getOrder
+	getPriority
+	sort
+	sortIfNessessary
+	withSourceProvider
+OrverridingClassLOader
+	isEligibleForOverriding
+	loadBytesForClass
+	loadClass
+	loadClassForOverriding
+	openStreamForClass
+	transformIfNecessary
+ParamterizedTypeReference
+	getType
+	forType
+ReactiveAdapter
+	fromPublisher
+	getDescriptor
+	getReactiveType
+	isMultiValue
+	isNoValue
+	supportsEmpty
+	toPublisher
+ReactiveAdapterRegistry
+	getAdapter
+	getSharedInstance
+	hasAdapters
+	registerReactiveType
+ReactiveTypeDescriptor
+	getEmptyValue
+	getReactiveValue
+	isMultivalue
+	isNoValue
+	multiValue
+	noValue
+	singleOptionalValue
+	singleRequiredValue
+	supportEmpty
+ResolvableType
+	as
+	asClollection
+	asMap
+	clearCache
+	forArrayComponent
+	forClass
+	forClassWithGenerics
+	forConstructorParameter
+	forField
+	forInstance
+	forMethodParameter
+	forRawClass
+	forType
+	getComponentType
+	getGenerics
+	getInterfaces
+	getNEsted
+	getRawClass
+	getSource
+	getType
+	hasGenerics
+	hasUnresolvableGenerics
+	isArray
+	isAssignableFrom
+	isAssignableFrom
+	isInstance
+	resolve
+	resolveGeneric
+	resolveGenerics
+	toClass
+SimpleAliasRegistry
+	allowAliasOverriding
+	canonicalName
+	checkForAliasCircle
+	getAliases
+	hasAlias
+	isAlias
+	registerAlias
+	removeAlias
+	resolveAliases
+SpringProperties
+	getFlag
+	setFlag
+	getProperty
+	setProperty
+SpringVersion
+	getVersion
+StandardReflectionParamterNameDiscover
+
+</beans>
+<core.annotation>
+SynthesizedAnnotation
+AnnotatedElementUtils
+	findAllMErgedAnnotations
+	findMergedAnnotation
+	findMergedAnnotationAttributes
+	findMergedRepeatableAnnotations
+	forAnnotations
+	getAllAnnotationAttributes
+	getAllMergedAnnnotations
+	getMergedAnnotation
+	getMergedAnnotationAttributes
+	getMergedRepeatableAnnotations
+	getMetaAnnotationTpes
+	getMetaAnnotationTypes
+	hasAnnotation
+	hasMetaAnnotationTypes
+	hasMetaAnnotationTypes
+	isAnnotated
+AnotationAttributes
+	annotationType
+	fromMap
+	getAnnotation
+	getAnnotationArray
+	getBoolean
+	getClass
+	getClassArray
+	getEnum
+	getNumber
+	getString
+	getStringArray
+	putIfAbsent
+AnnotationsUtils
+	clearCache
+	findAnnotation
+	findANnotationDeclaringClass
+	findAnnotatinoDeclaringClassForTypes
+	getAnnotation
+	getANnotationAttributes
+	getAnnotations
+	getDecalredRepeatableAnnotations
+	getDefaultValue
+	getRepeatableAnnotations
+	getValue
+	isAnotationDeclaredLocally
+	isAnnotationInherited
+	isAnnotationMetaPresent
+	isInJavaLangAnnotaionPackage
+	postProcessAnnotaionAttributes
+	registerDefaultValues
+	synthesizeAnotation
+	validateAnnotation
+OrderUtils
+	getOrder
+	getPriority
+SynthesizedMethodParameter
+	adaptAnnotation
+	adaptAnnotationArray
+	clone
+	forExecutable
+	forParamter
+@AliasFor 
+	value attribute annnotation
+@Order
+	int value
+
+</core.annotation>
+<core.codec>
+Decoder
+	canDecode
+	decode
+	decodeToMono
+	getDecodableMimeTypes
+Encoder
+	canEncode
+	encode
+	getEncodableMimeType
+AbstractDataBufferDecoder
+	decode
+	decodeDataBuffer
+	decodeToMono
+AbstractDecoder
+AbstractSingleValueEncoder
+	encode
+ByteArrayDecoder
+ByteArrayEncoder
+ByteBufferEncoder
+ByteBufferDecoder
+CharSequenceEncoder
+DataBufferDecoder
+DataBufferEncoder
+Hints
+	from
+	getLogPrefix
+	getRequiredHint
+	merge
+	merge
+	none
+ResourceDecoder
+ResourceEncoder
+ResourceRegionEncoder
+StringDecoder
+core.convert
+ConversionService
+	canConvert
+	convert
+Property
+	getName
+	getObjectType
+	getReadMethod
+	getTpe
+	getWriteMethod
+TypeDescriptor
+	arrray
+	collection
+	elementTypeDescriptor
+	forObject
+	getAnnotation
+	getAnnotations
+	getElementTypeDescriptor
+	getMapKeyTypeDescriptor
+	getMapValueTypeDescriptor
+	getName
+	getObjectType
+	getResolvableType
+	getSource
+	getType
+	hasAnnotation
+	isArray
+	isAssignableTo
+	isCollection
+	isMap
+	isPrimitive
+	map
+	narrow
+	nested
+	upcast
+	valueOf
+
+</core.codec>
+<core.convert.converter>
+
+ConditionalConverter
+	matches
+COnditionalGenericConveter
+Converter
+	convert
+ConverterFactory
+	getConverter
+ConvertRegistry
+	addConveter
+	addConveterFactory
+	removeConverible
+GenericConverter
+	convert
+	getConvertibleTypes
+core.convert.support
+	configurableConversionService
+
+</core.convert.converter>
+<core.env>
+COnfigurableEnvironment
+	addActiveProfile
+	getPropertySources
+	getSystemEnvironment
+	getSystemProperties
+	merge
+	setActiveProfiles
+	setDefaultProfiles
+ConfigurablePropertyResolver
+	getConversionService
+	setConversionService
+	setIgnoreUnresolvableNestedPlaceholders
+	setPlaceholderPrefix
+	setPlaceholderSuffix
+	setRequiredProperties
+	setValueSeparator
+	validateRequiredProperties
+Enviroment
+	acceptProfiles
+	getActiveProfiles
+	getDefaultProfiles
+EnvironmentCapable
+	getEnvironments
+Profiles
+	matches
+	of
+PropertyResolver
+	containsProperty
+	getProperty
+	getRequiredProperty
+	resolvePlaceHolders
+	resolveRequiredPlaceHolders
+AbstractEnvironment
+	[ignore_getenv_property_name
+	[active_profiles_property_name
+	[default_profiles_property_am
+	[reserved_default_profile_name
+	[activeProfiles
+	[defaultProfiles
+	[MutablePropertySources
+	[propertyResolver
+	acceptsProfiles
+	addActiveProfile
+	containsProperty
+	customizzePropertySources
+	doGetActiveProfiles
+	doGetDefaultProfiles
+	getActiveProfiles
+	getConversionService
+	getDefaultProfiles
+	getActiveProFiles
+	getConversionService
+	getDefaultProfiles
+	getProperty
+	getPropertySources
+	getRequiredProperty
+	getReservedDefaultProfiles
+	getSystemEnvironment
+	getSystemProperties
+	isProfileActive
+	merge
+	resolvePLaceHolders
+	resolverRequiredPlaceHolders
+	setActiveProfiles
+	setConversionService
+	setDefaultProfiles
+	setIgnoredUnresolvableNestedPlaceHolders
+	setPlaceHolderPrefix
+	setPlaceholdersuffix
+	setRequiredProperties
+	setValueseperator
+	suppressGetEnveAccess
+	validateProfile
+	validateRequiedProperties
+	
+ConfigurableEnviroment 
+ConfigurablePropertyResolver 
+Enviroment 
+PropertyResolver
+AbstractPropertyResolver
+	PropertyResolver ConfiguablePropertyResolver
+CommandLinePropertySource
+	containsOption
+	containsProperty
+	getNonOptionsArgs
+	getOptionValues
+	getProperty
+	setNonOptionArgsPropertyName
+COmpositePropertySource
+	addFirstPropertySource
+	addPropetySource
+	contaisnProperty
+	getProperty
+	getPropertyNames
+	getPropertyNames
+	getPropertySources
+JOptCommandLinePropertySource
+	containsOptions
+	getNonOptionsArgs
+	getOptionValues
+	getProeprtyNames
+MapPropertySource
+	containsProperty
+	getProeprty
+	getPRopertyNames
+MutablePropertySources
+	addAfter
+	addBefore
+	addFirst
+	addLast
+	contains
+	get
+	iterator
+	precedenceOf
+	remove
+	removeIfPresent
+	replace
+	size
+	spliterator
+	stream
+PropertiesPropertySource
+	getPropertyNames
+PropetySource
+	containsProperty
+	getName
+	getProperty
+	getSource
+	named
+PropertySource.StubPropertySource
+	getProperty
+PropertySourcesPropertyResolver
+	containsPorperty
+	getPRoperty
+	getPropertyAsRowString
+	logKeyFound
+SimpleCOmmandLinePropertySource
+	getNonOptionsArgs
+	getOptionValues
+	getProeprtyNames
+StandardEnvironment
+	customizePropetySources
+SystemEnvironmentPropertySource
+	isSecurityManagemrpresent
+	resolvePropertyName
+</core.env>
+<core.io>
+InputStreamSource
+	getInputStream
+Resoruce
+	contentLength
+	createRelative
+	exists
+	getDescriptions
+	getFile
+	getFileName
+	getURI
+	getURL
+	isFile
+	isOpen
+	isReadable
+	isModified
+	readableChannel
+ResourceLoader
+	getClassLoader
+	getResource
+ContextResource
+	getPathWithInContext
+ProtocollResolver
+	resolve
+WritableResource
+	getOutputuStream
+	isWritable
+	writableChannel
+AbstractFileResolvingResource
+	customizeConnecction
+	exists
+	getFile
+	getFileForLastModifiedCHeck
+	isFile
+	isReadable
+	lastModified
+	readableChannel
+AbstractResource
+	contentLength
+	createRelative
+	exists
+	getFile
+	getFIleForLastModified
+	getFilename
+	getURI
+	getURL
+	isFile
+	isOpen
+	isReadable
+ByteArrayResource
+ClassPathResource
+ClassRelativeResourceLoader
+	getResourceByPath
+DefaultResourceLoader
+	addProtocolResolver
+	clearResoruceCaches
+	getClassLoader
+	getProtocolResolvers
+	getResource
+	getResourceByPath
+	getResourceCache
+	setClassLOader
+DefaultResourceLoader.ClassPathContextResource
+	getPathWithinContext
+DescriptiveResource
+	getDescription
+	getINputStream
+	exists
+FileSystemResource
+	contentLength
+	createRelative
+	eixsts
+	getFilename
+	getInputStream
+	getOutputStream
+	getURI
+	getURL
+FileSystemResourceLoader	
+	getResourceByPath
+FileUrlResource
+	createRelative
+	getFile
+	getOutputStream
+	isWritable
+InputStreamResource
+	getInputStream
+PathResource
+ResourceEditor
+	containsProperty
+	getProperty
+	getRequiredProperty
+	resolvePlaceHolder
+	reesolveRequiredPlaceHolder
+UrlResource
+	createRelative
+	getDescription
+	getFile
+	getURI
+	getURL
+VfsResource
+	createRelative
+	getFile
+VfsUtils
+	doGetPath
+	doGetVIsitorAttribtes
+	getRoot
+	invokeVfsMethod
+core.type
+TypeFilter
+	match
+AnnotationTypeFilter
+	getAnnotationType
+	hasAnnotation
+	matchInterface
+	matchSelf
+	matchSuperClass
+</core.io>
+<core.io.support>
+SpringFactoriesLoader
+	loadFactories
+	loadFactoryNames
+</core.io.support>
+<core.type>
+ANnotationMetaData
+	getAnnotatedMethods
+	getAnnotationsTypes
+	getMetaAnnotationTypes
+	hasAnnotation
+	hasMetaAnnotation
+MethodMetadata
+	getDeclaringClassName
+	getMethodName
+	getReturnTypeName
+	isAbstract
+	isFinal
+	isOverridable
+	isStatic
+ClassMetadata
+	getClassName
+	getEnclosingClassName
+	getInterfaceNames
+	getMemerClassNames
+	getSuperClassNames
+	hasEnclosingClass
+	hasSuperClass
+	isAbstract
+	isAnnotaion
+	isConcrete
+	isFinal
+	isIndependent
+	isInterface
+StandardAnnotationMetadata
+	getAllAnnotationAttributes
+	getAnnotatedMethods
+	getAnnotationAttributes
+	getAnnotationTypes
+	getMetaAnnotationTypes
+	hasAnnotatedMethods
+	hasAnnotation
+	hasMetaAnnotation
+	isAnnotated
+	
+</core.type>	
+<aop>
+TargetClassAware
+	getTargetClass
+TargetSource
+	getTarget
+	getTargetClass
+	isStatic
+	releaseTarget
+Advice
+Interceptor
+MethodINterceptr
+	invoke
+BeforeAdvice
+MethodBeforeAdvice
+	before
+Advisor
+	getAdvice
+	isPerinstance
+PointcutAdvicor
+	getPointcut
+AbstractPointcutAdvisor
+	equals
+	getOrder
+	hashCode
+	isPerInstance
+	setOrder
+AbstractGenericPointcutAdvisor
+	getAdvice
+	setAdvice
+	toString
+NameMatchMethodPointcutAdvisor
+	addMethodName
+	getPointcut
+	setClassFilter
+	setMappedName
+	setMappedNames
+</aop>
+<aop.framework>
+ProxyConfig
+	copyFrom
+	isExposeProxy
+	isFrozen
+	isOpaque
+	isOptimize
+	isProxyTargetClass
+	setExposeProxy
+	setFrozen
+	setOpaque
+	setOptimize
+	setProxyTargetClass
+	toString
+AopInfrastructureBean
+ProxyProcessorSupport
+	evaluateProxyInterfaces
+	getOrder
+	getProxyClassLoader
+	isConfigurationCallbackInterface
+	isInternalLanguageInterface
+	setBeanClassLoader
+	setORder
+	setProxyCladdLoader
+AbstractAutoProxyCreator
+	[Proxy_WITHOUT_ADDITIONAL_INTERCEPTORS
+	[DO_NOT_PROXY
+	[advisorAdapterRegistry
+	[freezeProxy
+	[interceptorNames
+	[applyCommonInterceptorsFirst
+	[customTargetSourceCreators
+	[benFactory
+	[targetSourcedBeans
+	[earlyProxyReferences
+	[proxyTypes
+	[advisedBeans
+	advisorsPreFilterred
+	buildAdvisors
+	createProxy
+	customizeProxyFactory
+	determineCandidateConstructors
+	getAdvicesAndAdvisorsForBean
+	getBeanFactory
+	getCacheKEy
+	getCustomTargetSource
+	getEarlyBeanReference
+	isFrozen
+	isInfrastructureClass
+	postProcessAfterInitialization
+	postProcessAfterInstantiation
+	postProcessBeforeInitialization
+	postProcessBeforeInstantiation
+	postProcessProperties
+	predictBeanType
+	setAdvisorAdapterRegistry
+	setApplyCommonInterceptorsFirst
+	setBeanFactory
+	setCustomTargetSourceCreators
+	setFrozen
+	setInterceptorNames
+	shouldProxyTargetClass
+	shouldSkip
+	wrapIfNecessary
+	
+	
+ProxyFactory
+	getProxy
+Advised
+	addAdvice
+	addAdvisor
+	getAdvisors
+	getProxiedInterfaces
+	getTargetSource
+	indexOf
+	isExposeProxy
+	isFrozen
+	isInterfaceProxied
+	isPreFiltered
+	isProxyTargetClass
+	removeAdvise
+	removeAdvisor
+	replaceAdvisor
+	setExposeProxy
+	setPrefiltered
+	setTargetSource
+	toProxyConfigString
+ProxyCreatorSupport
+	addListener
+	adviseChanged
+	createAopProxy
+	getAopProxyFactory
+	isActive
+	removeListener
+	setAopProxyFactory
+ProxyFactoryBean
+	adviceChanged
+	createCompositeINterface
+	getObject
+	getObjectType
+	getProxy
+	isSingleton
+	setAdvisorAdapterRegistry
+	setAutodectectInterfaces
+	setBeanClassLoader
+	setBeanFactory
+	setFrozen
+	setInterceptorNames
+	setPRoxyClassLoader
+	setProxyInterfaces
+	setSingleton
+	setTargetName
+
+</aop.framework>
+<aop.support>
+Pointcut
+	getClassFilter
+	getMethodMatcher
+NameMatchMethodPointcut
+	addMethodName
+	equals
+	hashcode
+	isMatch
+	matches
+	setMappedName
+	setMappedNames
+StaticMethodMatcherPointcut
+	getClassFilter
+	getMethodMatcher
+	setCLassFIlter
+StaticMethodMatcher
+	isRuntime
+	matches
+MethodMatcher
+	isRuntime
+	matches	
+</aop.support>
+<aop.aspectj>
+InstatntiationModelAwarePointcutAdvisor
+	isAdviceInstantiated
+	isLazy
+</aop.aspectj>
+<aop.aspectj.annotation>
+AnnotationAwareAspectJAutoProxyCreateor
+	findCandidateAdvisors
+	initBeanFactory
+	isEligibleAspectBean
+	isINfrastructureClass
+	setAspectJAdvisorFactory
+	setIncludePatterns
+AspectJAwareAdvisorAutoProxyCreator
+	exendAdvisors
+	shouldSkip
+	sortAdvisors
+</aop.aspectj.annotation>
+<web.context>
+ContextLoaderListener
+	contextDestroyed
+	contextInitialized
+ContextLoader
+	closeWebApplicationContext
+	configureAndRefreshWebApplicationContext
+	createWebApplicationContext
+	customizeContext
+	determineContextClass
+	determineContextInitializerClasses
+	getCurrentWebApplicationContext
+	initWEbApplicationContext
+	loadParentContext
+	setContextInitailizers
+</web.context>
+<factory.xml>
+NamespaceHandler
+	decorate
+	init
+	parse
+AopNamespaceHandler
+MvcNamespaceHandler
+CacheNamespaceHandler
+ContextNamespaceHandler
+jdbcNamespaceHandler
+TxNamespaceHandler
+WebSocketNamespaceHandler
+NamespaceHandlerResolver
+	resolve
+DefaultNamespaceHandlerResolver
+	(ClassLOader
+	(
+	(classLoader,String
+	[ClassLOader
+	[handlerMappings
+	resolve
+BeanDefinitionDocumentReader
+	registerBeanDefinitions
+ReaderContext
+	[resource
+	[problemReporter
+	[eventListener
+	[sourceExtractor
+	error
+	fatal
+	warning
+	extractSource
+	fireAliasRegistered
+	fireComponentRegistrered
+	fireDefaultsRegistered
+	fireImportProcessed
+	getResource
+	getSourceExtarctor
+XmlReaderContext	
+	[XmlBeanDefinitionReader
+	[NamespaceHandlerResolver
+	generateBeanName
+	getBeanClassLoader
+	getEnvironment
+	getNamespaceHandlerResolver
+	getReader
+	getRegistry
+	getResurceLoader
+	readDocumentFromString
+	registerWithGeneratedName
+DefaultBeanDefinitionDocumentReader
+	[XmlReaderContext
+	[BeanDefinitionParserDelegate
+	createDelegete
+	doRegisterBeanDefinitions
+	extractSource
+	getReaderContext
+	importBeanDefinitionResource
+	parseBeanDefinitions
+	parseProcessXml
+	processAliasRegistration
+	processBeanDefinition
+	registerBeanDefinition
+XmlBeanDefinitionReader
+	[Class(BeanDefinitionDocumentReader
+	[ProblemReporter
+	[ReaderEventListener
+	[SourceExtractor
+	[NamespaceHandlerResolver
+	[DocumentLoader
+	[EntityResolver
+	[XmlValidationModeDector
+	createBeanDefinitionDocumentReader
+	createDefaultNamespaceHandlerResolver
+	createReaderContext
+	detectValidationMode
+	doLoadBeanDefinitions
+	doLoadDocument
+	getEntityResolver
+	getNamespaceHandlerResolver
+	getValidateMOde
+	getValidationMOdeForResource
+	isNamespaceAware
+	loadBeanDefinitions
+	registerBeanDefinitions
+	setDocumentLoader
+	setDocumentReaderClass
+	setEntityResolver
+	setErrorHandler
+	setEventListener
+	setNamespaceAware
+	setNamespaceHandlerResolver
+	setProblemReporter
+	setSourceExtractor
+	setValidating
+	setValidationMode
+	setValidationMOdeName
+BeanDefinitionParser
+	parse
+AbstractBeanDefinitionParser
+	parse
+	parseINternal
+	postProcessComponentDefinition
+	registerBeanDefinition
+	resolveId
+	sholdFIreEvents
+	shouldGenerateId
+	shouldGenerateIdAsFallback
+	shouldParseNameAsAliases
+
+</factory.xml>
+<factory.support>
+BeanDefinitionReader
+	getBeanCLassLoader
+	getBeanNameGenerator
+	getRegistry
+	getResourceLoader
+	loadBeanDefinitions
+	loadBeanDefinition
+AbstractBeanDefinitionReader
+	[ResourceLoader
+	[ClassLoader
+	[Environment
+	[BeanNameGenerator
+	getBeanClassLoader
+	getBeanFactory
+	getBeanNameGenerator
+	getEnvironment
+	getRegistry
+	getResourceLoader
+	loadBeanDefinitions
+	loadBeanDefinition
+	setBeanClassLoader
+	setBeanNameGenerator
+	setEnvironment
+	setResourceLoader
+
+</factory.support>
+<boot>
+SpringApplication
+	[Default_context_clas
+	[Default_servlet_web_context_Class
+	[default_reactive_web_context_class
+	[banner_location_proeprty_calue
+	[banner_location_property
+	[system_property_java_awt_headless
+	[primarySources 
+	[sources 
+	[mainApplicationClass
+	[bannerMode
+	[logStartUpInfo
+	[addCOmmandLinePropertties
+	[banner
+	resoruceLoader
+	[beanNameGenerator
+	[environment
+	[applicationContextClass
+	[webApplicationType
+	[headLess
+	[registerShutdownHook
+	[initializers
+	[listenrs
+	[defaultProperties
+	[additionalProfiles
+	[isCustomeEnvironment
+	addInitializers
+	addListeners
+	addPrimarySources
+	afterRefresh
+	applyIitializers
+	binToSpringAPplication
+	configureEnvironment
+	configureProfiles
+	configurePropertySources
+	createApplicationContext
+	createBeanDefinitionLoader
+	exist
+	getAllSources
+	getApplicationLog
+	getClassLoader
+	getInitalizers
+	getListeners
+	getMainApplicationClass
+	getResoruceLoader
+	getSource
+	getWebApplicationType
+	load
+	logStartupInfo
+	logStartupProfileInfo
+	main
+	postProcessApplicationContext
+	refresh
+	registerLoggedException
+	run
+	setAddConmandLineProperties
+	setAddConvertionService
+	setAdditionalProfiles
+	setAllowBeanDefinitionOverriding
+	setApplicationContextClass
+	setBanner
+	setBannerMode
+	setBeanNameGenerator
+	setDefaultProperties
+	setEnvironment
+	setHeadless
+	setInitializers
+	setListeners
+	setLogStartupInfo
+	setMainAPplicationClass
+	setRegisterShutdownHook
+	setResourceLoader
+	setSources
+	setWEbAppicationType
+SpringApplicationRunListener
+	starting
+	envrioentPrepared
+	contextPrepared
+	contextLoader
+	failed
+	started
+	running
+CommandLineRunner
+	run
+ApplicationRunner
+	run
+ApplicationArguments
+	containsOption
+	getNonOptionArgs
+	getOptionNames
+	getOptionValues
+	getSourceArgs
+
+</boot>
+<boot.env>
+EnvironmentPOstProcessor
+	postProcessEnvironment
+SpringApplicationJsonEnvrionmentPostProcessor
+PropertySourceLoader
+	getFileExtensions
+	load
+PropertiesPropertySourceLoader
+YamlPropertySourceLoader
+
+</boot.env>
+<boot.context.config>
+ConfigFileApplicationListener
+	addPostProcessors
+	addPropertySources
+	getOrder
+	onApplicationEnvent
+	postProcessEnvironment
+	setOrder
+	setsEarchocations
+	setsearcheNames
+	suportsEventType
+</boot.context.config>
+<boot.context.event>
+EventPulbishingRunListener
+	staring
+	envrionmentPrepared
+	contextPrepared
+	contextLoaded
+	failed
+	started
+	running
+SpringApplicationEvent
+	getArgs
+	getSpringApplication
+ApplicationStartingEvent
+ApplicationEnvironmentPrepareEvent
+ApplicationPreparedEvent
+ApplicationStartedEvent
+ApplicationReadyEvent
+ApplicationFailedEvent
+</boot.context.event>
+<servlet>
+Filter
+	destroy
+	doFilter
+	init
+FilterChain
+	doFilter
+FilterConfig
+	getFilterName
+	getInitParameter
+	getInitParameterNames
+	getServletContext
+RequestDispatcher
+	forward
+	include
+Servlet
+	destroy
+	getServletConfig
+	getServletInfo
+	init
+	sevice
+ServletConfig
+	getInitParameter
+	getnitParameterNames
+	getServletContext
+	getServletName
+ServletContext
+	getAttribute
+	getAttributeNames
+	getContext
+	getInitParameter
+	getInitParameterNames
+	getMajoVersion
+	getMimeType
+	getMinourVersion
+	getNamedDispatcher
+	getRealPath
+	getRequesetDispatcher
+	getResource
+	getResourceAsStream
+	getResourcePaths
+	getServerINfo
+	getServlet
+	getServletContextNAme
+	getServletNmes
+	getServlets
+	log
+	log
+	removeAttribute
+	setAttribute
+ServletContextAttributeListener
+	attributeAdded
+	attributeRemoved
+	attributeReplaced
+ServleContextListener
+	contextDestroyed
+	contexTInitialized
+ServletRequest
+	getAttribute
+	getAttribuetNames
+	getCharacterEncoding
+	getCOntentLength
+	getContentType
+	getInputStream
+	getLocalAddr
+	getLOcale
+	getLOcales
+	getLocalName
+	getLOcalPOrt
+	getParameter
+	getParemterMap
+	getParamterNames
+	getParameterVlues
+	getPRotocol
+	getReader
+	getRealPath
+	getRemoteAddr
+	getRemoteHost
+	getRemotePOrt
+	getRequestDispatcher
+	getSchema
+	getServerName
+	getServerPort
+	isSEcure
+	removeAttribute
+	setAttribute
+	setCharacterEncoding
+ServletRequstAttributeListener
+	attributeAdded
+	attributeRemoved
+	attributeReplaced
+ServletRequestListner
+	requestDestroyed
+	requestInitialized
+ServletResponse
+	flushBuffer
+	getBufferSize
+	getCharacterENcoding
+	getContentType
+	getLocal
+	getOutputStream
+	getWriter
+	isCommmited
+	reset
+	resetBuffer
+	setBufferSize
+	setCharacterEncoding
+	setContentLength
+	setContentType
+	setLocale
+SingleThreadModel
+GenericServlet
+	destroy
+	getInitParameter
+	getInitParameterNames
+	getSerlvetConfig
+	getServletCntext
+	getSerlvetINfo
+	getSerlvetName
+	init
+	log
+	service
+ServletContextAttributeEvent
+	getName
+	getValue
+ServletContextEvent
+	getServletContext
+ServletINputStream
+	readLine
+ServletOutputStream
+	print
+	println
+ServletRequestAttributeEvent
+	getName
+	getValue
+ServletRequestEvent
+	getServletContext
+	getServletRequest
+ServleRequestWrapper
+	getAttribute
+	getAttributeNames
+	getCHaracterEncoding
+	getContentLength
+	getContentType
+	getInputStream
+	getLocalAddr
+	getLocale
+	getLocales
+	getLOcalName
+	getLOcalPort
+	getParameter
+	getParameterMap
+	getParamterNames
+	getParamterValues
+	getProtocol
+	getReader
+	getRealPath
+	getRemoteAddr
+	getRemotePort
+	getRequest
+	getRequestDispatcher
+	getScheme
+	getServerName
+	getServerPort
+	isSecure
+	removeAttribute
+	setCharcterEncoding
+	setRequest
+ServletResponseWrapper
+	flushBuffer
+	getBuffersize
+	getCharaterEncoding
+	getContentType
+	getLocale
+	getOutputStream
+	getResponse
+	getWriter
+	isCommitted
+	reset
+	resetBuffer
+	setBufferSize
+	setCHaracterENcoding
+	setContentLength
+	setContentType
+	setLocale
+	setResponse
+</servlet>
+<servlet.http>
+HttpServletRequest
+	getAuthType
+	getContextPath
+	getCookies
+	getDateHeader
+	getHeader
+	getHeaderNames
+	getHeaders
+	getIntHeader
+	getMethod
+	getPathINfo
+	getPathTranslated
+	getQueryString
+	getRemoteUser
+	getRequestSessionId
+	getRequestURI
+	getRequestURL
+	getServletPath
+	getSession
+	getSessino
+	getUserPricipal
+	isRequestSessionIdFromCookie
+	isRequestSesionIdFromURL
+	isRequestSessionIdValid
+	isUserInRole
+HttpServletResponse
+	addCookie
+	addDateHeader
+	addHeader
+	addIntHEader
+	containsHeader
+	encodeRedirectURL
+	encodeURL
+	sendError
+	sendRedirect
+	setDateHeader
+	setHeader
+	setIntHeader
+	setStatus
+HttpSessino
+	getAttribute
+	getAttributeNames
+	getCreatinoTIme
+	getId
+	getLastAccessedTime
+	getMaxInactiveInterval
+	getServletContext
+	getValue
+	getValueNames
+	invalidate
+	isNuew
+	putVlue
+	removeAttribuet
+	removeValue
+	setAttribute
+	setMaxINactiveINterval
+HttpSessionActivationListener
+	sessionDidActivate
+	sessionWillPassivate
+HttpSessionAttributeListenr
+	attribuetAdded
+	attributeRemoved
+	attribuetReplaced
+HttpSessionBindingListener
+	valueBound
+	valueUnbound
+HttpSessionContext
+	getIds
+	getSEssion
+HttpSessionListener
+	sessionCreated
+	sessionDestoryed
+Cookie
+	clone
+	getComment
+	getDomine
+	getMaxAge
+	getName
+	getPath
+	getSecure
+	getValue
+	getVersino
+	setComment
+	setDomian
+	setMaxAge
+	setPath
+	setSecure
+	setValue
+	setVersion
+HttpServlet
+	doDelete
+	doGet
+	doHead
+	doOptions
+	doPost
+	doPut
+	doTrace
+	getLastModified
+	service
+HttpServletRequestWrapper
+	getAuthType
+	getContexTPath
+	getCookies
+	getDateHeader
+	getHEader
+	getHEaderNames
+	getIntHeader
+	getMEthod
+	getpathInfo
+	getPathTranslated
+	getQueryString
+	getRemoteUser
+	getRequstedSessionId
+	getRequestURI
+	getRequestURL
+	getServletPath
+	getSession
+	getUserPrincipal
+	isReuestedSEssionIdFromCookie
+	isRequestedSEssionIdFromURL
+	isRequestedSessionIdVald
+	isUserInRole
+HttpServletBindingEvent
+	addCookie
+	addDateHEader
+	addHeader
+	addIntHeader
+	containsHeader
+	encodedRedirectUrl
+	encodeRedirectURL
+	encodeUrl
+	encodeURL
+	sendError
+	sendRedirect
+	setDateHEader
+	setHeader
+	setINtHeader
+	setStatus
+HttpSessionBindListener
+	getName
+	getValue
+	getSession
+HttpSessionEvent
+	getSession
+
+</servlet.http>
+<org.apache.catalina>
+LifeCycle
+	addLifecycle
+	findLifecycle
+	removeLifecycle
+	start
+	stop
+Server
+	addService
+	await
+	findService
+	findServices
+	getGlobalNamingResources
+	getInfo
+	getPort
+	getShutdown
+	initialize
+	removeService
+	getGlobalNamingResources
+	setPort
+	setSHutdown
+StandardServer
+	addLifecycleListener
+	addPropertyChangeListener
+	addService
+	await
+	findLifecycleListeners
+	findService
+	findServices
+	getDomain
+	getGlobalNamingContext
+	getGlobalNamingResources
+	getInfo
+	getObjectName
+	getPort
+	getServerInfo
+	getServiceNames
+	getShutdown
+	init
+	initialize
+	postDeregister
+	postRegister
+	preDeregister
+	preRegister
+	removeLifecycleListener
+	removePropertyChangeListener
+	removeService
+	setGlobalNamingContext
+	setGlobalNamingResources
+	setPort
+	setShutdown
+	setart
+	setop
+	stopAwait
+	storeConfig
+	storeContext
+	toString
+Engine
+	getDefaultHost
+	getJvmRoute
+	getService
+	setDefaultHost
+	setJvmRoute
+	setService
+StandardEngine
+	addChild
+	createObjectName
+	destroy
+	getBaseDir
+	getDefaultHOst
+	getDomain
+	getInfo
+	getJvmRoute
+	getMbeansFile
+	getParentName
+	getRealm
+	getService
+	init
+	preRegister
+	setBaseDir
+	setDefaulthost
+	setDomain
+	setJvmRoute
+	setMbeansFilte
+	setName
+	setParent
+	setService
+	start
+	stop
+	toString
+
+Service
+	addConnector
+	findConnectors
+	getContainer
+	getInfo
+	getName
+	getServer
+	initialize
+	removeConnnector
+	setContainer
+	setName
+	setServer
+StandardService
+	addConnector
+	addLifecycleListener
+	addPropertyChangeListener
+	findConnectors
+	getLifecycleListeners
+	getConnectorNames
+	getContainer
+	getContainerName
+	getDomain
+	getInfo
+	getName
+	getObjectName
+	getServer
+	init
+	initialize
+	postDeregister
+	postRegister
+	preRegister
+	removeConnector
+	removelifecycleListener
+	removePropertyChangelistenr
+	setContainer
+	setName
+	setServer
+	start
+	stop
+	toString
+Connnector
+	addLifecycleListener
+	createObjectName
+	createRequest
+	createResponse
+	destory
+	findContainer
+	findLifecycleListeners
+	getAllowTarace
+	getAttribuet
+	getBufferSize
+	getContainser
+	getConteroller
+	getDomain
+	getEmptySessionPath
+	getEnableLookups
+	getInfo
+	getMapper
+	getMaxparameterCount
+	getMaxPostSize
+	getMaxSavePostSize
+	getObjectNme
+	getPPort
+	getProperty
+	getProtocol
+	getProtocolHandler
+	getProtocolHandlerClassName
+	getProxyName
+	getPRoxyPort
+	getRedirectPort
+	getScheme
+	getSecure
+	getURIEncoding
+	getUseBodyEncodingForURI
+	getUseIPVHosts'
+	getXpoweredBy
+	init
+	initialize
+	isAvailable
+	pause
+	postDeregister
+	postRegister
+	preDeregister
+	preRegister
+	removeLifecycleListener
+	removeProperty
+	resume
+	setAllowTrace
+	setAttribute
+	setBufferSize
+	setContainer
+	setConteroller
+	setEmptySEssionPath
+	setEnableLookups
+	setMaxParameterCount
+	setMaxPostSize
+	setMaxSavePostSize
+	setPort
+	setProperty
+	setProtocol
+	setProtocolHandlerName
+	setProxyName
+	setProxyPort
+	setRedirectPort
+	setScheme
+	setSecure
+	setService
+	setURIEncoding
+	setUseBodyEncodingForURI
+	setUseIPVHosts
+	setXpoweredBy
+	setart
+	stop
+Container
+	addChild
+	addContainerListener
+	AddPropertyChangeListenre
+	backgroudProcess
+	findChild
+	findChildren
+	findContainerListeners
+	getBackgroundProcessorDelay
+	getCluster
+	getInfo
+	getLoader
+	getLogger
+	getManager
+	getMappingObject
+	getName
+	getObjectName
+	getParent
+	getParentClassLoader
+	getPipeline
+	getRealm
+	getResources
+	invoke
+	removeChild
+	removeContainer
+	rmovePropertyChangelIstenr
+	removeBackgroundProcessorDelay
+	setCLuster
+	setLoader
+	setManager
+	setName
+	setParent
+	setParentClassLOader
+	setRealm
+	setResources
+Host
+	addAlias
+	findAliasses
+	getAppBase
+	getAutoDeploy
+	getConfigClass
+	getDelployOnStartup
+	getName
+	getXmlNamespaceAware
+	getXmlValidation
+	map
+	removeAlias
+	setAppBase
+	setAutoDeploy
+	setConfigClass
+	setDeployOnStartup
+	setName
+	setXmlNamespaceAware
+	setXmlValidation
+Context
+	addApplicationListener
+	addApplicationParameter
+	addConstraint
+	setErrorPage
+	addFilterDef
+	addFilterMap
+	addInstanceListener
+	addJspMapping
+	addLocaleEncodingMappingParameter
+	addMimeMapping
+	addParameter
+	addRoleMapping
+	addSecurityRole
+	addServletMapping
+	addtagLib
+	addWatchedResource
+	addWelcomeFile
+	addWrapperLifecycle
+	addWrapperListener
+	createWrapper
+	findAPplicationListeners
+	findApplicationParameters
+	findConstraints
+	findErrorPage
+	findErrorPages
+	findFilterDef
+	findFileterDefs
+	findFilterMaps
+	findInstanceListeners
+	findMimieMappings
+	findParameter
+	findParamters
+	fidmRoleMapping
+	findSecurityRole
+	findSecurityRoles
+	findServletMapping
+	findServletMappings
+	findStatusPage
+	findStatusPages
+	findTaglib
+	findTagLibs
+	findWatchedResources
+	findWelcomeFile
+	findWelcomeFiles
+	findWrapperLifecycles
+	findWrapperListeners
+	getAltDDname
+	getApplciationEventListeners
+	getApplicationLifeCycleListeners
+	getAvailable
+	getCharsetMapper
+	getConfigFile
+	getConfigured
+	getCookie
+	getCrossContext
+	getDisplayName
+	getDistributeables
+	getDocBase
+	getEncodedPath
+	getLoginConfig
+	etMapper
+	getNameingResources
+	getOrverride
+	getPath
+	getPrivileged
+	getPublicId
+	getReloadable
+	getSErvletContext
+	getSEssioTimeout
+	getSwallowOutput
+	getTldNamspaceAware
+	getTldValidation
+	getUseHttpOnly
+	getWrapperClass
+	getXmlNamspaceAware
+	getXmlValidation
+	reload
+	removeApplicationListener
+	removeApplicationParamter
+	removeConstraint
+	removeErrorPage
+	removeFilterDef
+	removeFiltermap
+	removeInstanceListener
+	removeMimeMapping
+	removeParameter
+	removeRoleMapping
+	removeSecurityRole
+	removeServletMapping
+	removeTaglib
+	removeWatchedResource
+	removeWelcomeFile
+	removeWrapperLifecycle
+	removeWapperListenr
+	setAltDDName
+	setAppliationEventListeners
+	setApplicationLifecycleListeners
+	setAvailable
+	setChasetMapper
+	setConfigFile
+	setConfigured
+	setCookies
+	setCrossContext
+	setDipslayName
+	setDistributabe
+	setDocBase
+	setLoginConfig
+	setNamingResoures
+	setOverride
+	setPath
+	setPrivileged
+	setPublicId
+	setReloadable
+	setSessionTimeout
+	setSwalllowOutput
+	setTldNamspaceAware
+	setTldValidation
+	setUseHttpOnly
+	setWraperClass
+	setXmlNamspaceAware
+	setXmlValidation
+Wrapper
+	addInitParameter
+	addInstanceListener
+	addMapping
+	addSecurityReference
+	allocate
+	deallocate
+	findInitParameter
+	findInitParameters
+	findMappings
+	findSecurityReference
+	findSecurityReferences
+	getAvailable
+	getJspFile
+	getLoadOnStartup
+	getRunAs
+	getServletClass
+	getSevletMethods
+	incrementErrorCount
+	isUnavailable
+	load
+	removeInitParameter
+	removeInstanceListener
+	removeMapping
+	removeSecurityReference
+	setAvailable
+	setJspFile
+	setLoadOnStartup
+	setRunAs
+	setServletClass
+	unavailable
+	unload
+Loader
+	addPropertyChangeListener
+	addrepository
+	backgrounProcess
+	findRepositories
+	getClassLoader
+	getContainer
+	getDelegate
+	getInfo
+	getReloadable
+	modified
+	removePropertyCHangeListener
+	setContainer
+	setDelegate
+	setReloadable
+Manager
+	add
+	addPropertyChangeListernr
+	backgroundProcess
+	changeSessionId
+	createEmptySession
+	findSession
+	findSessions
+	getActiveSessions
+	getContainer
+	getDistributable
+	getExpiredSessions
+	getINfo
+	getMaxActive
+	getMaxInactiveInterval
+	getRejectedSessions
+	getSessionAverageAliveTime
+	getSessionCounter
+	getSessionIdLength
+	getSessionMaxAliveTime
+	load
+	remove
+	removePropertyChangeListener
+	setContainer
+	setDistributable
+	setExpiredSessions
+	setMaxActive
+	setMaxINactiveInterval
+	setRejectedSessions
+	setSessionAverageAliveTime
+	setSessinoCounter
+	setSessionIdLength
+	setSessionMaxAliveTime
+	unload
+Realm
+	addPropertyChangeListener
+	authenticate
+	backgroundProcess
+	findSecurityConstraints
+	getCOntainer
+	getInfo
+	hasRsourcePermission
+	hasRole
+	hasUserDataPermission
+	remoePropertyChangeListener
+	setContainer
+Pipeline
+	addValve
+	getBasic
+	getFirst
+	getValves
+	removeValve
+	setBasic
+</org.apache.catalina>
+<org.apache.catalina.startup>
+Bootstrap
+	[daemonLock
+	[daemon
+	[catalinaBaseFile
+	[catalinaHomeFile
+	[Path_PATTERN
+	[commonLoader
+	[catalinaLoaer
+	[sharedLoader
+	
+	destroy
+	getAwait
+	getCatalinaBase
+	getCatalinaHome
+	init
+	main
+	setAwait
+	setCatalinaBase
+	setCatalinaHome
+	start
+	stop
+	stopServer
+Catalina
+	[sm
+	[awati
+	[configFile
+	[parentClassLoader
+	[server
+	[useSHutdonwhook
+	[shutdownHook
+	[userNaming
+	[loaded
+	
+	arguments
+	await
+	configFile
+	create
+	createStartDigester
+	createStopDigester
+	destroy
+	getConfigFile
+	getUseShutdownHook
+	load
+	main
+	process
+	setCatalinaBase
+	setCatalinaHome
+	setConfig
+	setConfigFile
+	setParentClassLoader
+	setServer
+	setUseSHutdownHook
+	start
+	stop
+	stopServer
+	usage
+</org.apache.catalina.startup>
+<org.apache.catalina.util>
+LifecycleBase
+	[StringManager
+	[lifecycleListeners
+	[state
+	getThrowOnFailure
+	setThrownOnFailure
+	addLifecycleListener
+	findLifecycleListeners
+	removeLifecycleListener
+	fireLifecycleEvent
+	init
+	initInternal
+	start
+	startInternal
+	stop
+	stopInternal
+	destroy
+	destroyInternal
+	getState
+	getStateName
+	setStte
+	setState
+	setStateInternal
+	invalidTransition
+	handleSubClassException
+LifecycleMBeanBase
+	[sm
+	[domain
+	[oname
+	[mserver
+	initInternal
+	destroyInternal
+	setDomain
+	getDomain
+	getDomainInternal
+	getObjectName
+	getObjectNameKEyProperties
+	register
+	unRegister
+	postDeregister
+	postRegister
+	preDeregister
+	preDegister
+</org.apache.catalina.util>
+<org.apache.tomcat.util.modeler>
+Registry
+	addManagedBean
+	convertValue
+	disableRegistry
+	findManagedBean
+	getId
+	getMBeanServer
+	getMethodINfo
+	getRegistry
+	getType
+	invoke
+	load
+	loadDescriptors
+	postDeregister
+	postRegister
+	preDeregister
+	preRegister
+	registerComponent
+	registerComponent
+	stop
+	unregisterCOmponent
+RegistryMBean
+	getId
+	invoke
+	registerComponent
+	stop
+	unregisterComponent
+ManagedBean
+	addAttribute
+	addNotification
+	addOperation
+	createMBean
+	getAttributes
+	getClassName
+	getDescription
+	getDomain
+	getGroup
+	getName
+	getNotifications
+	getOperations
+	getSetter
+	getType
+	setClassName
+	setDescription
+	
+</org.apache.tomcat.util.modeler>
+<hello>	
+hello
+</hello>
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	-

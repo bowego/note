@@ -1,0 +1,65 @@
+标签
+	<html
+	<h1 <	align
+	<body < bgcolor
+	<p
+	<a < href target name
+	<img < src width height alt
+	<table < border
+	<br
+	<b
+	<big
+	<em
+	<i
+	<small
+	<strong
+	<sub
+	<sup
+	<ins
+	<del
+	<code
+	<kbd
+	<samp
+	<tt
+	<var
+	<pre
+	<abbr
+	<acronym
+	<address
+	<bdo < dir
+	<blockquote
+	<q
+	<cite
+	<dfn
+	<var
+	<sup
+	<link < rel type href
+	<style < type
+	<div < width border solid float height
+	<span
+属性
+	<tableindex . button 按table键时按钮的选中顺序
+	<target . a {_blank}
+	<align . h1
+	<bgcolor . body {red}
+	<href . a {#tips}
+	<src . img
+	<width . img
+	<height . img
+	<border . table {1}
+	<class . 
+	<id .
+	<style . {background-color:yello
+			text-align:center
+			font-family:verdana
+			color:red
+			font-size:20px
+			margin-left:20px
+			margin:20px
+			padding:20px
+			}
+	<title .
+	<dir . {rtl}
+	<rel . {stylesheet}
+	<type . {text/css}
+	<name . {string}

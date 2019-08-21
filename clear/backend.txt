@@ -1,0 +1,93 @@
+sudo service rabbitmq-server status
+rabbitmqctl list-queues name messages-ready messages-unacknowledged
+rabbitmqctl list-queues
+
+dpkg -l 列出相关的文件 dpkg -l | grep
+dpkg -i xx.deb 安装
+dpkg -L xx.deb 安装地址
+dpkg -r xx.deb
+
+apt-get install redis-server
+redis-server
+
+ppid 父进程
+sid 会话
+cpu，mem，start开始时间，time总运行时间
+stat （R,D,S,I空闲）
+
+
+2. 选择 Build, Execution, Deployment 下的 Debugger
+
+a. 将端口号 63342 改为 8080
+
+b. 勾选Can accept external connections(可以接受外部连接)
+
+3.  选择 Build, Execution, Deployment 下的 Deployment
+
+a. 点击"+"号，增加一条规则
+
+b. 设置 Name 为 localhost，Type 设置为 Local or mounted folder(本地或安装文件夹)
+
+
+4. 选择 Connection
+
+a. Folder  设为本地前端页面文件夹路径
+
+b. Web server root URL  设为本机的IP和8080端口
+
+5. 选择 Mappings
+
+a. Local path  设置为本地前端页面文件夹路径
+
+b. Web path on server 'localhost '  设置为 前端页面的文件夹
+
+
+spirng
+  resources:
+    chain:
+      cache: false
+    static-locations: file:///Users/aihe/Desktop/taqu/ticket-system/src/main/resources/static/,file:///Users/aihe/Desktop/taqu/ticket-system/src/main/resources/
+  mvc:    static-path-pattern: /static/**
+
+作者：慕码人8056858
+链接：http://www.imooc.com/article/263029
+来源：慕课网
+
+
+sudo service rabbitmq-server status
+rabbitmqctl list-queues name messages-ready messages-unacknowledged
+rabbitmqctl list-queues
+开启网页版控制台 rabbitmq_plugins enable rabbitmq_management guest/guest
+rabbitmqctl add user username password 添加用户
+rabbitmqctl set_permissions p / clouddev confP WriteP ReadP
+
+dpkg -l 列出相关的文件 dpkg -l | grep
+dpkg -i xx.deb 安装
+dpkg -L xx.deb 安装地址
+dpkg -r xx.deb
+
+apt-get install redis-server
+redis-server 【redis.conf】指定配置文件
+daemonize yes 后台运行
+
+ppid 父进程
+sid 会话
+cpu，mem，start开始时间，time总运行时间
+stat （R运行中,D僵死,S睡眠,I空闲）
+tty与进程关联的终端，RSS，VSZ
+
+netstat -anp | grep 8888
+
+vi ~/.vimrc :set nocompatible/backspace=indent,eol,start /nu /nonu 设置行号，回退键失效
+
+cat -n （包括空行）-b（不包括空行） 显示行号
+
+mysql -uroot -p inputpassword
+mysql -u -p -D(database)< path 命令行内执行xx.sql
+source path 客户端命令行内
+set password for root@localhost=password(‘123’);
+
+ln -s /a /b 创建软链接
+
+vi /etc/hosts  修改hosts etc/init.d/networking restart 生效
+

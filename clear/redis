@@ -1,0 +1,282 @@
+subject 
+-> action 
+| object
+[ result
+: status
+.desc
+$ variable 连续出现的代表同一个
+https://www.cnblogs.com/ivictor/p/9749465.html
+RDB
+	流程
+		parent ->fork  [child [parent:block
+		child ->according |parent [snapshot
+		child ->replace |snapshot [newStore
+		写时复制机制： copy-on-write 
+					parent ->copy [one page 避免占用两倍内存
+	触发：
+		手动：bgsave
+		自动：config,全量复制，debugload,shutdown
+		
+	conig：
+		save 900(sec) 1(at last 1key changed)
+			300 10|60 10000
+		stop-writes-on-bgsave-error yes
+		rdbcompression yes LZF压缩
+		rdbchecksum yes
+		dbfilename dump.rdb
+		dir ./
+	infor persistence
+		rdb_changes_since_last_save
+		rdb_bgsave in progress
+		rdb last save time
+			last bgsave status
+			last bgsave time ,使用的时间
+			current bgsave time sec ,当前bgsave使用时间
+			last cow size ,父子进程的差异
+AOF
+	save command
+	format：
+		redis protcol
+	
+	同步策略：
+		appendfsync：no 操作系统负责最长周期30s
+					always 每一条命令
+					everysec 每一秒 default
+	appendonly yes 开启AOF
+	工作流程：
+		master->write |command aof_buff
+		master->sync 	|aof_buff disk
+		master->rewrite&intermittent	|disk
+	阻塞：
+		master->write&intermittent.1s|comand  [aof_buff
+		master->record|lastRecordtime
+		master->compare|lastRecordtime&thisTime 如果大于两秒 主线程阻塞 最多丢失2s数据不是1s
+	重写：
+		减少超时数据
+		存在删除命令
+		多条写命令可以合并为一个
+	触发：
+		手动：bgrewriteaof
+		自动
+			autoaof-rewrite-percentage ,(currentSize-originalSize)/originalSize
+			auto aof rewrite min size
+	流程：
+		avoid conflict bgsave
+		parent ->fork [child 结束之后继续响应命令 
+		新的命令写入 aof-rewrite-buff
+		child ->rewrite&merge |AOFfile 
+		child ->merge |aof-rewrite-buff|AOFfile [newAOFfile
+		replace oldAOFfile
+	还原流程：
+		->create  [clientWithoutNetwork
+		client ->read |AOFfile [command
+		client ->execute |command
+	相关变量
+		aof_enabled
+			rewrite in progress
+			rewrite scheduled
+			last write time sec ，消耗时间
+			current rewrite time sec 消耗时间
+			last bgrewrite status		上次重写状态
+			last write status	上次追加状态
+			last cow size	copyonwriteallocations
+		aof_current_size
+			base size
+			pending rewrite .waite rdb success
+			buff length .aof buff
+			rewrite buff length
+			pending bio fsync .等待执行fsync的数量
+			delayed fsync .fsync操作延迟执行的次数
+		如果一个loading执行
+		loading_start_time
+			    total bytes
+				loaded bytes
+				 loaded perc
+				 eta second 预计多久加载完毕
+	配置参数
+		appendonly yes
+		appendfilename 'appendonly.aof'
+		appendfsync everysec
+		no-append-fsync-on-rewrite no
+		auto-aof-rewrite-percentage 100
+		auto-aof-rewrite-min-size 64mb
+		aof-load-truncated yes
+		aof-use-rdb-preamble no
+config get config-setting-name|loglevel|*
+config set loglevel.. 'notice'
+
+
+redis
+	数据类型
+		string text|img|serialize 最大512M
+		Hash 	键值对|对象				2^32-1个
+		list		
+		set
+		zset
+	操作k->key v->value o-object|name 
+		data
+			key:del-k
+				dump-k
+				exists-k
+				expire-k-seconds
+				expire-k-timestamp
+				expire-k-milliseconds
+				expire-k-milliseconds-timestamp
+				keys-pattern	符合的键
+				move-k-db	移动到数据库？
+				persist-k	移除过期时间
+				pttl-k 返回过期时间 mill
+				ttl-k 剩余生存时间 time to live
+				randomkey
+				rename-k-nk
+				type-k	值类型
+			string:	getset-k-v
+					set-k-v 
+					setbit-k-offset-v
+					setex-k-seconds-v	设置过期时间
+					setnx-k-v
+					setrange-k-offset-v
+					mset-k-v-[k-v]..
+					msetnx-k-v-[k-v].. 必须所有的k都不存在
+					psetex-k-milliseconds-v	生存时间毫秒
+					get-k
+					getrange-k-start-end
+					getbit-k-offset
+					mget-k1..
+					strlen-k 储存字符串的长度
+					incr-k  数字+1
+					incrby-k-1
+					incrbyfloat-k-1.0
+					decr-k
+					decrby-k-1
+					decrbyfloat-k-1.0
+					
+			hash:	hkeys-o
+					hvals-0
+					hgetall-o
+					hlen-o		
+					hdel-o-k-k
+					hexists-o-k
+					hmset-o-[k-v]..
+					hset-o-k-v
+					hsetnx-o-k-v	
+					hmget-o-k-k
+					hget-o-k
+					hincrby-o-k-increment
+					hincrbyfloat-o-k-increment
+			list: lpush-o-v-v
+				  rpush-o-v-v
+				  lpushx-o-v-v
+				  rpushx-o-v-v
+				  lpop-o
+				  rpop-o
+				  rpoplpush-o-o
+				  blpop-o-timeout
+				  brpop-o-timeout
+				  brpoplpush-o-o-timeout
+				  lindex-o-index
+				  llen-o
+				  linsert-o-before|alfter-pivot-v
+				  lset-o-index-v
+				  lrem-o-count-v count制定方向和数量负数从尾到头
+				  ltrim-o-start-stop
+				  
+					lrange-o-0-10
+			set: sadd-o-v	查找的复杂度是O(1)
+				sismember-o-v
+				scard-k-v-v	集合数
+				sdiff-o-o 返回差集
+				sdiffstore-destination-o-o 差集存储在dest
+				sinter-o-o 	交集
+				sinterstore-destination-o-o
+				smove-source-destination-v
+				spop-o 移除并返回一个随机元素
+				srandomember 返回集合中一个或多个随机数
+				srem-o-v-v
+				sunion-o-o	并集
+				sunionstore-destiontion-o
+				ssan-o-cursor-matchPattern-count 迭代集合中的元素
+				
+			zset: zadd-o-0?-v
+				  zcard-o 所有成员数
+				  zrange-o-start-stop-withscores
+				  zrangebylex-o-min-max-Limit-offset-count
+				  zrangebyscore-o-min-max-withscores-limit
+				  zrank-o-v 返回指定索引
+				  zverange-o-start-stop-withscores
+				  zrevrangebyscore-o-max-min-withscores
+				  zrevrank-o-v
+				  zscore-o-v
+				  zuionstore-destination-numberkeys-o-o
+				  zscan-o-cursor-pattern-count
+				  zrem-o-v-v
+				  zremrangebylex-o-min-max
+				  zremrangebyrank-o-start-stop
+				  zremrangebyscore-o-min-max
+				  zcount-o-min-max	分数区间
+				  zlexcount-o-min-max 字典区间
+				  zincreby-o-increment-v	分数减少
+				  zinterstore-destination-numberkeys-o-o	交集
+		config
+			save 数据备份生成dump.rdb文件
+			config get dir 获取redis目录 将dump.rdb移动到安装目录
+			bgsave	后台备份文件
+			config set requirepass 123
+			config get	maxclients|requirepass
+			auth password 
+			client list|setname|getname|pause|kill
+			echo
+			ping
+			quit
+			select index
+		shell
+			redis-server --maxclients 100000
+			redis-cli -h127 -p6379 -a 'pass'
+			
+			
+	客户端连接
+		server->listen|tcpport
+		server->establish|connection
+		server->set|clientsocket[nonblock
+		server->set|clientsocket[TCP_NODELAY
+		server->create|readableFileEvent
+	分区
+		将数据分散在多个redis实例，每个实例保存所有数据的一个子集
+		劣势：不能执行跨区的操作 set交集
+		类型：
+			范围分区
+			哈希分区
+	hyperLogLog
+		计算基数（不重复元素数）只需12kb内存可以计算2^64个不同元素的基数，根据输入计算基数不存储元素本身
+		pfadd-o-v-v	添加元素到HyperLogLog
+		pfcount-o-o	计算基数
+		pfmerge-o-o	合并为一个HyperLogLog
+	发布订阅
+		subscribe-o	订阅
+		unsubscribe-o
+		psubscribe-o-o 退订
+		punsubscribe-o-o
+		pubsub-command-arument-argument 查看订阅发布系统状态
+		publish-o 发布
+	事务
+		开始事务
+		命令入队
+		执行事务
+		multi
+		exec
+		discard
+		unwatch
+		watch-k-k 如果执行事务之前key被改变事务取消
+	脚本
+		通过lua解释器执行脚本 2.6内嵌支持lua环境
+		eval-scirpt-numberkeys-k-k-arg-arg numberkeys 后面的参数中前几个是键  脚本中keys[0]获取其余是args[0]获取
+	数据淘汰策略
+		server.maxmemory
+		内存增加到一定的程度的时候
+			6种淘汰策略：
+				从已设置过期时间的数据集里筛选：最近最少使用的
+												将要过期的
+												任意的
+				从数据集里：最近最少使用的
+							任意的
+				禁用

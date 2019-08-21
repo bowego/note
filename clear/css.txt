@@ -1,0 +1,258 @@
+color:#ff0000|#f00|rgb(255,0,0)|rgb(10%,20%,30%)
+font-size:lem;20px;
+font-family:"sans serif"; 
+font-weight:normal;bold|100-900
+font-style:italic|oblique|normal
+font-variant:small-caps
+line-height:1.5;
+text-align
+background
+margin:auto;
+padding:10px 0.25em 2ex 20%
+padding-top
+		right
+		bottom
+		left:百分比父元素的百分比
+
+background-color:transparent
+background-image:url()|none
+background-repeat:repeat-y
+background-position: top,bottom,left,right,center|%|px
+background-attachement:scroll|fixed
+border:1px solid blue;
+border-width
+border-style
+border-color:transparent
+borer-collapse:collapse;
+vertical-align:bottom
+border-spacing:10px 50px;
+caption-side:bottom;
+empty-cells:hide|show|inherit
+table-layout:automatic|fixed
+outline
+outline-color
+outline-style
+outline-width
+height
+max-height
+min-height
+缩进方式
+	em：1字体大小的倍数
+	text-intent:+-5em:所有块级元素都可以有效，行内元素图片不行，如果图片在段落首行有效
+		% 父元素的百分比
+text-align	对齐方式
+word-spacing:em|px	字间隔
+letter-spacing:em|px	字母间隔
+text-transform: 控制字母大小写
+text-decoration:none|undeline|overline|line-through
+opacity:0.6;
+
+display:block|inline|none
+list-style-type:square
+list-style-image:url()
+list-style:url squre inside;
+overflow:scroll|hidden
+z-index:-1 放在一个元素之后 设置position:absolute
+clip:rect(x,y,z,f) 元素切割
+vertical-align:text-bottom
+clear:both 元素的周边不允许出现浮动元素
+line-height
+visisbility:visible|hidden
+cursor:crosshair|help|wait
+box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;
+text-shadow
+伪类
+	img:hover
+	html元素
+	a:link
+	a:visited
+	a:hover
+	a:active
+	input:focus
+	a:first-child 作为某个元素子元素的a元素 如果没有父元素就是自身
+	q:lang(no){quotes:"1" "1"} <q/>
+	selector:pesuedo{}
+	p > i:first-child
+	bootstrap:	 $('a:first|last|eq(2)') 第一最后第几
+伪元素
+	p：fistr-letter
+	p:first-line
+	h1:before
+	h1:after
+	
+对齐
+	在父元素中，设直外边距margin：auto均等分配足有边距就是居中，width:70%
+	使用position
+	使用float
+	
+	
+覆盖
+	
+选择器
+	组选择器
+		selector1,selector2{}
+	继承
+		body{}
+		h,li,ul{}
+	选择器之间组合
+		后代选择器 空格
+		相邻兄弟选择器	+
+		子选择器	>
+	单个标志
+		标签选择器
+		id选择器 #
+		类选择器 .
+	特殊
+		标签.类
+	属性选择器
+		[a=b]
+		^$*开头，结尾，包含值
+		|~开头，包含 词
+	外部样式表<内部样式表<内联样式
+
+普通流：元素的位置由在html中的位置确定，块级狂从上到下一个接一个排列，行元素的水平框称为行框
+position：
+	position:relative
+	left:-20px
+	
+	
+
+	
+
+
+
+
+
+https://www.w3school.com.cn/xhtml/xhtml_structural_01.asp xhtml网站重构
+
+样式定义如何显示 HTML 元素
+多个样式定义可层叠为一
+样式通常存储在样式表中
+外部样式表通常存储在 CSS 文件中
+
+把样式添加到 HTML 4.0 中，是为了解决内容与表现分离的问题
+
+浏览器缺省设置
+外部样式表
+内部样式表（位于 <head> 标签内部）
+内联样式（在 HTML 元素内部）
+
+CSS 规则由两个主要的部分构成：选择器，以及一条或多条声明。
+在这个例子中，h1 是选择器，color 和 font-size 是属性，red 和 14px 是值。
+h1 {color:red; font-size:14px;}
+
+记得写引号
+提示：如果值为若干单词，则要给值加引号：
+p {font-family: "sans serif";}
+
+空格和大小写
+如果涉及到与 HTML 文档一起工作的话，class 和 id 名称对大小写是敏感的。
+
+选择器的分组
+h1,h2,h3,h4,h5,h6 {
+  color: green;
+  }
+  
+body {
+     font-family: Verdana, sans-serif;
+     }
+通过 CSS 继承，子元素将继承最高级元素（在本例中是 body）所拥有的属性（这些子元素诸如 p, td, ul, ol, ul, li, dl, dt,和 dd）
+
+创建一个针对 p 的特殊规则，这样它就会摆脱父元素的规则：
+
+通过依据元素在其位置的上下文关系来定义样式，你可以使标记更加简洁。
+在 CSS1 中，通过这种方式来应用规则的选择器被称为上下文选择器 (contextual selectors)
+li strong {
+    font-style: italic;
+    font-weight: normal;
+  }
+  
+在后代选择器中，规则左边的选择器一端包括两个或多个用空格分隔的选择器。选择器之间的空格是一种结合符（combinator）。每个空格结合符可以解释为“... 在 ... 找到”、“... 作为 ... 的一部分”、“... 作为 ... 的后代”  
+
+解决方法是使用后代选择器。在这种情况下，可以为包含边栏的 div 指定值为 sidebar 的 class 属性，并把主区的 class 属性值设置为 maincontent。然后编写以下样式：
+div.sidebar {background:blue;}
+div.maincontent {background:white;}
+div.sidebar a:link {color:white;}
+div.maincontent a:link {color:blue;}
+
+如果写作 ul em，这个语法就会选择从 ul 元素继承的所有 em 元素，而不论 em 的嵌套层次多深。
+
+如果您希望选择只作为 h1 元素子元素的 strong 元素，可以这样写：
+h1 > strong {color:red;}
+
+如果要增加紧接在 h1 元素后出现的段落的上边距，可以这样写：
+h1 + p {margin-top:50px;}
+
+结合后代选择器和子选择器
+请看下面这个选择器：
+table.company td > p
+
+下面的两个 id 选择器，第一个可以定义元素的颜色为红色，第二个定义元素的颜色为绿色：
+#red {color:red;}
+#green {color:green;}
+下面的 HTML 代码中，id 属性为 red 的 p 元素显示为红色，而 id 属性为 green 的 p 元素显示为绿色。
+<p id="red">这个段落是红色。</p>
+<p id="green">这个段落是绿色。</p>
+
+在现代布局中，id 选择器常常用于建立派生选择器。
+#sidebar p {
+	font-style: italic;
+	text-align: right;
+	margin-top: 0.5em;
+	}
+	
+.center {text-align: center}
+在上面的例子中，所有拥有 center 类的 HTML 元素均为居中。
+
+在下面的 HTML 代码中，h1 和 p 元素都有 center 类。这意味着两者都将遵守 ".center" 选择器中的规则。
+<h1 class="center">
+This heading will be center-aligned
+</h1>
+<p class="center">
+This paragraph will also be center-aligned.
+</p>
+
+[attribute]	用于选取带有指定属性的元素。
+[attribute=value]	用于选取带有指定属性和值的元素。
+[attribute~=value]	用于选取属性值中包含指定词汇的元素。
+[attribute|=value]	用于选取带有以指定值开头的属性值的元素，该值必须是整个单词。
+[attribute^=value]	匹配属性值以指定值开头的每个元素。
+[attribute$=value]	匹配属性值以指定值结尾的每个元素。
+[attribute*=value]	匹配属性值中包含指定值的每个元素。
+
+<head>
+<link rel="stylesheet" type="text/css" href="mystyle.css" />
+</head>
+
+<head>
+<style type="text/css">
+  hr {color: sienna;}
+  p {margin-left: 20px;}
+  body {background-image: url("images/back40.gif");}
+</style>
+</head>
+
+<p style="color: sienna; margin-left: 20px">
+This is a paragraph
+</p>
+
+
+多重样式
+如果某些属性在不同的样式表中被同样的选择器定义，那么属性值将从更具体的样式表中被继承过来。
+
+例如，外部样式表拥有针对 h3 选择器的三个属性：
+
+h3 {
+  color: red;
+  text-align: left;
+  font-size: 8pt;
+  }
+而内部样式表拥有针对 h3 选择器的两个属性：
+h3 {
+  text-align: right; 
+  font-size: 20pt;
+  }
+假如拥有内部样式表的这个页面同时与外部样式表链接，那么 h3 得到的样式是：
+color: red; 
+text-align: right; 
+font-size: 20pt;

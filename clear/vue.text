@@ -1,0 +1,281 @@
+el
+data
+components
+methods 
+computed
+created:function()
+copiled
+ready
+destroy
+	data
+	props 用在子组件内 :[a] <child a=
+	template
+	methods
+Vue.extend({})
+Vue.component('',MyComponent)
+
+
+
+.$data==data
+.$el===document.getElementById('id")
+.$watch('a',function(val))
+.items.$set(0,{})
+.items.$remove()
+
+{{}}
+v-model
+v-for
+v-on:click.[prevent|stop|capture|self]
+	keyup.enter.[enter|tab|delete|esc|space]
+v-bind:href|disabled|value|true-value|false-value|class.[literal]		绑定html特性
+	v-bind:class=[]|Object|{'class':boolean}|expression
+	v-bind:style=[obj1,obj2]|Object|{style:expression}
+v-if:	连续使用
+v-else 
+v-show
+v-ref
+
+array.push|pop|shift|unshift|splice|sort|reverse 变化数组
+	  filter|slice 返回一个新的数组
+	  track-by=uid itmes:[{uid:}]
+	  vn.items[0]={} --> items.$set(0,{})
+	  
+components:{
+	child:{
+		props:['msg'],
+		template:"{{msg}}"
+	}
+}
+<child msg="hello"|v-bind:msg='parentMssg'
+prop:{
+	type:String,
+	required:true
+}
+this.$parent
+this.$root
+this.children
+
+template
+	<child>
+		<slot>
+		<slot name=>
+	<parent>
+		<child>
+			<p|a|input slot=name
+			<p|a|input
+
+	
+	动态组件
+		<component :is=var
+		components:{
+			var1:{temp1}
+			var2:{temp1}
+		}
+<my-component v-for='a in as' :item='item' :index='$index'>
+
+
+需要一个html元素
+需要一个Vue对象
+{{}}
+var data:{a:1}
+new Vue({
+	data:data 内外data是一个对象
+})
+
+{{msg}} 绑定数据 视图数据改变
+{{* msg}} 数据视图不改变 渲染视图只渲染一次
+{{{}}} 原始值
+{{ message//arg1 | filter 'arg2' 'arg3'
+绑定值
+	绑定直可以用到标签属性里 html attribute
+	支持全功能的jascript表达式
+	表达式内的过滤器与linux相似但不是javascript js表达式之间可以使用
+	过滤器接受参数 '' 字符串参数 表达式是需要计算过后
+指令
+	v- 值限定为绑定表达式，根据值得变化应用行为到DOM中
+	v-if=true
+	特性插值？原始值	
+	参数 v-bind:href="url" 将href与url表达式的值绑定
+	v-on:click
+修饰符
+	.开始
+	v-bind:href.literal 表示指令应当一特殊方式绑定
+缩写
+	v:bind -> :
+	v:on ->@
+计算属性
+	提供的方法用作计算属性的getter
+	如果模板里面需要太多的计算表达式，为了分离逻辑和视图使用计算属性
+	vm.computed{
+		b:function(){
+			//复杂表达式，定义了一个值
+		}
+	}
+	setter
+		可以有getset方法
+		value{
+			get:function(){}
+			set:function(new value){} 当改变此值的时候setter会被调用 反向更新
+		}
+$watch
+	vm.$watch('',function(val){}) 监听器？这个是外部的，应该还有内部的
+
+Class style 绑定
+	外部样式绑定
+		数据绑定一个常见需求是操作元素的class列表和内联样式 因为是属性所以可以用v-bind
+		`{%raw|endraw%}`
+		v-bind:class="{json对象}|对象变量"  对象或数组或计算属性|三元表达式 对象是类名：ture|false 数组直接是类名 
+	内联样式
+		v-bind:style={json对象|对象变量|数组}
+			何为对象变量
+				data{
+					obj:{
+						color:'red'
+					}
+				}
+条件渲染
+	字符串模板中 
+		{{#if ok}} {{/if}} 使用失败
+		v-if="true|false"
+		<h1 v-if	两个并写
+		<h1 v-else 
+	条件包含多个元素
+		<template v-if><...
+	v-show  元素保存在DOM中 只是切换了css display
+列表渲染
+	v-for="(a,index) in as"
+		{{a.b}}
+	接受整数 {{n}}
+	可以操纵数组
+		改变数组
+			push
+			pop
+			shift
+			unshift
+			splice
+			sort
+			reverse
+		替换数组
+			vm.items=vm.items.filter(function(item){return a})
+			filter 
+			concat
+			slice
+	track-by??
+		items:[
+			唯一id
+		]
+		track-by="$index"
+	filterBy
+	orderBy
+方法和事件处理器
+	v-on:click=methodName
+	@click=methodName 参数 （自定义 特殊变量event
+	Vue.methods:function()
+	事件修饰符
+		@click.prevent|stop|stop-prevent|submit.prevent|capture|self
+	按键修饰符
+		@keyup.enter|tab|delete|esc|space|up|down|left
+表单控件绑定
+	<input v-model="message" <p>{{message}} Vue.data.message
+	多勾选框勾选到同一个数组
+	
+	绑定数据到动态属性
+		v-model=   v-bind:value|true-value|false-value
+	<select v-model= 
+		<option v-bind:value=""
+	<input.i=radio v-model= v-bind:value="var"
+	<input.i=checkbox v-model v-bind:true-value= v-bind:false-value=
+	<input.i=chekcbox v-model value=
+	<input.i=radio v-model=
+	同步试图懒加载lazy change事件中加载
+	debounce
+	number
+过渡
+	<div v-if transition=expand
+	vue.transitions={expand
+	过渡css类名
+		.fade-transition
+		.fade-enter
+		.fade-leave
+	覆盖类名 使用自定义或库动画类 Animate.css
+	Vue.transition('bounce',{})
+	显式声明过渡类型
+		type:"animation|transition
+	动画的钩子函数
+组件
+	Vue.extend('',{template:'<div>'}
+	Vue.component('',comp)
+	简写法 .component('',{template:''}
+	数据
+		template.data:function()|'<div/>'|el:function()
+	父组件传递数据给子
+		props:['a']
+		template:'{{a}}'
+		<child msg=''
+	动态props
+		<child v-bind:msg="parentVar"
+	is
+		<ul><li is='myComponent'>
+	传递的时候
+		v-bind |:props="" 代表字符串或字符串内的表达式
+	html 特性不区分大小写 camelCase-》kebab-case
+	验证 验证失败不在子组件设置值
+		props:[
+			a:{
+				type:Number|Object|String|Boolena|Funtion|Array
+				default:var|function
+				required:true|false
+			}
+		]
+	组件通信
+		this.$parent
+		this.$children
+		this.$root
+		
+		自定义事件 每个Vue是一个事件触发器
+			$on()	监听
+			$emit() 	触发
+			$dispatch()	上派发 第一次触发之后停止派发 弃用了
+			$broadcast() 	广播
+子组件索引
+	<child v-ref:id
+	parent.$refs.profile
+	
+内容分发
+	子组件模板内绑定父组件的 元素
+		template:"<div v-show='parentAttr'"
+	父组件不知道子组件的内容
+	
+	<aComponent
+		<slot name=
+	<parent>
+		<aComponent>
+			<p slot=''
+	
+统一使用<component :is='var'> <input v-model=var>
+		data{var=component}
+		components:[
+			a:temp2;
+			b:tempb;
+		]
+		
+组件 v-for
+	<acomp v-for="item in items" :item=item :index="$index"></acomp>
+	
+过滤器
+	Vue.filter('',function())
+	{{a|filter}}
+	双向过滤
+		filter('',{
+			read:function(){}
+			write:function(){}
+		})
+	过滤器的指针指向调用它的vm
+混合对象
+	mixin={
+		created:function(){}
+		methods:{}
+	}
+	Vue.extend({mixins:[myMixin]})
+	
+	

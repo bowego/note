@@ -1,0 +1,713 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+bootstrap类名 可用于html
+.table < table 表格
+.table-striped <	斑马线
+.table-bordered < 边框
+.table-hover <	鼠标悬停状态
+.table-condensed < 表格更加紧凑 行内元素切为凉拌
+.active < tr th td 
+.success
+.info
+.warning
+.danger
+
+.table-responsive 包含table使table适应小型设备小鱼768px
+.container	容器
+.row	容器行
+.col-xs-*	横跨列
+.col-md|sm-offset-* 偏移列
+.col-md-push-* 列排序
+
+.form-group
+.form-control
+.control-label 用在label上
+.checkbox
+.checkbox-inline 在一个div中多个此类元素是一行
+.form-control-static 表单中的纯文本
+.form-horizontal
+.inpu-lg 用在输入框等 
+.col-lg-*
+.help-block 表单帮助文本
+.btn 所有按钮集成圆角灰色默认外观
+.btn-default
+.btn-primary
+.btn-success
+.btn-info
+.btn-warning
+.btn-danger
+.btn-link 像链接
+.btn-lg
+.btn-sm
+.btn-xs
+.btn-block 按钮作为块级元素拉伸父元素的100%
+.active	按钮被点击
+.disabled 	按钮禁用
+.img-rounded 圆角
+.img-circle 圆形图片
+.img-thumbnail 灰色边框，填充内边距（缩略图？）
+辅助类
+.text-muted
+.text-primary
+.text-success
+.text-info
+.text-warning
+.text-danger
+.bg-primary
+.bg-success
+.bg-info
+.bg-warning
+.bg-danger
+.pull-left 元素浮动到左边
+.pull-right 
+.center-block 设置为display：block并居中显示
+.clearfix 清除浮动
+.show 强制元素显示
+.hidden 强制元素隐藏
+.sr-only 除了屏幕阅读器外其他设备上隐藏元素
+.sr-ony-focusable
+.text-hide
+.close 可用作通用的关闭图标
+.caret 显示插入符
+响应式隐藏和显示
+.visible-xs-* block inline inline-block
+.visible-sm-*
+.visible-md-*
+.visible-lg-*
+.hidden-xs
+.hidden-sm
+.hidden-sm
+.hidden-md
+.hidden-lg
+.glyphicon	字体图标
+.glyphicon-user ..
+.dropdown	下拉菜单
+.dropdown-toggle	按钮本身的类 data-toggle=dropdown|modal..
+.dropdown-menu	列表组
+.dropdown-header 下拉标题
+.divider 列表分割线
+.btn-group
+.btn-toolbar
+.btn-group-lg|sm|xs 按钮组
+.btn-group-vertical 按钮垂直排列
+.dropup 上拉列表用在包裹dropdown 的div上
+.input-group 输入框组
+.input-group-addon 输入框的装饰可以在之前后
+.input-group-lg
+.input-group-sm
+.input-group-xs
+.input-group-button 之前之后的装饰按钮 可以用span包裹button
+.nav 导航
+.nav-tabs
+.nav-pills
+.nav-stated 胶囊垂直堆叠
+.nav-justified 充满父元素
+.disabled 禁用 li元素
+.navbar 用在<nav 元素上
+.navbar-default
+.navbar-brand
+.navbar-nav
+可折叠的导航栏
+.navbar-toggle 汉堡按钮 data-toggle=collapse data-target=实际导航选项
+.collapse
+.navbar-collapse 实际导航需要放到这样的折叠div中
+.navbar-from 导航栏中的标案
+.navbar-btn
+.navbar-text
+.navbar-link
+.navbar-left
+.navbar-right
+.navbar-fixed-top
+.navbar-static-top
+.navbar-fixed-bottom
+.navbar-inverse
+.breadcrumb 用在ol 面包屑导航
+.pagination	分页
+.pagination-lg
+.pagination-sm 
+.pager 翻页
+.previous
+.next
+标签
+.label
+.label-default
+.label-primary
+.label-success
+.label-info
+.label-warning
+.label-danger
+.badge 徽章
+.jumbotron 超大屏幕
+.pager-header 标题子标题
+.thumbnail 缩略图添加padding
+.caption 标题
+.alert
+.alert-success
+.alert-warning
+.alert-danger
+.alert-info
+.close	关闭按钮 关闭的对象 data-dismiss
+.alert-link 警告中的链接		
+.progress
+.progress-bar
+图文混排
+.media
+.media-body
+.media-object
+.media-list
+封装的list
+.list-group
+.list-group-item
+.list-group-item-heading
+.list-group-item-text
+.panel
+.panel-default
+.panel-heading
+.panel-body
+.panel-title
+.panel-footer
+.well
+.well-lg|sm
+.modal
+.fade
+.model-dialog
+.modal-content
+.modal-header
+.modal-title
+.modal-body
+.modal-footer
+.collapse
+.in
+.panel-collapse
+
+api
+	$(document).off('.data-api')
+	
+
+
+
+
+
+data-toggle=modal|dropdown|tooltip|popover
+表单
+	垂直表单<form role="form"
+		<div class="form-group"
+			<input class="form-control" | <label for="name"
+	内联表单<form class=form-inline|form-horizental" role="form"
+				form-group
+					label.class="col-sm-2 control-label"
+					div.class=col-sm-10
+						input.class=form-control
+				checkbox.c=col-sm-offset-2 col-sm-10
+				button.c=btn btn-default
+	输入框
+		input.type=text,password,datetime,datetime-local,date,month,time,week,number,email,url,search,tel,color
+		textarea.c=form-con tnrol .rows=3
+		p.c=form-control-static 纯文本
+	大小
+		form.input-sm|input-lg|col-lg-2-12
+	帮助文本
+		span.c=help-block
+	fieldset disabled 标签添加disabled 不是类
+	disabled
+	
+按钮
+	a button input
+		.btn
+		.btn-default
+			 primary
+			 success
+			 info
+			 warining
+			 danger
+			 link
+			 lg
+			 sm
+			 xs
+			 block
+		.active
+		.disabled
+图片
+	.img-circle
+		 thumbnail
+		 responsive
+辅助类
+	.text-muted
+		 primary
+		 success
+		 info
+		 warning
+		 danger
+	.bg-primary
+		success
+		info
+		warning
+		danger
+	.pull-left
+	.pull-right
+	.center-block
+	.clearfix
+	.show
+	.hidden
+	.sr-only
+	.sr-only-focusable
+	.text-hide
+	.close
+	.caret
+下拉按钮
+	div.c=btn-group
+		button.c=btn,btn-primary,dropdown .data-toggle=dropdown
+			ul.c=dropdown-menu .role=menu
+响应式
+	.visibl-xs-*[inline|block|inline-block] 可见
+	.visible-sm-*
+			 md
+			 lg
+	.hidden-xs 隐藏
+			sm
+			md
+			lg
+	.visible-print-block
+			      inline
+				  inline-block  打印机隐藏
+	.hidden-print
+字体图标
+	button.style=color: text-shadow
+		span.c=glyphicon glyphicon-user
+下拉菜单
+			div.c=dropdown
+				button.c=btn dropdown-toggle .data-toggle=dropdown 
+					span.c=caret
+				ul.c=dropdown-menu role=menu
+					li.role.presentation
+						a.role-menuitem tableindex=-1 
+			ul.pull-right向右对齐下拉菜单
+			ul.c=divider 分割线
+按钮组
+	div.c=btn-group
+		button.c=btn btn-default
+	div.c=btn-toolbar 
+		div.c-btn-group	按钮组的组合
+	btn.group-vertical 垂直按钮组
+按钮下拉菜单
+	div.c btn-group
+		button.c=btn btn-default dropdown-toggle & data-toggle=dropdown
+		ul.c=dropdown-menu & role=menu
+			li.c=divider
+		span.c=sr-only 切换标志
+	btn-lg
+		sm
+		xs 按钮大小
+	div.c drop-group drpup 上拉菜单
+
+		
+输入框组
+	
+	.c=bs-example bs-example-from role=form
+		input-group
+			input-group-addon
+				.c=form-control
+	
+		添加前缀后缀 span.c=input-grup-addon 
+	大小
+		input-group input-group-sm|lg|xs		
+		
+	span.c=input-group-addon 
+		input.type=radio
+		
+	前后缀变为按钮 span.c=input-group-btn
+		button.c=btn btn-default
+	包裹下拉菜单按钮
+导航元素
+	example1: ul.c=nav nav-tabs
+				li.c=active
+					a
+	胶囊式导航菜单
+			  ul.c=nav nav-pills nav-stacked
+	等宽直到屏幕小然后堆叠 nav-justified
+	disabled 禁用并且禁用：hover 需要js改变功能 
+导航菜单
+	<nav.c=navbar navbar-default r=navigation
+		<div.c=navbar-header
+			a.c=navbar-brand
+		<div.c=nav navbar-nav
+			<li
+	响应式可折叠导航栏
+	<nav.=navbar navbar-default r=navgation
+		<div.c=navbar-header
+			<a.c=navbar-brand
+			<button.c=navbar-toggle data-toggle=collapse data-target="#id1"
+		<div.c=collapse navbar-collopse id="id1"
+			<ul.c=nav navbar-nav
+				<li
+	导航栏中的表单
+		<div
+			<form.c=nav-form navbar-left role=search
+				<div.c=form-group
+					<input.c=from-control placeholder
+					<button.c=btn btn-default
+			form之外的按钮
+				<button.c=btn btn-default navbar-btn
+	导航栏中的文本
+		<div.c=navbar-header
+		<div
+			<p.c=navbar-text
+	自定义链接
+		<p.c=nvabar-text navbar-right
+			<a.c=navbar-link
+	固定在顶部
+		navbar-fixed-top
+		navbar-static-top
+	黑色背景白色字体
+		<nav.c=navbar navbar-inverse role=navigation
+	面包屑导航样式
+		<ol.c=breadcrumb
+分页
+	<or.c=pagination&pagination-lg|sm 无序列表的样式
+		<li.c=disabled|active
+	前一页后一页
+		<ol.c=pager
+			<li.c=previous|next &disabled
+标签	
+	<span.c=label label-default|primary|success|info|warnig|danger
+		
+徽章
+	<span.c=bage>3 更圆滑消息数 没有内容隐藏
+超大屏幕
+	<div.c=container
+		div.c=jumbotron
+页面标题
+	<div.c=page-header
+缩略图
+	<div.c=col-sm-6 col-md-3 
+		<div.c=thumbnail
+			<img
+			<caption
+			<p  可以添加任意元素
+可取消的警告
+	<div.c=alert alert-danger|warning alert-dismissable
+		<button.c=close &data-dismiss="alert" & aria-hidden=true
+		message
+	警告作为链接
+		<div.c=alert alert-success
+			<a
+进度条
+	<div.c=progress
+		<div.c=progress-bar role=progressbar aria-valuenow60 aria-valuemin aria-valuemax
+	带有警告的筋粗条
+		<div.c=progress-bar progress-bar-info
+	带有条纹
+		<div.c=progress progress-striped
+			<div.c=progress-bar progress-bar-success
+	动感的进度条
+		<div.c=progress progress-striped active
+	堆叠的进度条
+		多个进度条放在相同的.progress中
+媒体对象
+	<div.c=media
+		<a.c=pull-left
+			<img.c=media-object
+		<div.c=media-body
+			<h.c=media-heading
+	媒体列表
+		<ul.c=meida-list
+			<li.c=media
+			<li.c=media
+列表组
+	<ul.c=list-group
+		<li.c=list-group-item
+			<h3.c=list-group-item-heading
+			<p.c=list-group-item-text
+面板
+	<div.c=panel panel-default|panel-sucess[info,warning,danger]
+		<div.c=panel-heading
+			<h3.c=panel-title
+		<div.c=panel-body
+		<div.c=panel-footer
+	直接在面板接着panel-heading添加表格
+		<div.c=panel-heading
+			<table.c=table
+	带列表组
+		<div.c=panel-heading
+			<ul.c=list-group
+				<li.c=list-group-item
+凹陷效果的井
+	<div.c=well
+	
+插件
+	$(document).off('.data-api')
+	链式编码
+		$(".btn.danger').button("toggle").addClass("fag")
+		$("#myModal").modal()
+	获取某个插件
+		$('[rel-popover]'）.data('popover')
+	避免命名空间冲突
+		$.fn.button.noConfilict()
+	事件
+		动词不定式
+			$("#myModel").on ('show.bs.modal',function(e){
+			if(!data)return e.preventDefault()})
+		过去分词形式
+			ex.shown
+过渡效果
+	MOdal
+	标签页
+	警告框
+	轮播
+	transation.js
+模态框
+	<button.c=btn btn-primary btn-lg & data-toggle=model data-target="#id"
+	<div.c=model fade 
+		<div.c=modal-dialog
+			<div.c=modal-content
+				<div.class=modal-header
+					<button.c=close data-dismisss="modal" aria-hidden="true"
+					<div.c=modal-title
+				<div.c=modal-body
+				<div.c=modal-footer
+	选项backdrop	 背景
+		keyboard	按键相关
+		show	初始化的时候显示
+		remote 加载别的页面
+	按esc退出
+		$("#modal').modal({keyboard:true})
+	方法
+		$(#).modal({}) 接受内容操作modal
+			.modal('toggle') 切换modal
+			.modal('show') 手动打开
+			.modal('hide') 手动隐藏
+	事件/钩子函数
+		show.bs.modal 调用hsow方法后触发
+		shown.bs.modal 
+		hide.bs.modal
+		hidden.bs.modal
+		$().on('show.bs.modal',function(){})
+		
+下拉菜单
+	可以向 导航栏，按钮，链接添加下拉菜单
+	通过data属性添加 data-toggle
+	<div.c=dropdown
+		<a data-toggle="dropdown"
+		<ul.c=dropdown-menu
+滚动监听
+	<nav.c=navbar navbar-default navbar-static
+		<div.c=navbar-header
+			<button.c=navabar-toggle data-toggle=collapse data-target=.bs-js-navbar-scrollspy
+			<a.navabar-brand
+		<div.c=collapse navbar-collapse bs-js-navbar-scrollspy
+			<ul.c=nav navbar-nav
+				<li <a href="#ios"
+	显示的内容也需要
+		<div data-spy=scroll data-target='#myScrollspy
+			<div.c=section
+				<h|a.id=
+	当页面里面元素改变需要刷新scrollspy 
+		$('[data-spy="scroll"]').each(()=>$(this).scrollspy('refresh'))
+	钩子
+		$().on('activate.bs.scrollspy') 当被滚动激活的时候
+		function(){
+			$('.nav li.active>2").text()//当前激活的元素
+		}
+
+标签页
+	<ul.c=nav nav-tabs
+		<li.c=active
+			<a.href="#id" data-toggle="tab"
+	<div.c=tab-content
+		<div.c=tab-pane fad in active & id="id" 第一个必须要有in 
+	js
+		.click(function(e){e.preventDefault();$(this).tab("show")})
+		需要一个链接调用tab方法
+	钩子
+		show.bs.tab 元素标签页显示时 准确是之前瞬间
+		shown.bs.tab						之后瞬间
+		function(e) e.target relatedTarget 激活/前一个
+
+提示工具
+	$("[data-toggle='tooltip']").tooltip(); 激活提示工具
+	链接或按钮
+	<a.c=tootip|tooltip-test data-toggle=tooltip data-placement=left title=hlleoworld
+	属性
+		animation data-animation	渐变滤镜
+		html	向提示工具插入html
+		placement 定位 top/bottom/left/right/auto
+		selector	 选择器选出来的对象周围会显示提示信息
+		title	提示的信息
+		trigger	如何触发 click/hover/focus/menual
+		content	默认’‘
+		delay	{show:500,hide:100} ms	
+		container 向指定元素追加提示工具 container:body
+	方法
+		tooltip(options|toggle|show|hide|destroy)
+	钩子
+		show.bs.tooltip
+		shown.bs.tooltip
+		hide.bs.tooltip
+		hidden.bs.tooltip
+弹出框
+	激活 $("data-toggle='popover'").popover();
+	js $().popover(options);
+	 
+	 <button data-contianer=body data-toggle="popover" data-placement=left|top|right|bottom data-content="hello" title="xianshi"
+	 属性-数据api
+		animation data-animation
+		html
+		placement
+		selector
+		title
+		trigger
+		delay
+		container
+	方法 
+		.popover(options)
+				toggle
+				show
+				hide
+				destroy
+				
+	钩子
+		show.bs.popove
+		shown
+		hide
+		hidden
+警告框：
+	<div.c=alert alert-warning 
+		<a.class=close data-dismiss="alert"> $tiems; 
+		
+	alert() 让警告框有关闭功能
+	alert('close') 关闭所有警告框
+	 
+	钩子
+		close.bs.alert 关闭是触发
+		closed.bs.alert 关闭完成时触发
+
+按钮插件
+	加载状态
+		<buton.c=btn btn-primary data-loading-text="loading"
+		
+		$().click(function(){
+			$(this).button('loading').delay(1000).queue(function(){
+				
+			})
+		})
+	单个切换 
+		<button data-toggle=button
+	复选框切换
+		<buttons.c=btn-group data-toggle=buttons
+	启用
+		$().button()
+	方法
+		button（toggle|loading|reset|string
+折叠面板
+	<div.c=panel-group id=parent
+		<div.c=panel panel-default
+			<div.c=panel-heading
+				<h4.c=panel-title
+					<a data-toggle=collapse data-parent=#parent href=#col1
+			<div.c=panel-collapse collapse in & id=col1
+		<div....
+	js
+		$().collapse
+	属性
+		parent 切换时父元素的其他子元素都不可见
+		
+		toggle
+	方法
+		collapse(options|toggle|show|hide
+	折叠的事件
+		show.bs.collapse
+		shown
+		hide
+		hidden
+轮播
+	<div.carousel slide id=p
+		<ol.c=carousel-indicators 
+			<li.c=active data-target=#p data-slide-to=1 
+		<div.c=carousel-inner
+			<div.c=item active
+		<a.c=carousel-control left|right href=#p
+		属性
+			data-slid:prev|next
+			data-slide-to 索引从0开始
+			data-ride=carousel 标记开始时火力全开9（动画效果
+			
+			js $().carousel()
+		配置选项 html中配置或者js中传递
+			interval 轮播循环延时量
+			pause 鼠标进入暂停循环
+			wrap 轮播是否连续循环
+		事件
+			slide.bs.carousel
+			slib.bs.carousel 播完过渡效果的时候
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	
+	
+				
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+bootstrap标签？
+thead
+tbody

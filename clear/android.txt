@@ -1,0 +1,466 @@
+val
+var
+val l:String?=null
+val anwserString=whern{a->b a==b->dfd}
+fun generation():String{}
+fun generation(a:Int)String{}
+fun generation():String=if(){}else{}
+val stringlenghtFun:(String)->Int={input->input.length}
+fun stringMapper(str:String,mapper:(String)->Int):Int{return mapper(Str)}
+stringMapper("",(input->input.length))
+stringMapper(""){}
+class Car{
+	val wheels=listOf<Wheel>()
+}
+val car=Car()
+val wheels=car.wheels
+class Car(val wheels:list<Wheel>)
+
+val gallonOfFuelInTank:Int=15
+	private set
+	
+"a is $a"
+"a is ${a.replace("a","b")}"
+var age:String?="23"
+age!!.toInt()
+age?.toInt()
+age?.toInt()?:-1
+for(i in 1..4)
+for(i in 1..4 step 2)
+for(i in 4 downTo 1 step 2)
+if ("key2" in map)
+1 in map.values
+map.containsValue(1)
+mapOf(a to b)
+map.put("1",a")
+map["a"]=121
+@JvmStaticFun main(args Array){}
+Class(args:Array){
+}
+fun main(args:Array){}
+companion object{
+	fun main(args:Array){}
+}
+
+
+	
+val numbers=nutableListOf("one")
+numbers.add();
+List<Rectangele> covirant List<Shape>
+MutableList<Rectangle> not covariant MutableList<Shape>
+println()
+printAll()
+
+
+http://schemas.android.com/apk/res/android
+http://schemas.android.com/apk/distribution
+
+
+
+apacheHttpClient
+abstractHttpClient AndroidHttpClient DefaultHttpClient
+android.net.http.AndroidHttpClient
+newInstance()
+get url
+post setEntitty(Entity)
+execute(HttpUriRequest):HttpResponse
+
+
+activity
+service
+intent
+
+manifest.big.xml
+menifest.small.xml
+
+require camera
+
+.apk
+multi user linux
+one app=one user = userID = one virtual mechaine
+close process when other higer level process need
+two user can one userID on process
+https://developer.android.google.cn/guide/components/fundamentals.html system previlege
+		activity service content provider 
+		
+menu
+component
+resource
+activity  entry denpendent denpendencies
+service dont blok activity
+content provider filesystem sqlite network anything
+broadcastReceiver Intent start other component
+
+Intent dataUri+manipulate returnData ,dont start ContentProvider
+contentProvider->ContentResolver
+startActivity()/startActivityForResult()
+startService()/bindService()
+sendBroadcast()/sendOrderedBroadcast
+ContentResolver.query()
+
+manifest.xml
+	previlege,api level ,hardware,lib
+<activity><service><receiver><provider> must define
+	receiver registerReceiver()
+<activiby<intent-filter> action'x.x.send' data '*/*'category ''
+
+<user-feature name required
+<uses-sdk
+
+https://developer.android.google.cn/guide/topics/permissions/overview request app permissons
+protection levels
+app permissions best practices
+GooglePlay and featurebased filtering
+custom App permission
+
+<activity android:permision> start Activity Context.startActivity()
+	Activity.startActivityForResult()	SecurityException is thrown from the call
+<service android:permission> Context.startService() context.stopService()
+	COntext.bindService()
+<receiver andoird:permission	Context.sendBroadcast() after this return
+	Dont send the Intent
+	Context.registerReceiver()
+<Provider android:readPermission android:writePermission	ContentResolver.insert()
+	query() update() delete
+< android:grantUriPermissions grant-uri-permission	COntex.tgrantUriPermission() 
+	Context.revokeUriPermission Context().chekcUriPermission
+checkPermission Context.checkCallingPermission() checkPermission() PIDPackageManager.checkPermission
+
+Protection Level normal signature dangerous /specify
+
+permision -> permission Group
+viewing an app's permkissio
+	adb shell pm list permissions -s 
+	adb shell install -g MyApp.apk
+
+https://developer.android.google.cn/guide/topics/resources/providing-resources resources
+resources
+	R.id runtime different environment
+	root/
+		src/
+		res/ drawable/ layout/ mipmap/ values
+animator
+anim
+color
+drawable png 9.png jpg gif describe.xml
+mipmap
+layout
+menu
+raw InputStream() Resource.openRowResource()
+	assets/ AssetManager
+values a lot of resorces/type <resource <string> color 
+	arryas.xml  colors.xml dimens.xml strings.xml styles.xml
+xml Resource.getXml()
+
+backupResource
+	resources_name-config_qualifier
+	animator-hdpi/ same as above
+	
+runtime change
+	Activity onDestroy() onCreate()
+		onSaeInstanceState() //onCreate() onRestoreInstanceState()
+	extends Fragment
+	onCreate(){getFramentManager().findFragmetnByTag(), fm.beginTransacion().add(fragment,"data")}.commit()
+	onDestory(){setData}
+
+customization
+	onConfigurationChanged(Configuration)
+	.orientation == Configuration.ORIENTATION_LANDSCAPE{
+	.orientation == Configuration.ORIENTATION_PORTRAIT
+		Toast.makeText(this,"landscape",Toast.LENGTH_SHORT).show()
+
+	
+
+
+api23 android 6.0  ask user when runtime
+SEND_SMS
+
+
+AccessResource https://developer.android.google.cn/guide/topics/resources/localization
+
+<xliff:g id ="start">\u2605</xliff:g>
+
+accessing Resource
+	appt R subclass R.drawable R.drawable.icon int
+	R.string.hello resourceType:resourceName
+	@string/hello 
+	android:name 
+findViewById(R.id.myimageview)
+	setImageResource(R.drawable.myimage)
+Resources.getResources()
+
+res->assets AssetManager fileSystem
+res/raw openRawResource()
+
+[package_name.]R.<resource_type>.<resource_naem>
+
+getWindow().setBackgroudDrawableResource(R.drawable.my_background_image)
+setTitle(getResources().getText(R.string.main_title))
+setContentView(R.layout.main_screen)
+TextView findViewByID(R.id.msg)
+.setText(R.string.hello_message)
+
+xml
+	@[<package_name>.]<resource_type>/<resource_name>
+	@android:color/secondary_text_dart
+	@string/hello
+	alias resources
+https://developer.android.google.cn/guide/topics/resources/accessing-resources.html
+	?android:textColorSecondary
+	?{packagename.][resource_type].resource_name
+	ListView 
+	standard resource above
+AnimationResource
+	Animator
+		ObjectAnimator
+		AnimatorInflater.loadAnimator(myContext,R.animator.name).
+			apply{setTarget(obj)
+			      start()				
+			}
+	TweenAnimation	Animation
+		<set> alpha scale translate rotate set
+		fromAlpha toAlpha float AlphaAnimation
+		ScaleAnimation pivotX pivotY from to xy scale
+		TramslateAnimation form to xy delta 5 %5 %p5
+		RotateAnimation from to degrees pivot xy
+		val image:ImageView=findViewById(R.id.image)
+		AnimationUtils.loadAnimation(this,R.anim.hyperspaceJump)
+		image.startAnimation(hyperspaceJump)
+	Frame animation AnimationDrawable
+		if R.drawable.rocket is Animatable
+			R.drawable.rocket.start()
+
+
+	setListAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,myarray))
+	
+ColorStateList
+	res/color/filename.xml R.color.finename
+	
+	
+
+	@string
+
+res/layout/filename.xml
+	R.layout.filename
+	@layout/filename
+	R.id.ID
+	<ViewGroup id layout height width match_parent wrap_content
+		linearLayout RelativeLayout FrameLayout
+	TextView Button CheckBox
+	<ViewStub id inflatedId 
+	setVisibility(View.VISIBLE)
+	.infalte() return ViewStub
+
+	<Merge just place in 
+
+res/menu/filename.xml
+	R.menu.filename
+	@menu/filename
+	<menu><item> <group>
+	<mune  <item <mune <item>>>>
+
+	item 
+		title string row string
+		titleCondensed
+		icon
+		onclick fun(){ onOptionItemSelected()}
+	
+values/filename.xml
+String 
+StringArray
+QuantityStrings format
+R.string.string_name
+@string/string_name
+getText(int) richString 
+getString(int)
+<resource>
+<string-array name <item
+	getResources()
+	res.getStringArray(R.array.array_name)
+\"
+\' 
+String.format(res.getString(R.string.welcome_messages),username,mailCount);
+html.fromHtml(text)
+TextUtil.htmlEncode(username);
+<b>
+<i>
+<u>
+
+ownprivatemethod apply(charSequence[],tags)
+tag1,tag2 seq1,seq2 /tag2/tag1
+apply(content,new StyleSpan(TypeFace.BOLD));
+
+
+style applied to view activity application
+styles and themes https://developer.android.google.cn/guide/topics/resources/style-resource
+res/values/filename.xml
+<style name parent <item name ..
+<item name="android:textSize">20sp
+<item name="android:textColor">#008
+<EditText style="@style/CustomText" >
+
+font
+res/fond/filename.ttf ttc otf xml
+@[package:]font/font_name
+<fond-family>
+<font 
+	android:font="
+	fontStyle normal italic
+	fontWeight="700 400
+<EditText android:fontFamily=@font/lobster
+<resources>
+	<color name=''>hexcolor	#RGB
+
+Bool	
+	<bool name>true/flase
+	getResources().getBoolean(R.bool.screen_small);
+color
+	android:drawable="@color/green"
+	hexadecimal number
+	<color name >#f00 
+dimension
+	dp
+	sp
+	pt
+	mm
+	px
+
+manifest
+..</application></manifest>
+</activity><activity-alias>..
+
+android:attr
+
+<manifest package="com.shanpai"   android:name=".Service"
+<service/activity/receier/provider android:ame="com.shanpai.Service"
+
+<intent-filter <action android:name="android.intent.action.EDIT"
+		<action andorid:name="android.intent.action.INSERT" "DELETE"
+
+<activity android:icon="@drawable/smallPic"
+
+<intent-filter> 
+	data,type,description
+	appoint one component filter is useless
+	intent and intent filter 
+
+icon label description
+<permission icon label description
+parent icon derived by child icon
+	android.intent.action.MAIN android:intent.category.LAUNCHER app launcher
+
+android define permission android.Manifest.permision
+<uses-permission android:name="">
+	<permission android:name-"com.shanpai.CustomezationPermission">
+	<activity android:permission>
+<permission permissionGroup=>
+
+own library
+	<uses-library>
+
+
+Action
+ in <intent-filter> without any Action dosen't accept any Intent Objects
+	standart actions
+	Intent.ACTION_MAIN
+	Intent.ACTION_WEB_SEARCH
+ 	android.intent.action.MAIN
+	android.intent.action.WEB_SEARCH
+
+Activity
+	application - activity - intent-filter,meta-data
+	must define here
+	android:allowEmbedded show other process Activity
+	android:allowTaskReparentint  allow activity survive   launchMode
+		alwaysRetailTaskState  multi activity  allow lose surface
+		autoRemoveFromRecents  short landscape
+		banner TV orieanted
+		clearTaskOnLaunch  restart is  keep or not 
+		configChannges	prevent restart onCOnfigurationChanged()
+			local navigation orientation
+		documentLaunchMode 
+			intoExisting: reUse FLAG_ACTIVITY_MULTIPLE_TASK not FLAG_ACTIVITY_NEW_DOCUMENT
+			always FALG_ACTIVITY_NEW_DOCUMENT  yes FLAG_ACTIVITY_MULTIPLE
+			none FLAG_ACTIVITY_NEW_TASK 
+			never 
+			launchMode="standard"
+	android:enabled	canuse ACTIVITY
+	android:excluedFromRecents if this activity is new
+	android:exported: true can invoke false cannot invoke
+	android:finishOnTaskLaunch
+	android:hardwareAccelerated
+	android:icon  /android:label
+	android:launchMode standard singleTop	multiple instance belong any task  othertask invoke it
+				one instance for one intent if(stack top) create one instance
+				same on reback parent activity by intent
+ 			 singleTask singleInstance only one task in rntime	
+				singleTask can contains other
+				singleInstance only one Activity
+	android:maxRecents 1-50 
+	android:multiProcess default false start in process that defined it
+	android:name package.path.Class android:exported="false" is allow change activity name 
+	android:parentActivityName = <meta_data android:name="android.support.PARENT_CTIVITY" android:value=""> up navigate
+	android:permission					
+
+
+
+	
+
+ID
+INTEGER
+INTEGER ARRAY
+TYPED ARRAY
+
+
+manifest.xml
+uses-permission
+permission
+permission-tree
+permission-group
+instrumentation
+uses-sdk
+used-configuration
+uses-feature
+supports-screens
+compatible-screens
+supports-gl-texture
+
+application
+	activity
+		intent-filter
+			action
+			category
+			data
+		meta-data
+	<activity-alias>
+		intent-filter
+		meta-data
+	service
+		intent-filter
+		meta-data
+	receiver
+		intent-filter
+		meta-data
+	provider
+		grant-uri-permission
+		meta-data
+		path-permission
+	uses-library
+	
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

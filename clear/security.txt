@@ -1,0 +1,169 @@
+BasicAuthenticationFilter
+UsernamePasswordAuthenticationFilter
+AnonymousAuthenticationFilter
+
+LogoutFilter
+CorsFilter
+HeadWriterFitler
+SecurityContextPersistenceFilter
+
+FilterSecurityInterceptor
+
+ExceptionTranslationFilter
+
+SessionManagementFilter
+
+RequestCacheAwareFilter
+
+@EnableWebSecurity(@Import(WebSecurityConfiguration(WebSecurityConigAdapter)))
+
+<http><intercept-url pattern="/**" access="authenticated"><form-login/><http-basic/>
+
+HttpSecurity.authorizeRequests():ExpressionInterceptorUrlRegistry
+	antMatchers("","").
+		permitAll	一些静态的
+		hasRole("ADMIN")	小角色的
+		access（"hasRole('ADMIN') and "）	需要
+	.formLOgin()
+logout
+	销毁session
+	清除rememberme
+	SecurityContextHolder
+	退出
+http.logout()
+	.logoutUrl
+	.logoutSuccesUrl
+	logoutSuccessHandler
+	invalidateHttpSEssino
+	addLogoutHnadler
+	deleteCookies
+	.and
+	
+TokenEndpoints TokenGenerater AuthenticationManager UserDetailService AuthenticationServerTokenSErvice
+	
+模块
+     web/http
+     保护方法
+     AuthenticationManager
+     AccessDecisionManager
+     AuthenticationProvider
+     UserDetailService
+<security 前缀
+    <security:http auto-config="true"  //自动生成简易登录页面 访问规则
+        <:intercept-url pattern="/**|正则表达式" access="ROLE_USER|逗号分隔的角色列表"
+    设置为auto-config=true
+        <:http
+            <:form-login
+            <:http-basic
+            <:logout
+    --
+    <:authentication-manager    认证管理器
+        <:authentication-provider
+            <:user-service
+                <user name.. password.. authorities="ROLE_USER"
+             properties制定用户的信息
+            <:user-service properties="user.properties"
+                username=password,grantedAuthority[,authority][,enabled|disabled]
+    --
+    配置了security基础设施,还需要在security的所有的filter前面用一个filter引入所有的请求
+    web.xml
+        <filter
+            <filter-name
+            <filter-class>org.springframework.web.filter.DelegatingFilterProxy
+        <filter-mapping
+            <filter-name
+            <url-pattern>/* 拦截所有请求 (此处所有请求表达式与spring不同**)
+登录页面    https://www.w3cschool.cn/springsecurity/4lwn1ihz.html
+    <:http auto-config      //默认提交地址参数 j_username,j_password,j-spring-security-check
+        <:form-login login-page=".jsp|html" login-processing-url="login.do"
+                   username-parameter="username" password-parameter="password"
+        <:intercept-url pattern="login.jsp" access="IS_AUTHENTICATED_ANONYMOUSLY" //放行登录页面
+        <:intercept-url /** role
+    --
+    其他放行登录页面方法
+        <:http security="none" pattern="login.jsp" //为它定义单独的filter链
+    --
+    <:form-login default-target-url=""      //登录成功的页面,普通的页面会跳转到原来的目标页面
+                 always-use-default-target="true|false" //所有的都跳转
+    --
+    <:form-login authentication-success-handler-ref ='bean'
+    extends AuthenticationSuccessHandler.onAuthenticationSuccess()
+    <bean id="bean" //自定义登录成功后的跳转逻辑
+    --
+    <:form-login authentication-failer-handler-ref
+    extends AuthenticationFailerHandler.onAuthenticationFailer() //自定义失败跳转逻辑
+    --
+    弹窗登录 <:http-basic
+    form-login 比http-basic 有更高的优先级
+核心类简介   https://www.w3cschool.cn/springsecurity/ted11ii1.html
+    Authentication
+        接口,表示认证信息,登录认证前简略信息,认证后包含权限信息等,保存在SecurityContextHolder持有的SecurityContext中
+    SecurityContextHolder
+        内部逻辑通过SecurityContextHolderStrategy实现 getContext/setContext/clearContext
+        三种strategy:
+            ThreadLocalSecurityHOlderStrategy   默认实现
+            GlobalSecurityContextHOlderStrategy 全局使用一个SecurityContext C/S结构客户端??
+            InheritableThreadLocalSecurityContextHolderStrategy    子线程可以获取福线程的变量
+        改变strategy:
+            MODE_THREADLOCAL|INHERITABLETHREADLOCAL|GLOBAL
+            SecurityContextHolder.setStrategyName|改变系统属性 spring.security.strategy
+    AuthenticationManager & AuthentcationProvider
+        manager方法authenticate()接受authentication返回认证过的authentication
+            默认实现ProviderManager:内部provider列表,依次直到认证返回结果不为null
+        provider
+            默认实现DaoAuthenticationProvider
+                    使用userDetailService加载UserDetails来封装Authentication对象
+        <:authentication-manager alias=""
+            <:authentication-provider user-service-ref='userDetailService" //默认会使用DaoAuthenticationPorvider
+    认证成功后清楚凭证
+        默认认证后provider会清楚凭证信息,密码,以后使用缓存的Authentication不能进行验证凭证信息
+        解决办法 设置ProviderManager.eraseCredentialsAfterAuthentication属性为false
+    UserDetailService
+        登录->获取UserDetails->验证->赋值Context.authentication.principal
+        UserDetailService.loadUserByUserName()
+        <bean
+            <property name='dataSource' ref=''
+    JdbcDaoImpl
+        usersByUserNameQuery,查询用户信息sql sel username,password,enable from users where username=
+        authoritiesByUsernameQuery 查询用户权限sql sel name,authority from authorities where username=
+        如果JdbcDaoImpl enableGroups=true
+            groupAuoritiesByUsernameQuery 用户组权限
+            select g.id,g.goup_name,ga.authority from groups g,groups_members gm,groups_authorities ga where gm.username= and g.id=ga.group_id and g.id=gm.group_id
+        默认的建表语句
+        基于jdbc的UserDetailService
+            <:authentication-provider
+                <:jdbc-user-service data-source-ref='datasource' users-by-username-query=""
+    InMemoryDaoImpl 测试用
+        <:user-service
+            <:user name password authorities
+    GrantedAuthority
+        Authentication.getAuthorities 返回拥有的权限 是此类的一个数组
+        .getAuthority 返回一个字符串表示权限,spring默认内部的Authentication返回的都是SimpleGrantedAuthority
+    PasswordEncoder
+        <:authentication-provider
+            <:password-encoder hash="md5"
+                <:salt-source
+认证简介
+    过程:
+        username&password登录->封装Authentication接口实现UsernamePasswordAuthenticationToken->传递给AuthenticationManager登录验证
+        ->返回封装用户权限的Authentication->Holder.context.setAuthentication
+    ExceptionTranslationFilter
+        处理来自AbstractSecurityInterceptor抛出的AuthenticationException & AccessDeniedException
+        AbstractSecurityInterceptor子类
+            MethodSecurityInterceptor 拦截方法调用
+            AccessDeniedException 拦截url请求
+        跳转登录页面|返回403错误
+    request之间共享SecurityContext
+        第一次登录将SecurityContext保存到Session之中
+异常信息本地化
+    <bean class="org.springframework.context.support.ReloadableResourceBundlerMessageSource
+        <property name='basename" value="classpath:org/springframework/security/messages
+        |<property name='basenames'
+            <array
+                <value>classpath:
+                <value>..  自定义的propeties在spring内置的security之前
+
+
+
+
+

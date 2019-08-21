@@ -1,0 +1,32 @@
+ChannelFilter channelProcessingFilter
+SecurityContextPersisitenceFilter
+ConcurrentSession
+HeaderWriter
+Csrf
+Logout
+X509Authentication
+AbstarctPreAuthenticatedProcessing
+CasAuthentication
+UsernamePasswordAuthentication
+BasicAuthentication
+SecurityContextHolderAwareRequest
+JaasApiInteration
+RemembermeAuthentication
+AnonymousAuthencation
+SessionManagement
+ExceptionTrasalation
+FilterSecurityInterceptor
+SwitchUser
+
+default
+	SecurityContextPersistence  //request.getSecurityContext() ->SecurityContextHolder|ThreadLocalSecurityContextHolderStrategy -?requestFinished clearSecurityContext
+	WebAsyncManagerIntegration //WebAsyncUtils.getAsyncManager(request) ,asyncManager.getCallableInterceptor
+	HeadWriter // X-Frame-options X-Xss-protection Content-Type-OPtions
+	Logout // LogoutHandlers.foreach->logout(SecurityContextHoler.getContext.getAuthentication
+	UsernamePasswordAuthentication //AbstractAuthenticationProessingFilter attemptAuthentication(res,req) sessionStrategy.onAUthentication(req,res,authResout)
+	RequestCacheAware //requestCache.getMatchRequest chain.doFilter(cache==null?req:cache);
+	SecurityCOntextHolderAwareRequest //wrapper
+	SessionManagerment //onAuthencation(authenticatinon ,req,res)
+	ExceptionTranslation //authencationException AccessDeniedException
+	FilterSecurityInterceptor //securityMEtadataSource resource    AccessDecisionManager pricision
+	

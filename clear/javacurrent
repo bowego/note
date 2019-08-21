@@ -1,0 +1,150 @@
+多线程 
+	.-类 th-Thread ex-Exception	
+
+	线程同步
+		互斥同步：在一个时间点值允许一个线程访问代码段
+		条件同步：通过条件变量和三个操作：等待，信号，广播
+		synchronized:
+			synchronized(this)
+			synchronized(Object.class)
+			声明方法：声明一个方法作为临界段
+				静态方法
+				动态方法
+			声明代码段
+		wait
+			调用必须在synchronized方法或者同步块中
+			当前线程已经获得监视器对象，必须调用wait方法
+		notify
+	生产者消费者
+		synchronized produce(){		notify()wait()必须在synchonized中
+			if(full)
+				try
+					this.wait();
+			生产
+			notify（）
+		}
+		synchronized consume(){
+			if(empty)
+				try 
+					this.wait();
+			消费
+			notify（）
+		}
+	当前线程
+		th.crtTh();
+		捕获线程中的异常 
+			.th.uncgtExHd
+				uncgtEx(th,trb)
+			Thread.setUncgtExHd(handler);
+	睡眠：
+		th.slp()	java.util.concurrent
+		TimeUnit.Seconds.sleep 
+	线程加入
+		t1.join()
+	线程生命周期
+		new	创建
+		runnable	运行
+		blocked	阻塞/等待
+		waiting	就绪
+		timed-waiting	
+		terminated	中断
+		
+		isAlive()
+		状态转换
+			->等待状态
+				wait()
+				join()
+				park()
+				sleep()
+				parkNanos()
+				parkUtil()
+	设置优先级
+		1-10
+		setPriority()
+		创建线程的时候是福线程的优先级
+		MIN_PRIORITY
+		NORM_PRIORITY
+		MAX_PRIORITY
+	守护线程
+		如果所有的线程都是守护线程将退出程序
+		setDaemon()
+		isDaemon()
+	中断线程
+		th.interrupt()
+		th.isInterrupt()
+		Thread.isInterrrupted()
+	volatile
+		保持线程工作内存中的变量值与他们在主存储器中的值同步
+	停止挂起回复线程
+		stop
+		suspend
+		resume
+	线程并发包
+		java.util.concurent
+							.automic
+							.locks
+		四种方式支持并发
+			原子变量
+			锁
+			同步器
+			并发集合
+		原子变量
+			AtomicInteger
+					Long
+					Boolean
+					Reference
+					IntegerArray
+					LongArray
+					ReferenceArray
+					LongFieldUpdater		使用反射以原子方式更新类的易失性字段
+					IntegerFieldUpdater
+					ReferenceFieldUpdater
+						获取对象 .newUpdater()
+		锁
+			ReentrantLock
+				lock
+				unlock
+			ReentrantReadWriteLock
+				readLock
+				writeLock	一个写锁多个读锁
+		同步器
+			四种类型
+				Semaphores
+					new Semaphore(count)
+						acquire
+						release
+				Barriers
+					
+				Latches
+				Exchanges
+		执行器
+			Executor
+			ExecutorService
+				.submit
+			Callable	有返回值的任务
+				call
+			ScheduledTask
+			Future
+			Executors
+				newFixedThreadPool 
+				newScheduledThreadPool(3)
+					schedule(task,2,second) 调度将来的任务
+		Fork/join框架
+			利用多个处理器或内核解决问题
+			通过创建一个线程池
+			ForkJoinPool	线程池
+			ForkJoinTask	抽象类
+				fork() 产生一个新的子任务
+				join() 任务等待另一个任务完成
+			RecursiveAction	不产生结果的子类
+			RecursiveTask	产生结果的子类
+		线程局部变量
+			分隔每个线程变量的值
+			ThreadLocal
+				set
+				get
+				remove
+				initialValue
+				
+					
+		

@@ -1,0 +1,208 @@
+spring.cloud.config.server.git.uri
+spring.config.name
+配置文件到名称的映射 
+application-profile.yml
+
+编码
+	@EnableConfigServer  1spring.config.name=configserver
+						2server.port/spring.cloud.config.server.git.uri:
+						
+
+
+client side
+spring-cloud-starter-config
+
+bootstrap.yml
+	spring.application.name
+		.profiles.active: dev,mysql
+	spring:
+		cloud:
+			config:
+				server:
+					git:
+						uri: 
+						skipSslValidation: true
+						timeout: 4
+						
+
+spring.cloud.config.uri: loclahost:8888
+spring.application.name: myapp
+
+rabbitmq binder
+	destination ->]TopicExchange contains ]Queue
+	instance have ]Consumer
+	
+
+depenciesManagement	
+spring-boot-maven-plugin	
+注册中心	
+bootstrap.xml	
+spring:
+	application:
+		name: reigster-stater
+	security:
+		user:
+			name: zhangsan
+			password:xiaoweijiagou
+			
+server.port:8761
+eureka:
+	client:
+		serviceUrl:
+			defaultZone:http://localhost：8761,http:/localhost:8762
+		fetch-registry: false
+		retistry-fetch-interval-seconds:5
+	instance:
+		lease-expireation-duration-in-seconds:15
+		lease-renewal-interval-in-seconds:5
+		prefer-ip-address: true
+		instance-id: ${spring.application.name}:${random.port}
+		
+spring-boot-starter-security
+	
+	@Configuration
+	@EnableWebSecurity extends WebSecurityConfigurerAdapter
+	configure(http) http.sessionManagement(0.sessionCeationPolicy(SessionCreateionPolicy.NEVER);http.csrf().disable(); http.authorizeRequests().anyRequest().authenticated().and().httpBasic();
+	visit http://zhangsan:xiaoweijiagou@localhost:${server.port}/eureka/
+		
+@EnableEurekaClient
+@EnableEurekaServer
+@SpringBootApplication
+
+
+配置中心
+spring-cloud-config-server
+spring-cloud-starter-eureka
+
+@EnableConfigServer
+@EnableEurekaClient
+@SpringBootAppliction
+
+spring:
+	application:
+		name: config-center
+	profiles:
+		active: native
+	cloud:
+		config:
+			server:
+				native:
+					searchLocation: classpath: configs/{profile} #classpath:/ classpath:/config file:/d:/config/{profile}
+	#application spring.application.name # profile spring.profiles.active #label versioned  find config.dev 1application.yml 2name.yaml
+				git:
+					uri: http://git/.git
+					default-label: master
+					force-pull: true
+					searchPaths: '{profile}'
+					username:
+					password:
+					
+server:
+	port: 0
+
+eureka:
+	client:
+		serviceUrl:
+			defautlZone: http://localhost:8761/eureka
+	instance:
+		instance-id:${spring.aplication.name}:${random.int}
+
+	
+客户端
+spring:
+	appliction:
+		name: user-center
+	cloud:
+		config:
+			discovery:
+				enabled: true
+				serviceId: config-center
+			profile:dev    #${aaa:dev}		mapping:spring.cloud.config.client.ConfigServerInstanceProvider
+												construc(DiscoveryClient client) 
+												getInstance(serviceId) 
+													client.getInstance():list(instance)
+											ConfigServicePropertySourceLocator
+												getRemoteEnvironment()
+											# httpconfig-server/gateway-zuul/dev
+认证中心登录鉴权
+spring-cloud-starter-config
+spring-cloud-starter-oauth2
+spring-boot-stater-data-redis
+jdbc
+spring-session //session共享
+spring-cloud-stater-feign// 根据用户名从用户中心获取数据
+springfox-swagger2
+springfox-bean-validators												
+springfox-swagger-ui
+
+spring:
+	redis:
+		host:
+		port:
+	datasource:
+		driver-clas-name:
+		url:
+		username:
+		password:
+	mvc:
+		servlet:
+			load-on-startup: 1
+access-token:
+	store-jwt: false
+loggging:
+	level::
+		root:
+		com.cloud:
+	file:: logs/${spring.application.name}.log
+security:
+	oauth2:
+		resource:
+			filter-order: 3
+hystrix:command:default.execution.isolation.thread.timeoutInMilliseconds: 5000
+ribbon:eager-load.enabled:true//启动的时候获取usercenter,false第一次调用获取
+				 clients: user-center
+				 
+@EnableFeignClients
+@EnableEurekaClient
+@SpringBootApplication
+
+@FeignClient("user-center") interface  "log-center"
+			value
+			url
+		@GetMapping(value="",params="")
+		find(@RequestParam("username")String username)
+
+配置
+@Configuration
+@EnableAuthorizationServer 
+extends AuthorizationServerConfigurerAdapter
+
+@Autowired
+	authenticationManager
+	redisConnection
+	dataSource
+	access_token:store-jwt:false storeWithJwt
+	
+@Bean 
+
+@EnableRedisSession
+@EnableSwagger2
+
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

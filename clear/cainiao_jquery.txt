@@ -1,0 +1,292 @@
+   $(document).ready(function(){
+            $(".easyui-linkbutton").click(()=>alert("a"));
+        });
+		
+		
+		$(function(){
+ 
+   // 开始写 jQuery 代码...
+ 
+});
+
+jQuery 选择器基于元素的 id、类、类型、属性、属性值等"查找"（或选择）HTML 元素。 它基于已经存在的 CSS 选择器，除此之外，它还有一些自定义的选择器。
+
+$("*")	选取所有元素	在线实例
+$(this)	选取当前 HTML 元素	在线实例
+$("p.intro")	选取 class 为 intro 的 <p> 元素	在线实例
+$("p:first")	选取第一个 <p> 元素	在线实例
+$("ul li:first")	选取第一个 <ul> 元素的第一个 <li> 元素	在线实例
+$("ul li:first-child")	选取每个 <ul> 元素的第一个 <li> 元素	在线实例
+$("[href]")	选取带有 href 属性的元素	在线实例
+$("a[target='_blank']")	选取所有 target 属性值等于 "_blank" 的 <a> 元素	在线实例
+$("a[target!='_blank']")	选取所有 target 属性值不等于 "_blank" 的 <a> 元素	在线实例
+$(":button")	选取所有 type="button" 的 <input> 元素 和 <button> 元素	在线实例
+$("tr:even")	选取偶数位置的 <tr> 元素	在线实例
+$("tr:odd")
+
+
+鼠标事件	键盘事件	表单事件	文档/窗口事件
+click	keypress	submit	load
+dblclick	keydown	change	resize
+mouseenter	keyup	focus	scroll
+mouseleave	 		blur	unload
+hover
+
+$("button").click(function(){
+  $("p").hide(1000);
+});
+
+尝试一下 »
+下面的例子演示了带有 speed 参数的 hide() 方法，并使用回调函数：
+
+实例
+$(document).ready(function(){
+  $(".hidebtn").click(function(){
+    $("div").hide(1000,"linear",function(){
+      alert("Hide() 方法已完成!");
+    });
+  });
+});
+
+$("#p1").css("color","red").slideUp(2000).slideDown(2000);
+
+
+text() - 设置或返回所选元素的文本内容
+html() - 设置或返回所选元素的内容（包括 HTML 标记）
+val() - 设置或返回表单字段的值
+jQuery attr() 方法用于获取属性值。
+$("button").click(function(){
+  alert($("#runoob").attr("href"));
+});
+：text()、html() 以及 val()，同样拥有回调函数。回调函数有两个参数：被选元素列表中当前元素的下标，以及原始（旧的）值。然后以函数新值返回您希望使用的字符串。
+
+attr() 方法也允许您同时设置多个属性。
+
+下面的例子演示如何同时设置 href 和 title 属性：
+
+实例
+$("button").click(function(){
+    $("#runoob").attr({
+        "href" : "http://www.runoob.com/jquery",
+        "title" : "jQuery 教程"
+    });
+});
+
+
+append() - 在被选元素的结尾插入内容
+prepend() - 在被选元素的开头插入内容
+after() - 在被选元素之后插入内容
+before() - 在被选元素之前插入内容
+
+
+remove() - 删除被选元素（及其子元素）
+empty() - 从被选元素中删除子元素
+
+remove() - 删除被选元素（及其子元素）
+empty() - 从被选元素中删除子元素
+$("p").remove(".italic");
+
+jQuery 拥有若干进行 CSS 操作的方法。我们将学习下面这些：
+
+addClass() - 向被选元素添加一个或多个类
+removeClass() - 从被选元素删除一个或多个类
+toggleClass() - 对被选元素进行添加/删除类的切换操作
+css() - 设置或返回样式属性
+
+
+$("button").click(function(){
+  $("h1,h2,p").addClass("blue");
+  $("div").addClass("important");
+});
+
+
+$(document).ready(function(){
+  $("button").click(function(){
+    $("h1,h2,p").toggleClass("blue");
+  });
+});
+
+
+如需返回指定的 CSS 属性的值，请使用如下语法：
+css("propertyname");
+下面的例子将返回首个匹配元素的 background-color 值：
+$("p").css("background-color");
+
+如需设置指定的 CSS 属性，请使用如下语法：
+
+css("propertyname","value");
+下面的例子将为所有匹配元素设置 background-color 值：
+$("p").css("background-color","yellow");
+
+width()
+height()
+innerWidth()
+innerHeight()
+outerWidth()
+outerHeight()
+
+
+这些 jQuery 方法很有用，它们用于向上遍历 DOM 树：
+
+parent()
+parents()
+parentsUntil()
+
+
+children()
+find()
+
+$(document).ready(function(){
+  $("div").find("span");
+});
+
+尝试一下 »
+下面的例子返回 <div> 的所有后代：
+
+实例
+$(document).ready(function(){
+  $("div").find("*");
+});
+
+
+siblings()
+next()
+nextAll()
+nextUntil()
+prev()
+prevAll()
+prevUntil()
+
+
+三个最基本的过滤方法是：first(), last() 和 eq()，它们允许您基于其在一组元素中的位置来选择一个特定的元素。
+
+其他过滤方法，比如 filter() 和 not() 允许您选取匹配或不匹配某项指定标准的元素。
+
+
+responseTxt - 包含调用成功时的结果内容
+statusTXT - 包含调用的状态
+xhr - 包含 XMLHttpRequest 对象
+下面的例子会在 load() 方法完成后显示一个提示框。如果 load() 方法已成功，则显示"外部内容加载成功！"，而如果失败，则显示错误消息：
+
+实例
+$("button").click(function(){
+  $("#div1").load("demo_test.txt",function(responseTxt,statusTxt,xhr){
+    if(statusTxt=="success")
+      alert("外部内容加载成功!");
+    if(statusTxt=="error")
+      alert("Error: "+xhr.status+": "+xhr.statusText);
+  });
+});
+
+$("#div1").load("demo_test.txt");
+
+尝试一下 »
+也可以把 jQuery 选择器添加到 URL 参数。
+
+下面的例子把 "demo_test.txt" 文件中 id="p1" 的元素的内容，加载到指定的 <div> 元素中：
+
+实例
+$("#div1").load("demo_test.txt #p1");
+
+
+$("button").click(function(){
+  $.get("demo_test.php",function(data,status){
+    alert("数据: " + data + "\n状态: " + status);
+  });
+});
+
+$("button").click(function(){
+    $.post("/try/ajax/demo_test_post.php",
+    {
+        name:"菜鸟教程",
+        url:"http://www.runoob.com"
+    },
+        function(data,status){
+        alert("数据: \n" + data + "\n状态: " + status);
+    });
+});
+
+其中某些框架也使用 $ 符号作为简写（就像 jQuery），如果您在用的两种不同的框架正在使用相同的简写符号，有可能导致脚本停止运行。
+
+jQuery 的团队考虑到了这个问题，并实现了 noConflict() 方法。
+
+jQuery noConflict() 方法
+noConflict() 方法会释放对 $ 标识符的控制，这样其他脚本就可以使用它了。
+
+当然，您仍然可以通过全名替代简写的方式来使用 jQuery：
+
+实例
+$.noConflict();
+jQuery(document).ready(function(){
+  jQuery("button").click(function(){
+    jQuery("p").text("jQuery 仍然在工作!");
+  });
+});
+
+尝试一下 »
+您也可以创建自己的简写。noConflict() 可返回对 jQuery 的引用，您可以把它存入变量，以供稍后使用。请看这个例子：
+
+实例
+var jq = $.noConflict();
+jq(document).ready(function(){
+  jq("button").click(function(){
+    jq("p").text("jQuery 仍然在工作!");
+  });
+});
+
+$.noConflict();
+jQuery(document).ready(function($){
+  $("button").click(function(){
+    $("p").text("jQuery 仍然在工作!");
+  });
+});
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>JSONP 实例</title>
+</head>
+<body>
+<div id="divCustomers"></div>
+<script type="text/javascript">
+function callbackFunction(result, methodName)
+{
+    var html = '<ul>';
+    for(var i = 0; i < result.length; i++)
+    {
+        html += '<li>' + result[i] + '</li>';
+    }
+    html += '</ul>';
+    document.getElementById('divCustomers').innerHTML = html;
+}
+</script>
+<script type="text/javascript" src="https://www.runoob.com/try/ajax/jsonp.php?jsoncallback=callbackFunction"></script>
+</body>
+</html>
+jQuery 使用 JSONP
+以上代码可以使用 jQuery 代码实例：
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>JSONP 实例</title>
+    <script src="https://cdn.static.runoob.com/libs/jquery/1.8.3/jquery.js"></script>    
+</head>
+<body>
+<div id="divCustomers"></div>
+<script>
+$.getJSON("https://www.runoob.com/try/ajax/jsonp.php?jsoncallback=?", function(data) {
+    
+    var html = '<ul>';
+    for(var i = 0; i < data.length; i++)
+    {
+        html += '<li>' + data[i] + '</li>';
+    }
+    html += '</ul>';
+    
+    $('#divCustomers').html(html); 
+});
+</script>

@@ -1,0 +1,286 @@
+Netty:
+	异步事件驱动的NIO框架，所有的操作都是异步非阻塞的
+非阻塞IO	
+	
+	socket-socket-socket
+	io io io
+		selector
+		Thread     thread--many socket
+	Bootstrap:container 
+	ServerBootstrap:container
+	Channel:read|write|isActive|isOpen|bind|close|config|ocnnnect|isWritable
+	ChannelHandler:bussiness logic	引导阶段添加进ChannelPipeline 添加的顺序决定处理数据的顺序
+		ChannelOutboundHandler出站数据 
+		ChannelInboundHandler入站数据
+	ChannelPipeline:multi Handler
+	EventLoop:处理多个channel时间
+	EventLoopGroup:multi group
+	ChannelFuture:将来处理结果的一个占位符，可注册处理逻辑，无论出错与否都会调用
+	ChannelHandlerContext
+	
+	ServerBootstrap监听端口，是否有Bootstrap或DatagramSocket连接
+		一个ServerChanel绑定本地端口的Socket
+			EventLoopGroup为链接的请求创建Channel
+		多个代表接收到的客户端的连接
+			另一个EventLoopGroup处理Channel的读写等？
+	Bootstrap连接方法connect|bind,connect
+	ChannelPipeline 作为ChannelHandler的容器
+	出站/入站数据流 ChannelInboundHandler ChannelOutboundHandler
+	程序的配置阶段（ServerBootstrap）,添加ChannelHandler到Pipeline添加的顺序决定处理数据的顺序
+	ChannelInboundHandlerAdapter ChannelOutBoundHandlerAdapter
+	Netty发送消息 channel/ChannelHandlerContext区别前者从头开始/后者从下一个handler开始
+	
+	ChannelHandlerAdapter
+		ChannelInboundHandlerAdapter
+			SimpleChannelInboundHandle
+		ChannelOutboundHandlerAdapter
+		ChanelDuplexHandlerAdapter
+	java对象 互转换 字节
+		解码
+		编码器 
+		继承 ChannelHandlerAdapter-》处理数据-》转发到下一个handler
+	SimpleChannelHandler
+		channelRead0 覆盖方法
+		不阻塞EventLoop：制定一个EventExecutorGroup
+Transport
+	https://www.w3cschool.cn/essential_netty_in_action/essential_netty_in_action-s1ed28b3.html
+	统一的Api
+		新旧IO切换代码很少
+	JDK 新旧IO 完全不同的API
+	TranspotAPI核心是Channel
+		Channel
+			ChannelPipeline：过滤器模式，增减ChannelHandler
+			ChannelConfig
+			ChannelHandler：转换数据格式，channel状态变化，异常通知，用户时间
+			方法
+				eventLoop
+				pipeline
+				isAcive
+				localAddress
+				remoteAddress
+				write
+				flush
+				writeAndFlush //writeAndFlush future.addListener
+		Tranpsort种类
+			协议
+				NIO	java.nio.channels
+					channel selector thread->execute
+					通道状态改变
+						SelectionKey
+							OP_ACCEPT	有新连接时得到通知
+							OP_CONNECT	链接完成后得到通知
+							OP_REA	准备读取数据得到通知
+							OP_WRITE	写入更多数据得到通知
+				OIO	java.net
+				Local	虚拟机本地通信
+				Embedded 没有真正网络测试
+BufferAPI
+	利用引用计数确定合适释放ByteBuf,利用池提高性能，降低内存
+		引用计数
+		方法链
+		Pooling
+		自定义类型
+		符合缓冲类型零拷贝
+		扩展性
+		读取写入索引分开
+		不要flip切换读写模式
+	可读、可写，可丢弃字节 discardReadBytes
+	索引管理
+		markReaderIndex
+		markWriterIndex
+		resetReaderIndex
+		resetWriterIndex
+		clearIndex 整个空间都是可写的，重置索引
+	查询操作
+		indexOf()
+		forEachByte(ByteBufProcessor.FIND_NUL)
+	衍生缓冲区
+		slice
+		readOnly
+		order
+	全新缓冲区
+		copy
+	读写操作
+		get/set	
+		read/write
+	ByteBuf
+		getByte
+		读写
+		重复读取
+		写入增加writeIndex读取增加readerIndex 初始为0相同则不能读取
+			read/write改变索引 set/get不改变索引，只在相应位置操作索引
+			0<=readerIndex<=writeIndex<=capacity
+		模式：
+			堆中缓冲区
+				array 【byte[] 直接获取字节数组
+			直接缓冲区
+				-XX:MaxDirectMemorySize=xxM
+			复合缓冲区
+				CompositeByteBuf
+					addComponents();
+					removeComponent
+					component()			
+	ByteBufHoldr
+		data
+		copy
+	ByteBuf分配
+		池类ByteBufAllocator
+			buffer
+			heapBuffer
+			directBuffer
+			compositeBuffer
+			heapCompositeBuffer
+			directCompositeBuffer
+		channel.alloc()
+		ChanelHandlerContext.alloc()
+		实现
+			池化
+				PooledByteBufAllocator 内存使用降到最低
+			非池化
+				通过Unpooled创建非池化的ByteBuf实例
+		ByteBufUtil
+	引用计数器
+		ByteBuff.refCnt
+				.release
+ChannelHandler & ChannelHandlerPipeline & ChannelHandlerContext
+	Channel生命周期
+		channelUnregistered	已创建尚未注册到EventLoop
+		channelRegistered	注册到一个EventLoop
+		channelActive	活跃状态，连接到主机可以发送接受数据
+		channelInactive 非活跃状态
+	检测资源泄露
+		handler.hanenlRead 或者write的时候不要资源泄露，handler处理完消息之后，减少对他的引用计数ReferenceCountUtil.release(message)
+		Disables
+		Simple
+		advanced
+		paranoid
+	ChannelHandler生命周期
+		handlerAdded	添加到一个handlerPipeline
+		handlerRemoved	从一个handlerPipeline移除
+		exceptionCaught	pipeline执行出现异常
+		子接口
+			ChannelInboundHandler
+				channelRegistered
+				chanenlUnregistered
+				chanenlActive
+				chanenlInactive
+				channelReadComplete
+				channelRead
+				chanenlWritablilityChanged
+				userEventTriggered
+			ChannelOutboundHandler
+				bind
+				connect
+				disconnect
+				close
+				deregister
+				read
+				flush
+				write
+		ChannelPromise extends ChannelFuture	
+		适配器
+	ChanenlPipeline
+		用来保存关联到一个Channel的CHannelHanler
+		可以动态添加删除ChannelHandler
+		ChannelPipeline丰富的API调用来回一个入站和出站事件
+		一个ChannelHandler可能同事实现InboundHandler和OutboundHandler
+		addLast
+		addFirst
+		addBefore
+		addAfter
+		remove
+		replace
+		get
+		context
+		names
+		iterator
+		发送事件
+			出站操作
+				fireChannelRegistered
+					ChannelUnregistered
+					chanenlActive
+					ChannelInactive
+					ExceptionCaught
+					EventTriggered
+					ChannelRead
+					ChannelReadComplete
+			入站操作
+				bind
+				connect
+				disconnect
+				close
+				deregister
+				flush
+				write
+				writeAndFlush
+				read
+	EventExecutorGroup 不要阻塞EventLoop
+	ChannelHandlerContext
+		handler添加到pipeline之后会创建一个实例ChannelHandlerContext
+		context中调用方法会传播到下一个有处理事件能力的ChannelHandler
+			最终都是调用context调用方法传递事件
+Codec框架
+	编码解码：数据从一种特定协议格式到另一种格式的转换，构建一个基于netty的邮件服务器，可以使用Pop3，Imap,Smtp的实现
+	Decoder：解码从二进制消息流转换成数据
+		ByteToMessageDecoder
+			decode(ctx,buf,list<object>)
+			decodeLast
+			子类
+				ReplayingDecoder
+				LineBasedFrameDecoder
+				HttpObjectDecoder
+		MessageToMessageDecoder		
+			子类
+				HttpObjectAttregator
+	TooLongFrameException ：缓存数据太长的话，抛出异常，处理
+	Encoder：编码将数据编码成二进制消息流
+		MessageToByteEncoder
+			encode
+		MessgeToMessageEncoder			
+	Codec:编解码器
+		ByteToMessageCodec
+		MessageToMessageCodec
+	
+	
+	
+			
+		
+			
+	
+		
+	
+	
+	服务端
+		ChannelHandler->channelRead|ChanenlHandlerContext&msg
+					 ->channelReadComplete|ChannelHandlerContext
+					 ->exceptionCaught
+		ChannelHandlerCOntext->write|ByteBuff
+							->close
+		@Shared:多个线程之间共享CHannelHandler
+		->NioEventLoopGroup[group
+		->ServerBootStrap[strap
+		strp->group|group
+			->channel|NioServerSocketChannel.class
+			->Localaddress|(->InetSocketAddress|port)
+			->childHandler|(->ChannelInitializer[initializer.initChannel)
+			(->bind)->sync[ChannelFuture
+		(channelFuture.channel->closeFuture)->sync
+		(group->shutdownGraceFully)->sync
+	客户端
+		channelHandler:
+			SimpleChannelInboundHandler<ByteBuf
+				.channelActive
+				.channelRead0
+				.exceptionCaught
+		client:
+			->NioEventLoopGroup
+			->Bootstrap->group
+					   ->channel
+					   ->remoteAddress
+					   ->handler(new ChannelInitailizer<SocketChannel>(){})
+	
+			
+			
+	
+		
+		
