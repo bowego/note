@@ -1,0 +1,42 @@
+KettleDatabaseRepository :relational database to store ETL metadata
+Kettle file repository : store in a file
+ID admin
+Name admin
+Kettle
+	Spoon
+		ETL转换过程 图形化界面 Transformation
+	Pan
+		批量运行ETL转换 后台
+	CHEF
+		创建任务：转换，脚本
+		检查执行成功
+	Kitchen
+		批量执行任务
+定时调度工具
+	Kitchen.bat
+		-rep 存储路径
+		-user 执行人
+		-pass 执行密码
+		-job 任务包名称
+		-file 作业文件路径
+		-dir|level|log|listdir|listjobs|listrep|norep
+	bat文件
+		kitchen /file:..kjb /level:Base>>.log
+转换
+	表输入：步骤名称|数据库连接|获取SQL查询语句|预览|
+	表输出：步骤名称|数据库连接|目标模式？|目标表|提交记录数量|裁剪表，truncate操作
+			映射匹配[表字段，流字段]
+	字段设置默认值 ：作业->获取变量
+	字段选择：获取选择的字段|列映射
+	kitchen.sh /rep ..proj /user .. /pass .. /level [Minimal] /dir .. /job ..
+	pan.sh /rep .. /user .. /pass .. /level .. /dir .. /trans ..
+插入记录，复制表
+	新建转换->表输入->转换.选择字段->校验转换->执行
+更新记录
+	选择区分字段id存在则更新，不存在则删除
+	新建转换->表输入->output.插入更新->区分查询字段|更新字段->校验转换->本地运行
+合并字段
+	脚本：javascript var merge=''+''; 处于输入输出之间，输入的列看做js变量，生成新变量映射到输出 可通过 输出.选择字段 将没用的字段不输出
+连接
+	
+	
