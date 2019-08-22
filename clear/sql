@@ -1,3 +1,150 @@
+mysql https://www.w3cschool.cn/mysql/mysql-administration.html
+    按照数据结构组织存储管理数据
+    关系模型基础上借助集合代数等处理数据
+    列|行|表|库|主键|外键|复合键|索引|冗余|参照完整性|实体完整性
+    开源可定制
+    安装
+        my.ini->/data->mysqld->mysqld --initialize-insecure ->mysqld -install
+    user mysql;insert into user(host,user,password,select_priv,insert_priv,update_priv)  //添加新用户
+        values('localhost','user','PASSWORD(123)','y','y','y');flush privileges;
+        select|insert|update|delete|drop|reload|shutdown|process|file|grant|references|index|alter
+        -grant select.. on database.table to 'user'@'localhost' identified by '2323'; flush privileges;
+    /etc/my.cnf
+    show databases|tables|columns from table|index from table|table status from table name/like '';
+    show tables;
+    数据类型
+        数值
+            tinyint-1
+            smallint-2
+            mediumint-3
+            int/integer-4
+            bigint-8
+            float-4
+            double-8
+            decimal(M,D)-大的值+2
+        日期时间
+            year 1901/2155
+            date
+            time
+            datetime
+            timestamp
+        字符串
+            char
+            varchar
+            ''|tiny|medium|long blob|text
+            binary
+            varbinary
+            Enum
+            Set
+    创建表
+        create table name(column type not null|auto_increment ..[primary key(id)]);
+        drop table name;
+    插入语句
+        insert into table name() values()
+    查询
+        select * from user limit 0|偏移量,1|显示条数;
+
+    更新
+        update table name set k=v...
+    删除
+        delete from name
+    where子句
+            =|<>|!=|>|<|>=|<=| like ''区分大小写 |binary = 区分大小写
+    like子句
+        like '%%'
+    order by f asc, f2 desc
+    coalesce(a,b,c) 依次使用名称
+    连接
+        left join|inner join |right join
+    null值处理
+        is null | is not null |<=>比较相等 两个值是null返回true
+    正则表达式 where Regexp '' ^|$|.|[]|[^]|
+        a|b  |*|+|{n}|{n,m}
+    事务
+        原子|一致，稳定有非法数据（外键约束）事务撤回|隔离型|持久性，可靠性，什么时候把数据保存到日志里
+        start transaction
+        savepoint name
+        commit|rollback
+    索引
+        create index name on table (col(length))
+        drop index name on table;
+        alter table table add primary key (col list)
+        alter table table add unique indexname(list);   唯一索引
+        alter table table add index idnexName(list);    普通索引
+        alter table table add fulltext indexname(list); 全文索引
+    临时表
+        create temporary table name();
+    设置序列
+        alter table t auto_increment=100;
+        重置序列
+            alter table t drop id;
+            alter table t add id int unsigned not null auto_increment first,
+                add primary key(id);
+    防止出现重复数据
+        制定primary key(,,) 字段not null
+        insert ignore into 不插入不报错
+        replace into 存在当前的主键先删除再插入
+    sql注入
+        转义，检测工具 MDCSoft scan
+    导出数据
+        select * from tab into outfile '' fields terminated by ',' enclosed by '"' lines terminated by '\r\n';
+        导出表结构
+            mysqldump -h -P -u -p [-d|只生成创建表结构的语句] database [tb1,t2]> .sql
+
+    导入数据库   https://www.w3cschool.cn/mysql/mysql-database-import.html
+        mysql -u -p db < dump.text
+        mysql> source .sql
+        load data local[客户端|else服务器] infile into table tb1
+            fields terminated by ':' lines terminated by '\r\n';
+        myslqimport -u -p --local --columns=b,c,a db dump.txt
+    函数
+        date_add(date,interval expr type[second,minute,hour,day,week,month,quarter,year]) 增加指定时间间隔
+            date_sub(date,interval expr type),datediff(date,date2),date_format(now(),'%Y-%m-%d $T[:%f毫秒]')
+            now() curDate() curtime() date()毫秒
+            extract(year|day|hour from date1)
+        concat() 有null返回值为null|有二进制字符串返回值是..|显式转换二进制到字符串cast(bit as char)
+            concat_ws(',',..)制定分隔符，不会因为有null返回null
+            GROUP_concat(distinct |separator '' |order by asc/desc)
+            repeat('',2) 复制字符串
+            left('',pos)
+            right('',pos)
+            substring('',pos,len)
+            substring_index('','关键字'，关键字出现的次数) 第几次出现位置之前的字符串
+        cast(bit as char)
+        数学
+            - 负号 bigint无效
+            abs()
+            sign() 符号
+            mod(234,10) 取模
+            floor(x) 不大于的整数
+            ceiling(x) 不小于的整数
+            round(x) 最近的整数
+            a div b 整除取不大于结果的整数
+            exp(x) e x次方
+            ln（x) 自然对数
+            log(b,x) 一般对数
+            log2(x) 以2为底对数
+            log10   10为底
+            pow(x,y) 幂
+            sqrt（x) 平方根
+            pi()
+            cos(x)
+            sin(x)
+            tan(x)
+            asin(x)
+            atan(x)
+            rand(n|null种子) 0-1
+            least(..) 最小值 integer语境|real语境|大小写敏感 参数分别作为对应类型比较
+            gratest(..) 最大值
+            degrees(x)  弧度转角度
+            radians(x)  角度专弧度
+            truncate(x,d)   截取小数点后尾数 d负数小数点左数为0
+
+
+practice
+    if a=b then .. elseif then .. else .. end if ; //判等，连续判断
+    select a,'han';     //返回值
+
 https://blog.csdn.net/scbiaosdo/article/details/81561162
 数据库对象
 	table
@@ -35,15 +182,15 @@ https://blog.csdn.net/scbiaosdo/article/details/81561162
 			alter table t add foreign key a(c) references	tt(cc) 添加外键约束
 			alter table t change column c cc t	修改字段类型名称
 			alter table t modify column  c t 修改字段类型‘
-			alter table t alter column set default ''
-			alter table t alter column drop default
+			alter table t alter column c set default ''
+			alter table t alter column c drop default
 			alter table t disable keys 
 			alter table t enable keys
 			alter table t drop column c
 			alter table t drop primary key
 								index c
 								foreigh key c
-						 rename tt
+						 rename to tt
 		drop
 			drop database d
 			drop table t
@@ -102,4 +249,82 @@ Cursor
 		FOR i IN 1..10
 		LOOP
 		ENDLOOP
+
+
+
+
+存储过程保存在数据库的数据字典中
+--
+    DELIMITER $$
+    CREATE PROCEDURE delete_matches(IN p_a INTEGER)
+    label: BEGIN
+
+    END label$$
+    DELIMITER ;
+--
+
+
+CREATE PROCEDURE procedure(IN p_int int) 声明存储过程
+DECLARE 1_int int unsigned default 20000;	声明变量
+SET @1_int = 2 变量赋值
+
+if-then-else|while-do|declare
+变量
+	DECLARE variable_name,[name...] datatype [default value] 定义
+	SET k=expression[,k=v..] 赋值
+用户变量
+	session 中定义的变量
+		select 'v' into @v;
+		SET @y='v'
+	存储过程中使用
+		CREATE PROCEDURE pro() select concat(@userVar,'word')
+	存储过程之中使用用户变量
+		CREATE PROCEDURE p ..@a..
+		CREATE PROCEDURE p1 ..@a.. 只要@前缀都是用户变量？
+
+
+注释
+	--
+查询
+	selectname from mysql.proc where db='数据库名'
+	selectroutine_name from information_schema.routins where routine_schema='数据库名‘
+	showprocedure status where db='数据库名’
+	showcreate proceudre db.proc 存储过程详细
+	dropprocedure
+过程语句
+	if .. then ..; end if; |if then ..; else ..; end if ;
+	case .. when 0 then .; when 2 then ; else ; end case;
+	while .. do ..; end while;
+	repeat ..; until .. end repeat;
+	loop ..; end loop;label:loop ..; if .. then leave label; end loop;
+	--:label:loop ..;
+			if .. then ITERATE label; end if ;
+		end loop;
+游标cursor
+	delimiter //
+	drop procedure if exists
+	DECLARE usCursor CURSOR FOR SELECT username,PASSWORD FROM USER;
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done=1;
+	open cursor;
+	label loop
+		fetch .. into ..;
+		if .. then
+		leave label;
+		end if;
+	end loop label;
+	close cursor;
+	end //
+	delimiter //
+	call ..();
+mysql
+	prepare stmt from @sql; execute stmt;
+gbase
+	变量：
+		define k type;
+		let k='';
+	字符串
+		连接： a||b;
+	动态
+		execute immediate sql;
+
 	

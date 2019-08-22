@@ -162,8 +162,187 @@ TokenEndpoints TokenGenerater AuthenticationManager UserDetailService Authentica
             <array
                 <value>classpath:
                 <value>..  自定义的propeties在spring内置的security之前
+缓存UerCache
+    CacheingUserDetailService contains UserCache&realUserDetailService 首先从cache获取没有就从real获取
+    UserCache 实现类 NullUserCache & EhCacheBasedUserCache
+    <:authentication-manager
+        <:authentication-provider user-service-ref=$1
+    <bean $1 CachingUserDetialsService
+        <constructor-arg ref=$4
+        <property name="userCache"
+            <bean EhCacheBasedUserCache
+                <property name="cache" ref=$3
+    <bean $3 EhCacheFactoryBean
+    <bean $4 JdbcDaoImpl|UserDetailService
+制定拦截的url
+    <:http use-expression="true"
+        <:intercept-url pattern access="ROLE_USER|hasRole('ROLE_USER',..)|hasAnyRole|OR"
+            requires-channel="https" 指定访问协议
+            method= 制定请求方式 GET|POST|DELETE|PUT|HEAD|OPTIONS|TRACE
+        <:port-mappings
+            <port-mapping http= https= 指定端口，使用http请求被限制限制使用https的接口会重新请求https端口 80 443
+Security Filter
+    ChannelProcessingFilter
+    SecurityContextPersistenceFilter
+        通过SecurityContextRepository获取和缓存SecurityContext,allowSessionCreation=true 吧Context保存到sessino中
+        自定义
+            <bean SecurityContextPersistenceFilter
+                <proeprty name="securityContextRepository
+                    <bean HttpSessionSecurityContxtRepository
+                        <property allowSessionCreation=false
 
+    ConcurrentSessinoFIlter
+    UsernamePasswordAuthenticationFilter
+        持有 AuthentcationManager
+            property usernameParameter|passwordParameter|filterProcessUrl
+        自定义
+            <:http entry-point-ref=$1
+                <:custom-filter ref=$2 position="FROM_LOGIN_FILTER"
+            <bean $1 LoginUrlAuthenticationEntryPoint
+                <property loginFromUrl=/login.jsp
+            <bean $2 UsernamePasswordAuthenticationFIlter
+                <proeprty authenticatiomManager|usernameParameter|passwordParameter|filterProcessUrl
+    CasAuthenticationFIlter BasicAuthenticationFilter
+    SecurityContextHolderAwareRequestFilter
+    JaasApiIntegrationFilter
+    RememberMeAuthenticationFilter
+    AnonymousAuthenticationFilter
+    ExceptinoTransactionFilter ?Transilation
+        持有
+            AuthenticationEntryPoint.commence 重新登录 authenticationException
+            AccessDeniedHandler 返回403 errorPage
+        自定义
+            <bean
+                <property authenticationEntryPoint
+                    <bean
+                        <propety loginFromUrl /login..jsp
+                <property accessDeniedHandler
+                    <bean
+                        <property errorPage /access_denied.jsp
+            <:http
+                <:form-login
+                <:intercept-url
+                <:custom-filter ref=$1 after="EXCEPTION_TRANSLATION_FILTER" 自定义异常处理截获要放在内置异常处理后面
+        缓存请求session RequestCache HttpSessionRequestCache->save|SavedRequest[HttpSession
+    FilterSecurityInterceptor
+        持有
+            SecurityMetadataSource
+                请求是否受保护
+            AuthenticationManager
+                如果Authentication.authenticated()=false | interceptor.alwaysReauthenticate=true 认证替换SecurityContext中的Authentication
+            AccessDecisionManager
+                检查权限
+        自定义
+            <bean security.web.access.intercept.FilterSecurityInterceptor
+                <property name authMana
+                <property name accessDecisionMana
+                <property name securityMetaDatasource
+                    <:filter-security-metadata-source
+                        <:intercept-url pattern access
 
+    --
+    添加Filter到FilterChain spring 内置额fitler有固定的顺序和名字，使用 after|before|position NAME last|first制定chain中的位置
+    --
+    DelegatingFilterProxy web.xml中的init-param指定springfactory中的filter的名字|通过filter的名字
+        设置targetFilterLifeCycle = true 使被代理的filter与DelegatingFilterProxy有相同的生命周期
+    --
+    DelegatingFIlterProxy代理的是FilterChainProxy 为每一个<:http 添加一个filterChain 更特殊的http应在前面
+    --
+退出登录
+    <:logout logout-url="/logou.do"
+    invalidate-session|delete-cookies|logout-success-url|success-handler-
+匿名认证相关类
+    AnonymousAuthenticationTOken
+    AnonymousAUthenticationFIlter
+        key= userAttribute=anonymousUser,ROLE_ANONYNOUS
+    AnonymousAuthenticationProvider
+    AutehticationTrustResolver
+        判断是否是AnonymousAuthenticationToken
+Remember-me https://www.w3cschool.cn/springsecurity/56821iil.html
+    <:http
+        <:remember-me key="" [user-service-ref=''] 自定义页面checkBox _spring_security_remember_me
+    简单加密    加密token username,password,expiretime,key 服务器自动登录
+        token base64(username:expirationTime:md5Hex(name:time:pasword:keuy))
+    持久化token
+        登录成功后保存一个加密token到数据库，同时发送给客户端，下一次没有登录的用户通过token和数据库中比对，重新生成新的token，保存在客户端和数据库
+            每一个token都只能用一次，当用两次的时候说明有盗用
+            但是盗用者还是有一次机会登录
+            表结构
+                persistent_logins username,series,token,last_used
+        <:http
+            <:remember-me data-source-ref=''
+    相关接口
+        RememberMeServices
+            autoLogin
+            loginFail
+            loginSuccess
+        RememberMeAuthenticationFilter
+        开机服务->登录成功/失败|service.loginFail[删除token/loginSuccess[生成token
+            ->filter尚未登录->service.autoLogin
+    自定义
+        <:http
+            <:custom-filter usernamePasswordAuthentFilter
+            <:custom-filter rememberMeFilter
 
+        <bean usernamePassordAuthenticationFilter
+            <prop rememberMeService&authenticationManager
+        <bean remeberMeFilter
+            <prop remmeberMeService&authenticationManager
 
+        <:authentication-manager
+            <:authentication-provider user-service-ref
+            <:authentication-provider remberMeAuthenticationProvider
+        <bean userDetailService
+        <bean remmemberMeAuthenticationProvider
+
+        <bean rememberMeService
+            <prop userDetailService
+            <prop key
+            <prop parameter
+        --
+        持久化token 替换上述rememberMeService
+        <bean remmeberMeService
+            <prop   userDetailSErvice key parameter
+            <prop
+                <bean JdbcTokenRepositoryImpl
+                    <prop dataSource crateTableOnStartup
+SessionManagement
+    <:http
+        <:session-maangerment invalid-session-url //session超时跳转页面
+        <:logout delete-cookies="JSESSIONID" //不关闭浏览器退出再登录，使用新的cookie，避免超时
+    限制只登录一次
+        web.xml <listener><listener-calss>security.web.session.htpSessionEventPublisher
+        <:http security="none" pattern="/none/**" //rememberMe认证错误跳转页面不经过ilterChain
+        <:session-managerment   sesion-authentication-error-url= //remmemberme 认证错误 跳转页面，覆盖返回错误码401
+            <:concurrency-control max-sessions="1" //登录多次多个session ，默认策略 覆盖以前
+                error-if-maximum-exceeded=true  //session个数超出 抛出错误 跳转authentication-failure-url
+        --
+        <:session-managerment
+            <:concurency-control expired-url= //使用session【再次登录导致的超时】错误跳转页面
+    session固定攻击保护
+        通过发送sessionId给别的用户，使别的用户获取相同的权限？？
+        spring 默认保护
+        自定义
+            <:session-management migrateSession登录创建新session复制attribute none使用原来session newSession创建全新session
+权限鉴定基础
+    AccessDecisionManager.decide(Authentication|用户信息,Object|保护对象MethodInvocation Aop,
+                                                                JoinPoint AspectJ，
+                                                                FilterInvocation web请求
+                                    ,Collection<ConfigAttribute>|受保护对象的配置属性，如角色列表)
+    aroundAdvice对方法鉴权，filter对web请求鉴权
+        可以三种方式任意组合，通常使用Filter对web粗略鉴权，AOP对service层放啊发细粒度鉴权
+
+    AbstractSecurityIntercetor
+        保护对象基础抽象类 beforeInvocation //鉴权，抛出出异常
+                         finallyInvocation //调用完毕清理 如恢复改变了的SecurityContext
+                         afterInvocation    //处理返回结果
+    ConfigAttribute
+        beforeInvocation调用AccessDecisionManager.decide()鉴权
+        注解定义在方法上 | access属性=""
+    RunAsManager
+        AbstractSecurityInterceptor.beforeInvocation使用，创建新的securityContext&Authentciation
+                                    .finallyInvocaion 恢复SecurityContext
+        原Authentication有属性 RUN_AS_开头 原Authentication+Role_RUN_AS 新的Context
+    AfterInvocationManager.decide()
+        若有manager afterInvocation调用decide
 
